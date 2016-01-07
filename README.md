@@ -1,2 +1,2 @@
-# ttw
-淘桃网
+<a href="http://www.taotaool.com" target="_blank">淘桃网</a><br/>
+这是和几位小伙伴一起弄的一个网站，刚完成第一个version，由于时间等原因还有很多功能待实现，继续完善中...
