@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="banner">
+
+	<select id="queryBannerList" parameterType="com.phly.ttw.manage.banner.model.BannerVO"
+		resultType="com.phly.ttw.manage.banner.model.BannerVO">
+		SELECT 
+		  ID id,
+		  NAME name,
+		  DESCRIPT descript,
+		  PIC_URL picUrl,
+		  SORT sort,
+		  HREF href,
+		  PAGE page,
+		  PAGE_IDX pageIdx,
+		  CREATOR creator,
+		  CREATE_DATE createDate,
+		  LAST_UPDATE_DATE updateTime,
+		  LAST_UPDATER updater 
+		FROM
+		  t_banner 
+		<include refid="sqlCondition"></include>
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+		<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY LAST_UPDATE_DATE DESC
+		</if>
+	</select>
+	
+	<select id="getBannerListCount" parameterType="com.phly.ttw.manage.banner.model.BannerVO"
+		resultType="int">
+		SELECT count(1) FROM t_banner 
+		<include refid="sqlCondition"></include>
+	</select>
+	
+	<sql id="sqlCondition">
+		<where>
+			<if test="page != null and page != ''">
+				page = #{page}
+			</if>
+			<if test="pageIdx != null and pageIdx != ''">
+				and page_idx = #{pageIdx}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="getBanner" parameterType="com.phly.ttw.manage.banner.model.BannerVO"
+		resultType="com.phly.ttw.manage.banner.model.BannerVO">
+		SELECT 
+		  ID id,
+		  NAME name,
+		  DESCRIPT descript,
+		  PIC_URL picUrl,
+		  SORT sort,
+		  HREF href,
+		  PAGE page,
+		  PAGE_IDX pageIdx,
+		  CREATOR creator,
+		  CREATE_DATE createDate,
+		  LAST_UPDATE_DATE updateTime,
+		  LAST_UPDATER updater 
+		FROM
+		  t_banner 
+		  <where>
+		  	<if test="id != null and id != ''">
+		  		id = #{id}
+		  	</if>
+		  	<if test="page != null and page != ''">
+		  		and page = #{page}
+		  	</if>
+		  	<if test="pageIdx != null and pageIdx != ''">
+		  		and page_idx = #{pageIdx}
+		  	</if>
+		  	<if test="sort != null and sort != '' and sort > 0">
+		  		and sort = ${sort}
+		  	</if>
+		  </where>
+		  limit 0,1
+	</select>
+	
+	<insert id="addBanner" parameterType="com.phly.ttw.manage.banner.model.BannerVO">
+		INSERT INTO t_banner (
+		  ID,
+		  NAME,
+		  DESCRIPT,
+		  PIC_URL,
+		  SORT,
+		  HREF,
+		  PAGE,
+		  PAGE_IDX,
+		  CREATOR,
+		  CREATE_DATE,
+		  LAST_UPDATE_DATE,
+		  LAST_UPDATER
+		) 
+		VALUES
+		  (
+		    #{id},
+		    #{name},
+		    #{descript},
+		    #{picUrl},
+		    ${sort},
+		    #{href},
+		    #{page},
+		    #{pageIdx},
+		    #{creator},
+		    now(),
+		    now(),
+		    #{creator}
+		  )
+	</insert>
+	
+	<update id="updateBanner" parameterType="com.phly.ttw.manage.banner.model.BannerVO">
+		UPDATE t_banner
+		SET
+		  NAME = #{name},
+		  DESCRIPT = #{descript},
+		  PIC_URL = #{picUrl},
+		  SORT = ${sort},
+		  HREF = #{href},
+		  PAGE = #{page},
+		  PAGE_IDX = #{pageIdx},
+		  LAST_UPDATE_DATE = now(),
+		  LAST_UPDATER = #{creator}
+		WHERE ID = #{id}
+	</update>
+	
+	<delete id="deleteBanner" parameterType="com.phly.ttw.manage.banner.model.BannerVO">
+		delete from t_banner where id = #{id}
+	</delete>
+</mapper>

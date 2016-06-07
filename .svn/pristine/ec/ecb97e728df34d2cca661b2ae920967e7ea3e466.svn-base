@@ -1,0 +1,81 @@
+
+/*                          公共声明类                           */
+.container { margin:auto;}
+.width1000 { width:1000px;}
+.fleft { float:left;}
+.fright {float:right;}
+.a { font-family:微软雅黑}
+.colora{ color:#54ade3}
+.backc { background:#f5f5f5}
+a {color:#31333e;text-decoration:none; }
+.sidebarleft li.active a{color: white;}
+/*                           导航栏                             */
+.main { height:740px;}
+.nav { width:165px; height:660px; background-color:#4cff00}
+.nav_li {width:163px;height:47px; border:solid 1px #d7d7d7;background-color:#f5f5f5;line-height:50px; text-align:center;}
+.nav_li_a { font-size:14px;font-weight:bold;}
+.nav_li_color {background-color:#0096dc;color:#ffffff;border-color:#0096dc}
+
+
+/*                           代金卷                             */
+.daijin { margin-left:10px;}
+.daijin_head { width:225px; height:50px; line-height:50px; text-align:center;font-size:12px}
+.daijin_head1 {width:825px;height:50px;}
+.head1_a { width:50px; height:50px; line-height:50px; text-align:center; display:block;color:#0096dc;font-size:14px}
+.head1_a1 { width:130px; height:50px;line-height:50px; text-align:center; display:block;font-size:12px}
+.user-info {height:20px;}
+.user-order {padding-top:10px;}
+.uoc-num {width:200px}
+.uco-moeny {width:210px}
+.uco-xdate {width:250px}
+.uco-state {width:140px}
+
+/*                           待付款订单                             */
+.nopay-num {margin-left:20px;width:160px }
+.nopay-name {width:225px }
+.nopay-xdate {width:140px }
+.nopay-moeny {width:130px}
+.nopay-state { width:140px}
+
+
+/*                           订单管理                             */
+.order-num {margin-left:20px;width:160px }
+.order-name {width:225px }
+.order-xdate {width:140px }
+.order-moeny {width:130px}
+.order-state { width:60px}
+.order-control {width:88px}
+
+/*                           信息修改+信息查看                             */
+.xinxi-tit {width:830px;border:none;height:35px; margin-top:5px;}
+.xinxi-tit-title {width:110px; line-height:35px; text-align:left;font-size:12px;}
+.xinxi-tit-text {height:30px;width:240px}
+.xinxi-tit-button {height:30px;width:70px;background-Color:#008ed0;color:#ffffff; border-Color:#008ed0}
+.xinxisee { line-height:30px; text-align:left;}
+
+/*                           我的购物车                             */
+.shopcar-onclick {width:85px; text-align:center; }
+.shopcar-name {width:240px }
+.shopcar-danjia {width:100px }
+.shopcar-quantity {width:135px;height:26px;position:relative; }
+.shopcar-moeny {width:125px}
+.shopcar-state { width:135px}
+.shopcar-text{ font-size:12px; color:#eb5858}
+.spinner {height:26px;margin-top:10px;}
+
+.shopcar-content { border: 1px solid #e6e6e6; }
+.shopcar-content ul li:first-child { border: 0px; }
+.shopcar-content ul li { height: 46px;  background: white; border-top: 1px solid #e6e6e6; }
+.shopcar-content ul li div { float: left; text-align: left; line-height: 46px;}
+.shopcar-content ul li div.uco-control span { color: #67b4e5; }
+.shopcar-content ul li .uoc-tit { font-weight: bold; }
+
+.shopcar-f1 { font-size:12px; margin:10px}
+.shopcar-bottom {width:830px;height:50px}
+.shopcar-bottom-1 {width:220px;height:50px;}
+.shopcar-f2  { font-size:12px;margin-top:33px}
+.shopcar-f3 {font-size:30px; color:#ff5252;margin-top:15px}
+.shopcar-button {height:35px;width:75px;background-Color:#008ed0;color:#ffffff; border-Color:#008ed0;margin-left:15px;font-size:16px;margin-top:10px}
+.shopcar-text1 {height:25px; width:70px; margin-top:10px;text-align:center;}
+.shopcar-textB {height:10px; width:18px; background:url('../images/bimg.png') 30px 65px;position:absolute;left:48px;top:13px}
+.shopcar-textB1 {height:10px; width:15px; background:url('../images/bimg.png') 41px 26px;position:absolute;left:51px;top:24px}

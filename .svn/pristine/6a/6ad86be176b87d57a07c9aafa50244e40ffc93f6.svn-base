@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goods">
+
+	<!-- 查询商品列表 -->
+	<select id="queryGoodsList" parameterType="com.phly.ttw.manage.goods.model.GoodsVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsVO" flushCache="true">
+	 SELECT ID id,
+	 		SERIALNUMBER serialNumber,
+	 		GOODSNAME goodsName,
+	 		BRANDID brandId,
+	 		BRANDNAME brandName,
+	 		GOODSCATEGORYID goodsCategoryId,
+	 		GOODSCATEGORYNAME goodsCategoryName,
+	 		COST cost,
+	 		PRICE price,
+			MEMBERPRICE memberPrice,
+			PICTUREURL pictureUrl,
+			QUANTITY quantity,
+			SALESTATE salestate,
+			UNITNAME unitName,
+			KEYWORDNAME keywordName,
+			INTRO intro,
+			SORT sort,
+			APPROVAL_STATE approvalState,
+			IS_NEW isNew,
+			RECOMMENDED recommended,
+			HOTSALE hotsSale,
+			HTML_PATH htmlPath,
+			IS_SPECIFICATIONS_OPEN isSpecificationsOpen,
+	 		IS_DEL isDel,
+	 		ORGID orgid,
+			CREATE_TIME createTime,
+			CREATE_USER creator,
+			UPDATE_TIME updateTime,
+			UPDATE_USER updater
+	   FROM t_goods
+		<where>
+		    1 = 1 AND IS_DEL = 0 
+		    <if test="goodsCategoryId != null and goodsCategoryId != ''">
+				AND GOODSCATEGORYID = #{goodsCategoryId}
+			</if>
+			<if test="goodsName != null and goodsName != ''">
+				AND GOODSNAME LIKE CONCAT('%',#{goodsName},'%') 
+			</if>
+			<if test="creator != null and creator != '' and creator != 'admin'">
+				AND CREATE_USER = #{creator} 
+			</if>
+			<if test="approvalState != null and approvalState != ''">
+				AND APPROVAL_STATE = #{approvalState}
+			</if>
+			<if test="searchPhrase != null and searchPhrase != ''">
+				AND (
+					GOODSNAME LIKE CONCAT('%',#{searchPhrase},'%') 
+					OR KEYWORDNAME LIKE CONCAT('%',#{searchPhrase},'%') 
+					) 
+			</if>
+			<if test="isSpecificationsOpen != null and isSpecificationsOpen != ''">
+				AND IS_SPECIFICATIONS_OPEN = #{isSpecificationsOpen}
+			</if>
+		</where>
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+		<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY SORT DESC
+		</if>
+	</select>
+	
+	<!-- 查询商品总数 -->
+	<select id="getGoodsCount" parameterType="com.phly.ttw.manage.goods.model.GoodsVO"
+		resultType="int">
+		 SELECT COUNT(1)
+  		FROM t_goods
+		<where>
+		    1 = 1 AND IS_DEL = 0 
+		    <if test="goodsCategoryId != null and goodsCategoryId != ''">
+				AND GOODSCATEGORYID = #{goodsCategoryId}
+			</if>
+			<if test="searchPhrase != null and searchPhrase != ''">
+				AND (
+					GOODSNAME LIKE CONCAT('%',#{searchPhrase},'%') 
+					OR KEYWORDNAME LIKE CONCAT('%',#{searchPhrase},'%') 
+					) 
+			</if>
+			<if test="creator != null and creator != '' and creator != 'admin'">
+				AND CREATE_USER = #{creator} 
+			</if>
+			<if test="isSpecificationsOpen != null and isSpecificationsOpen != ''">
+				AND IS_SPECIFICATIONS_OPEN = #{isSpecificationsOpen}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询商品编号 -->
+	<select id="queryGoodsSerialNumber" parameterType="java.lang.String"
+		resultType="String">
+      SELECT SERIALNUMBER
+  		FROM t_goods
+		<where>
+		    1 = 1 AND SERIALNUMBER LIKE CONCAT('%',#{prefix},'%') 
+		</where>
+		ORDER BY SERIALNUMBER DESC 
+		LIMIT 0,1 
+	</select>
+	
+	<!-- 根据商品信息查询某分类下的推荐产品 -->
+	<select id="queryGoodsListByRecommendedAndCategoryId" parameterType="com.phly.ttw.manage.goods.model.GoodsVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsVO" flushCache="true">
+	 SELECT ID id,
+	 		SERIALNUMBER serialNumber,
+	 		GOODSNAME goodsName,
+	 		BRANDID brandId,
+	 		BRANDNAME brandName,
+	 		GOODSCATEGORYID goodsCategoryId,
+	 		GOODSCATEGORYNAME goodsCategoryName,
+	 		COST cost,
+	 		PRICE price,
+			MEMBERPRICE memberPrice,
+			PICTUREURL pictureUrl,
+			QUANTITY quantity,
+			SALESTATE salestate,
+			UNITNAME unitName,
+			KEYWORDNAME keywordName,
+			INTRO intro,
+			SORT sort,
+			APPROVAL_STATE approvalState,
+			IS_NEW isNew,
+			RECOMMENDED recommended,
+			HOTSALE hotsSale,
+			HTML_PATH htmlPath,
+			IS_SPECIFICATIONS_OPEN isSpecificationsOpen,
+	 		IS_DEL isDel,
+	 		ORGID orgid,
+			CREATE_TIME createTime,
+			CREATE_USER creator,
+			UPDATE_TIME updateTime,
+			UPDATE_USER updater
+	   FROM t_goods
+		<where>
+		    1 = 1 AND IS_DEL = 0 
+			<if test="goodsCategoryId != null and goodsCategoryId != ''">
+				AND GOODSCATEGORYID = #{goodsCategoryId}
+			</if>
+			<if test="recommended != null and recommended != ''">
+				AND RECOMMENDED = #{recommended}
+			</if>
+			<if test="isSpecificationsOpen != null and isSpecificationsOpen != ''">
+				AND IS_SPECIFICATIONS_OPEN = #{isSpecificationsOpen}
+			</if>
+		</where>
+		ORDER BY SORT DESC
+	</select>
+	
+	<!-- 根据id或者名称查询商品-->
+	<select id="getGoods" parameterType="com.phly.ttw.manage.goods.model.GoodsVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsVO">
+	  SELECT
+			g.ID id,
+			g.SERIALNUMBER serialNumber,
+			g.GOODSNAME goodsName,
+			g.BRANDID brandId,
+			g.BRANDNAME brandName,
+			g.GOODSCATEGORYID goodsCategoryId,
+			g.GOODSCATEGORYNAME goodsCategoryName,
+			g.COST cost,
+			g.PRICE price,
+			g.MEMBERPRICE memberPrice,
+			g.PICTUREURL pictureUrl,
+			g.QUANTITY quantity,
+			g.SALESTATE salestate,
+			g.UNITNAME unitName,
+			g.KEYWORDNAME keywordName,
+			g.INTRO intro,
+			g.SORT sort,
+			g.IS_NEW isNew,
+			g.RECOMMENDED recommended,
+			g.HOTSALE hotsSale,
+			g.HTML_PATH htmlPath,
+			g.IS_SPECIFICATIONS_OPEN isSpecificationsOpen,
+			g.IS_DEL isDel,
+			g.ORGID orgid,
+			g.CREATE_TIME createTime,
+			g.CREATE_USER creator,
+			g.UPDATE_TIME updateTime,
+			g.UPDATE_USER updater,
+			s.SUPNAME as 'supname'
+		FROM
+			t_goods g
+		LEFT JOIN sys_users_t u ON u.ACCOUNT = g.CREATE_USER
+		LEFT JOIN t_supplier s ON s.USERID = u.USER_ID
+		<where>
+			1 = 1 
+			<if test="goodsName != null and goodsName != ''">
+				AND GOODSNAME LIKE CONCAT('%',#{goodsName},'%') 
+			</if>
+			<if test="id != null and id != ''">
+				AND ID = #{id}
+			</if>
+			<if test="serialNumber != null and serialNumber != ''">
+				AND serialNumber = #{serialNumber}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	<insert id="addGoods" parameterType="com.phly.ttw.manage.goods.model.GoodsVO">
+	  INSERT INTO t_goods(
+			 ID,
+			 SERIALNUMBER,
+			 GOODSNAME,
+       		 BRANDID,
+			 BRANDNAME,
+			 GOODSCATEGORYID,
+			 GOODSCATEGORYNAME,
+			 COST,
+			 PRICE,
+			 MEMBERPRICE,
+			 PICTUREURL,
+			 QUANTITY,
+			 SALESTATE,
+			 UNITNAME,
+			 KEYWORDNAME,
+			 INTRO,
+			 SORT,
+			 IS_NEW,
+			 RECOMMENDED,
+			 HOTSALE,
+			 HTML_PATH,
+			 IS_SPECIFICATIONS_OPEN,
+			 APPROVAL_STATE,
+			 CREATE_TIME,
+			 CREATE_USER,
+			 UPDATE_TIME,
+			 UPDATE_USER)
+	  VALUES (
+			 #{id},
+			 #{serialNumber},
+			 #{goodsName},
+			 #{brandId},
+			 #{brandName},
+			 #{goodsCategoryId},
+			 #{goodsCategoryName},
+			 #{cost},
+			 #{price},
+			 #{memberPrice},
+			 #{pictureUrl},
+			 #{quantity},
+			 #{salestate},
+			 #{unitName},
+			 #{keywordName},
+			 #{intro},
+			 #{sort},
+			 #{isNew},
+			 #{recommended},
+			 #{hotsSale},
+			 #{htmlPath},
+			 #{isSpecificationsOpen},
+			 #{approvalState},
+			 NOW(),
+			 #{creator},
+			 NOW(),
+			 #{creator}
+			 )
+	</insert>
+	
+	<update id="updateGoods" parameterType="com.phly.ttw.manage.goods.model.GoodsVO">
+		UPDATE t_goods
+		   SET GOODSNAME = #{goodsName},
+		   	   BRANDID = #{brandId},
+		   	   BRANDNAME = #{brandName},
+		   	   GOODSCATEGORYID = #{goodsCategoryId},
+		   	   GOODSCATEGORYNAME = #{goodsCategoryName},
+		   	   COST = #{cost},
+		   	   PRICE = #{price},
+		   	   MEMBERPRICE = #{memberPrice},
+		   	   PICTUREURL = #{pictureUrl},
+		   	   QUANTITY = #{quantity},
+		   	   SALESTATE = #{salestate},
+		   	   UNITNAME = #{unitName},
+		   	   KEYWORDNAME = #{keywordName},
+		   	   INTRO = #{intro},
+		   	   SORT = #{sort},
+		   	   IS_NEW = #{isNew},
+		   	   RECOMMENDED = #{recommended},
+		   	   HOTSALE = #{hotsSale},
+		   	   HTML_PATH = #{htmlPath},
+		   	   UPDATE_TIME = NOW(),
+		   	   UPDATE_USER = #{updater}
+		 WHERE ID = #{id}  
+	</update>
+	
+	<update id="updateGoodsPrice" parameterType="com.phly.ttw.manage.goods.model.GoodsVO">
+		UPDATE t_goods
+		   SET <if test="cost != null and cost != ''">
+		   	   COST = #{cost},
+		   	   </if>
+		   	   <if test="price != null and price != ''">
+		   	   PRICE = #{price},
+		   	   </if>
+		   	   <if test="price != null and price != ''">
+		   	   MEMBERPRICE = #{memberPrice},
+		   	   </if>
+		   	   UPDATE_TIME = NOW(),
+		   	   UPDATE_USER = #{updater}
+		 WHERE ID = #{id}  
+	</update>
+	
+	<update id="updateGoodsApproval" parameterType="com.phly.ttw.manage.goods.model.GoodsVO">
+		UPDATE t_goods
+		   SET APPROVAL_STATE = #{approvalState},
+		   	   UPDATE_TIME = NOW(),
+		   	   UPDATE_USER = #{updater}
+		 WHERE ID = #{id}  
+	</update>
+	
+	<update id="updateSpecificationsOpen" parameterType="com.phly.ttw.manage.goods.model.GoodsVO">
+		UPDATE t_goods
+		   SET IS_SPECIFICATIONS_OPEN = #{isSpecificationsOpen},
+		   	   UPDATE_TIME = NOW(),
+		   	   UPDATE_USER = #{updater}
+		 WHERE ID = #{id}  
+	</update>
+	
+	
+	<delete id="delGoods" parameterType="com.phly.ttw.manage.goods.model.GoodsVO">
+		UPDATE t_goods
+		   SET IS_DEL = 1
+		 WHERE ID = #{id};
+	</delete>
+	
+	<!-- 根据产品分类id查询产品数量 -->
+	<select id="getGoodsCountByCategoryId" parameterType="com.phly.ttw.manage.goods.model.GoodsVO"
+		resultType="int" flushCache="true">
+		SELECT count(1)
+		  FROM t_goods t1
+  		  <!--LEFT JOIN t_goods_attribute_rp t2 ON t1.ID = t2.GOODSID-->
+		<where>
+		    1 = 1 AND t1.IS_DEL = 0 
+			<if test="goodsCategoryId != null and goodsCategoryId != ''">
+				AND t1.GOODSCATEGORYID IN ( SELECT tt.id FROM t_goods_category tt WHERE tt.parent_id = #{goodsCategoryId} OR tt.id = #{goodsCategoryId} )
+			</if>
+			<if test="goodsName != null and goodsName != ''">
+				AND (
+					t1.GOODSNAME LIKE CONCAT('%',#{goodsName},'%') 
+					OR t1.KEYWORDNAME LIKE CONCAT('%',#{goodsName},'%') 
+					) 
+			</if>
+			<if test="isSpecificationsOpen != null and isSpecificationsOpen != ''">
+				AND t1.IS_SPECIFICATIONS_OPEN = #{isSpecificationsOpen}
+			</if>
+			<if test="categoryAttrList != null">
+				AND EXISTS (
+				SELECT ID 
+				  FROM t_goods_attribute_rp
+				 WHERE GOODSID = t1.ID 
+				   AND
+				<foreach collection="categoryAttrList" item="attrItem" open="(" separator=" OR " close=")">
+					(ATTRID = #{attrItem[0]} AND ATTRVAL = #{attrItem[1]})
+				</foreach>
+				)
+			</if>
+		</where>
+	</select>
+	
+	<!-- 根据产品分类id查询产品列表信息 -->
+	<select id="queryGoodsByCategoryId" parameterType="com.phly.ttw.manage.goods.model.GoodsVO" resultType="com.phly.ttw.manage.goods.model.GoodsVO">
+		SELECT t1.ID id,
+					t1.SERIALNUMBER serialNumber,
+			 		t1.GOODSNAME goodsName,
+			 		t1.BRANDID brandId,
+			 		t1.BRANDNAME brandName,
+			 		t1.GOODSCATEGORYID goodsCategoryId,
+			 		t1.GOODSCATEGORYNAME goodsCategoryName,
+			 		t1.COST cost,
+			 		t1.PRICE price,
+					t1.MEMBERPRICE memberPrice,
+					t1.PICTUREURL pictureUrl,
+					t1.QUANTITY quantity,
+					t1.SALESTATE salestate,
+					t1.UNITNAME unitName,
+					t1.KEYWORDNAME keywordName,
+					t1.INTRO intro,
+					t1.SORT sort,
+					t1.APPROVAL_STATE approvalState,
+					t1.IS_NEW isNew,
+					t1.RECOMMENDED recommended,
+					t1.HOTSALE hotsSale,
+					t1.HTML_PATH htmlPath,
+					t1.IS_SPECIFICATIONS_OPEN isSpecificationsOpen,
+			 		t1.IS_DEL isDel,
+			 		t1.ORGID orgid,
+					t1.CREATE_TIME createTime,
+					t1.CREATE_USER creator,
+					t1.UPDATE_TIME updateTime,
+					t1.UPDATE_USER updater
+			   FROM t_goods t1
+  			   <!--LEFT JOIN t_goods_attribute_rp t2 ON t1.ID = t2.GOODSID-->
+				<where>
+				    1 = 1 AND t1.IS_DEL = 0 
+					<if test="goodsCategoryId != null and goodsCategoryId != ''">
+						<!--AND t1.GOODSCATEGORYID IN ( SELECT tt.id FROM t_goods_category tt WHERE tt.parent_id = #{goodsCategoryId} OR tt.id = #{goodsCategoryId} )-->
+						AND FIND_IN_SET(t1.GOODSCATEGORYID, queryChildrenCategoryList(#{goodsCategoryId}))
+					</if>
+					<if test="goodsName != null and goodsName != ''">
+						AND (
+							t1.GOODSNAME LIKE CONCAT('%',#{goodsName},'%') 
+							OR t1.KEYWORDNAME LIKE CONCAT('%',#{goodsName},'%') 
+							) 
+					</if>
+					<if test="isSpecificationsOpen != null and isSpecificationsOpen != ''">
+						AND t1.IS_SPECIFICATIONS_OPEN = #{isSpecificationsOpen}
+					</if>
+					<if test="categoryAttrList != null">
+						AND EXISTS (
+						SELECT ID 
+						  FROM t_goods_attribute_rp
+						 WHERE GOODSID = t1.ID 
+						   AND
+						<foreach collection="categoryAttrList" item="attrItem" open="(" separator=" OR " close=")">
+							(ATTRID = #{attrItem[0]} AND ATTRVAL = #{attrItem[1]})
+						</foreach>
+						)
+					</if>
+				</where>
+				
+				
+				<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+					ORDER BY ${sortFieldName} ${sortType}
+				</if>
+				<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+					ORDER BY t1.SORT DESC
+				</if>
+	</select>
+	
+	<!-- 根据产品分类id查询热门推荐产品 -->
+	<select id="queryHotGoodsByCategoryId" parameterType="com.phly.ttw.manage.goods.model.GoodsVO" resultType="com.phly.ttw.manage.goods.model.GoodsVO">
+		SELECT ID id,
+			 		GOODSNAME goodsName,
+			 		SERIALNUMBER serialNumber,
+			 		BRANDID brandId,
+			 		BRANDNAME brandName,
+			 		GOODSCATEGORYID goodsCategoryId,
+			 		GOODSCATEGORYNAME goodsCategoryName,
+			 		COST cost,
+			 		PRICE price,
+					MEMBERPRICE memberPrice,
+					PICTUREURL pictureUrl,
+					QUANTITY quantity,
+					SALESTATE salestate,
+					UNITNAME unitName,
+					KEYWORDNAME keywordName,
+					INTRO intro,
+					SORT sort,
+					APPROVAL_STATE approvalState,
+					IS_NEW isNew,
+					RECOMMENDED recommended,
+					HOTSALE hotsSale,
+					HTML_PATH htmlPath,
+					IS_SPECIFICATIONS_OPEN isSpecificationsOpen,
+			 		IS_DEL isDel,
+			 		ORGID orgid,
+					CREATE_TIME createTime,
+					CREATE_USER creator,
+					UPDATE_TIME updateTime,
+					UPDATE_USER updater
+			   FROM t_goods
+				<where>
+				    1 = 1 AND IS_DEL = 0 
+					<if test="goodsCategoryId != null and goodsCategoryId != ''">
+						AND GOODSCATEGORYID IN ( SELECT tt.id FROM t_goods_category tt WHERE tt.parent_id = #{goodsCategoryId} )
+					</if>
+					<if test="recommended != null and recommended != ''">
+						AND RECOMMENDED = #{recommended}
+					</if>
+					<if test="hotsSale != null and hotsSale != ''">
+						AND HOTSALE = #{hotsSale}
+					</if>
+					<if test="isSpecificationsOpen != null and isSpecificationsOpen != ''">
+						AND IS_SPECIFICATIONS_OPEN = #{isSpecificationsOpen}
+					</if>
+				</where>
+				ORDER BY SORT DESC
+	</select>
+</mapper>

@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<style type="text/css">
+		body{margin:0;padding:0;}
+		input{font-size:12px;margin:0;padding:2px;}
+	</style>
+	<script type="text/javascript">
+		var api = frameElement.api, W = api.opener;
+		api.button({
+		    id:'ok',
+			name:'保存发票信息',
+			callback:ok
+		},{
+			name:'取消'
+		});
+		
+		function ok()
+		{
+		    W.document.getElementById('txt2').value = document.getElementById('itxt').value;
+		};
+	</script>
+</head>
+
+<body>
+<p style="color:#F00;text-align:center;margin-top:40px;">
+	发票抬头：<input size="25" id="itxt" type="text" value=""/>
+</p>
+<p style="color:#F00;text-align:center;margin-top:40px;">
+	发票内容：
+	<input type="radio" id="tick_content" name="content" value="明细" /><label for="tick_content">明细</label>
+	<input type="radio" id="tick_content" name="content" value="办公用品"/><label for="tick_content">办公用品</label>
+</p>
+</body>
+</html>

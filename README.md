@@ -1,2 +1,12 @@
-<a href="http://www.taotaool.com" target="_blank">淘桃网</a><br/>
-和几位小伙伴一起弄的一个网站，刚完成第一个version，由于时间等原因还有很多功能待实现，继续完善中...
+<a href="http://www.taotaool.com" target="_blank">淘桃网</a><br/>,设计类定制平台;
+
+集成了如下技术：
+Activiti
+SpringMVC
+Ibatis
+DWR
+CXF
+EHCACHE
+SpringSecurity
+Mail
+Quartz

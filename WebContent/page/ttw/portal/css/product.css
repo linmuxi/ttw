@@ -1,0 +1,62 @@
+﻿@import url('css.css');
+.Hbsj_Center{ width: 1000px; height: 100%; margin: auto;}
+.Hbsj_C_Top{ width: 100%;}
+.Hbsj_C_T_Top{ width: 100%; height: 45px;}
+.Hbsj_C_T_T_Left{ width: 50%; height: 100%; float: left;}
+.Hbsj_C_T_T_L_Div{ width: 25px; height: 25px; background-image: url(../images/icon_total.png);background-position: -336px -94px; float: left; border-radius: 20px; margin-top: 10px;}
+.Hbsj_C_T_T_L_Text{ margin-left: 15px; float: left; font-size: 14px; line-height: 45px;}
+.Hbsj_C_T_T_Right{ width: 50%; height: 100%; float: right;}
+.Hbsj_C_T_T_R_Div{ width: 250px; height: 25px; float: right; border: solid 1px #0096dc; margin-top: 10px;}
+.Hbsj_C_T_T_R_D_Right{ height: 100%; width: 65px; float: right; background-color: #0096dc; color: white; text-align: center; line-height: 25px; font-size: 12px;}
+
+.Hbsj_C_T_Cen{ width: 100%; height: 275px;}
+.Hbsj_C_T_C_Left{ width: 215px; float: left; border: solid 1px #0096dc;}
+.Hbsj_C_T_C_L_Top{ width: 100%; height: 35px; background-color: #0096dc; color: white; text-align: center; line-height: 35px; font-size: 14px;}
+.Hbsj_C_T_C_L_Bottom{ width: 100%; height: 240px; background-color: #eeeeee;}
+.Hbsj_C_T_C_L_B_Div{ border-bottom: solid 1px #d1d1d1; border-top:solid 1px white; width: 90%; height: 35px; margin: auto;}
+.Hbsj_C_T_C_L_B_D_Left{ width: 15px; height: 15px; background-image: url(../images/icon_total.png); background-position: -204px -121px; margin-top: 10px; float: left;}
+.Hbsj_C_T_C_L_B_D_Text{ font-size: 12px; color: #31333e; float: left; line-height: 35px; margin-left: 5px;}
+.Hbsj_C_T_C_L_B_Div:hover{ background:#fff; margin:0; padding:0 11px; margin:0; position:relative;}
+.Hbsj_C_T_C_L_B_Div:hover .Hbsj_C_T_C_L_B_D_Text{ color:#0096dc; margin-left:0;}
+.Hbsj_C_T_C_L_B_Div:hover .Hbsj_C_T_C_L_B_D_Left{ background:url(../images/product/hoverIcon.png) 0 0 no-repeat; margin-top:12px; margin-left:1px; margin-right:3.5px;}
+.Hbsj_C_T_C_L_B_Div:hover .Hbsj_C_T_C_L_B_D_Box{ display:block;}
+.Hbsj_C_T_C_L_B_D_Box{ display:none; position:absolute; left:215px; background:white; height:16px; padding:10px 10px; margin-top:-2px; width:264px; border:1px solid #0096dc; border-left:none;}
+.adsaf{ font-size:12px; color:#31333e;}
+.adsaf li{ float:left;}
+.adsaf div{ float:left; margin:0 8px;}
+
+.Hbsj_C_T_C_Right{ width: 775px; height: 100%; float: right; border: dashed 1px #c9c9c9;}
+.Hbsj_C_T_C_R_Left{ width: 115px; height: 100%; background-color: #eeeeee; float: left;}
+.Hbsj_C_T_C_R_L_Div{ width: 100%; height: 35px; float:left; border-bottom: dashed 1px #c9c9c9; font-size: 12px; color: #31333e; text-align: center; line-height: 35px;}
+.Hbsj_C_T_C_R_Right{ width: 660px; height: 100%; float: right;}
+.Hbsj_C_T_C_R_R_Div{ width: 100%; height: 35px; float: left; border-bottom: dashed 1px #c9c9c9;}
+.Hbsj_C_T_C_R_R_D_Div{ height: 20px; float: left; margin: 7.5px;}
+.Hbsj_C_T_C_R_R_D_D_Text{ font-size: 12px; color: #31333e; line-height: 20px; float: right;}
+.Hbsj_C_T_C_R_R_D_But{ width: 40px; height: 18px; border: solid 1px #c9c9c9; float: left; text-align: center; line-height: 20px; font-size: 12px; color: #31333e; margin: 7.5px;}
+
+.Hbsj_C_Cen{ width: 100%; height: 1130px; margin-top: 15px;}
+.Hbsj_C_C_Left{ border: solid 1px #c9c9c9;}
+.Hbsj_C_C_L_Top{ background-color: #eeeeee; color: #31333e; text-align: left; text-indent: 1em; font-size: 14px;}
+.Hbsj_C_C_L_Bot{ width: 100%; float: left;}
+.Hbsj_C_C_L_B_Div{ width: 90%; height: 200px; border-bottom: solid 1px #e0e0e0; margin:auto;}
+.Hbsj_C_C_L_B_D_Img{ background-image: url(../images/product/pro_t4.png); width: 170px; height: 130px; border: solid 5px #eeeeee; margin: auto; margin-top: 15px; border-radius: 5px;}
+.Hbsj_C_C_L_B_D_Text{ margin: auto; margin-top: 10px; width: 98%;}
+.Hbsj_C_C_L_B_D_T_Div{ width: 100%; height: 25px; float: left;}
+
+.Hbsj_C_C_Right{ border: 0;}
+.Hbsj_C_C_R_Top{ background-color: #eeeeee; border: solid 1px #c9c9c9;}
+.Hbsj_C_C_R_T_L_Div{ border: solid 1px #c9c9c9; width: 35px; height: 20px; float: left; margin: 6.5px; background-color: white; color: #31333e; font-size: 12px; text-align: center; line-height: 20px;}
+.Hbsj_C_C_R_T_L_Text{ float: left; color: #31333e; font-size: 12px; margin-left: 7.5px;}
+.Hbsj_C_C_R_T_Right{ font-size: 12px; width: 45%;}
+.Hbsj_C_C_R_T_R_Text{ color: red; float: left; margin-left: 20px;}
+.Hbsj_C_C_R_T_R_Num{ float: left; color: #31333e; margin-left: 30px;}
+.Hbsj_C_C_R_T_R_Input{ width: 50px; height: 20px; background-color: white; border: solid 1px #c9c9c9; float: left; margin: 6.5px 10px; color: #31333e; font-size: 12px; line-height: 20px;}
+
+.Hbsj_C_C_R_Cen{ width: 100%;}
+.Hbsj_C_C_R_C_CenDiv{ width: 100%; height: 1000px;}
+.Hbsj_C_C_R_C_Div{ width: 250px; float: left; height: 230px; margin-left: 7.5px; border: 0; margin-top: 10px;}
+.Hbsj_C_C_R_C_D_Img{ width: 230px; height: 170px; background-image: url(../images/product/product.png); }
+
+.Hbsj_C_C_R_C_Bot{ width: 415px; height: 27px; margin:auto; margin-top: 10px;}
+.Hbsj_C_C_R_C_B_Up{ width: 35px; height: 100%; background-color: #31333e; float: left; color: white; text-align: center; line-height: 27px; border-left: solid 1px #9ea1a6;}
+.Hbsj_C_C_R_C_B_Bg {background:white!important; color:#0096dc!important;}

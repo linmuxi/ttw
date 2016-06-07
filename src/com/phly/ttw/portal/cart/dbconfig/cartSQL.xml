@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cart">
+	<!-- 查询购物车商品信息 Start -->
+	<select id="queryAllCart" parameterType="com.phly.ttw.portal.cart.model.CartVO" resultType="com.phly.ttw.portal.cart.model.CartVO">
+		SELECT
+			tc.id,
+			tc.total,
+			tg.id goodsId,
+			tg.GOODSNAME goodsName,
+			tg.PRICE price,
+			tg.PICTUREURL pictureUrl
+		FROM
+			t_cart tc
+		LEFT JOIN t_goods tg ON tc.goods_id = tg.id
+	</select>
+	<!-- 查询购物车商品信息 End -->
+
+	<!-- 添加购物车商品信息 Start -->
+	<insert id="insertCart" parameterType="com.phly.ttw.portal.cart.model.CartVO">
+		insert into t_cart
+		(id,member_id,create_date,last_update_date,goods_id,total)
+		values(upper(replace(uuid(),'-','')),#{memberId},NOW(),NOW(),#{goodsId},#{total})
+	</insert>
+	<!-- 添加购物车商品信息 End -->
+
+
+	<!-- 更新购物车商品数量 Start -->
+	<update id="updateCart" parameterType="com.phly.ttw.portal.cart.model.CartVO">
+		update t_cart t set t.last_update_date = NOW()
+		<if test="total !=null and total != '' and total != 0">
+			,t.total = t.total + ${total}
+		</if>
+		where t.goods_id = #{goodsId} and t.member_id = #{memberId}
+	</update>
+	<!-- 添加购物车商品信息 End -->
+	
+	<!-- 查询指定商品在购物车中的数量 -->
+	<select id="getCartCountByGoods" parameterType="com.phly.ttw.portal.cart.model.CartVO" resultType="int">
+		SELECT IFNULL(MAX(total),0) FROM t_cart c 
+			WHERE c.member_id = #{memberId}
+			 	and c.goods_id = #{goodsId} 
+	</select>
+	
+	<!-- 购物车中所有商品数 -->
+	<select id="getCartProductCount" parameterType="com.phly.ttw.portal.cart.model.CartVO" resultType="int">
+		SELECT IFNULL(COUNT(total),0) FROM t_cart c 
+			WHERE c.member_id = #{memberId}
+	</select>
+	
+	<delete id="delCart" parameterType="com.phly.ttw.portal.cart.model.CartVO">
+		DELETE FROM t_cart WHERE id = #{id}
+	</delete>
+	
+	
+</mapper>

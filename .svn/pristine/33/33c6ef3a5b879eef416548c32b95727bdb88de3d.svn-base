@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderAudits">
+
+	<select id="queryList" parameterType="com.phly.ttw.manage.order.model.OrderAuditsVO" resultType="com.phly.ttw.manage.order.model.OrderAuditsVO">
+		SELECT
+			t1.order_id AS "orderVO.id",
+			t1.content,
+			t1.create_date AS createDate,
+			t1.creator,
+			t1.order_status AS orderStatus,
+			u.name AS "username"
+		FROM
+			t_order_audits t1
+		INNER JOIN t_order o ON o.id = t1.order_id
+		INNER JOIN sys_users_t u ON u.USER_ID=t1.creator
+		<where>
+			t1.order_status !=1
+			<if test="orderVO != null and orderVO.id != null and orderVO.id != ''">
+				AND t1.order_id=#{orderVO.id}
+			</if>
+		</where>
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY t1.create_date DESC
+		</if>
+	</select>
+	
+	<select id="getOrderAudits" parameterType="com.phly.ttw.manage.order.model.OrderAuditsVO" resultType="com.phly.ttw.manage.order.model.OrderAuditsVO">
+		SELECT
+			t1.order_id AS "orderVO.id",
+			t1.content,
+			t1.create_date AS createDate,
+			t1.creator,
+			t1.order_status AS orderStatus,
+			u.name AS "username"
+		FROM
+			t_order_audits t1
+		INNER JOIN t_order o ON o.id = t1.order_id
+		INNER JOIN sys_users_t u ON u.USER_ID=t1.creator
+		<where>
+			<if test="orderVO != null and orderVO.id != null and orderVO.id != ''">
+				AND t1.order_id=#{orderVO.id}
+			</if>
+			<if test="orderStatus != null and orderStatus != ''">
+				AND t1.order_status = #{orderStatus}
+			</if>
+		</where>
+		ORDER BY t1.create_date DESC
+	</select>
+	
+	<insert id="addOrderAudits" parameterType="com.phly.ttw.manage.order.model.OrderAuditsVO">
+		INSERT INTO t_order_audits (
+			id,
+			order_id,
+			content,
+			create_date,
+			creator,
+			last_update_date,
+			last_updater,
+			order_status
+		)
+		VALUES(
+			UPPER(REPLACE(UUID(),'-','')),
+			#{orderVO.id},
+			#{content},
+			NOW(),
+			#{creator},
+			NOW(),
+			#{creator},
+			#{orderStatus}
+		)
+	</insert>
+</mapper>

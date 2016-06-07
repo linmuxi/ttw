@@ -1,0 +1,55 @@
+﻿########################JDBC########################
+#oracle
+#oracle_driver=oracle.jdbc.driver.OracleDriver
+#oracle_url=jdbc:oracle:thin:@10.10.15.29:1521:comtop
+#oracle_username=edmp
+#oracle_password=edmp
+#oracle_maxActive=500
+#oracle_maxIdle=10
+#oracle_maxWait=10
+
+#mysql
+mysql_driver=com.mysql.jdbc.Driver
+#local
+#mysql_url=jdbc:mysql://192.168.1.104:3306/ttw?useUnicode=true&characterEncoding=UTF-8
+#mysql_username=root
+#mysql_password=root
+#production
+#mysql_url=jdbc:mysql://192.168.43.223:3306/ttw?useUnicode=true&characterEncoding=UTF-8
+mysql_url=jdbc:mysql://211.149.184.248:3306/ttw?useUnicode=true&characterEncoding=UTF-8
+mysql_username=root
+mysql_password=Taotao123
+#mysql_password=root
+
+#mysql_url=jdbc:mysql://192.168.1.104:3306/ttw?useUnicode=true&characterEncoding=UTF-8
+#mysql_username=root
+#mysql_password=root
+
+mysql_maxActive=500
+mysql_maxIdle=10
+mysql_maxWait=10
+
+########################EHCACHE########################
+ehCacheFilePath=com/phly/common/resource/ehcache.xml
+
+
+
+#########################ws#######################
+supplier.ws.address = http://localhost:8080/ttw/webservice/SupplierWS?wsdl
+
+member.ws.address = http://localhost:8080/ttw/webservice/MemberWS?wsdl
+
+order.ws.address = http://localhost:8080/ttw/webservice/OrderWS?wsdl
+
+
+#####################邮件发送#############################
+email.host.name = smtp.exmail.qq.com
+email.user.name = server@szsgi.com
+email.user.password = sgi123
+
+email.supplier.text.subject.resert = 供应商密码重置通知-淘桃网
+email.supplier.text.msg.resert = 尊敬的供应商#supplierName#您好!	你的账号#account# 于 #updateTime# 重置了密码。新密码为:#password#，由于重置密码过于简单，请您尽快修改密码。
+
+email.member.text.subject.pw_find = 会员找回密码通知-淘桃网
+email.member.text.msg.pw_find = 尊敬的会员#memberName#您好，请点击这里#url# ，重置您的密码，该链接将在您修改密码后失效。
+email.member.pw_find.url = http://10.211.61.28:8080/ttw/page/manage/member/resertpwd

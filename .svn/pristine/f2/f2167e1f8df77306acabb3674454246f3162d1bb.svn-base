@@ -1,0 +1,520 @@
+/*****************************************************工作流相关列表添加按钮的链接*********************************/
+	/************************************************
+	* 添加工作流的URL
+	*************************************************/
+	function addWorkFlow(){
+		window.location = ctx + "/workflow/maintTWorkflowYwlcdy.do?method=init";
+	}
+	
+	/************************************************
+	* 添加工作步骤的URL
+	* lcbh : 工作流的编号
+	*************************************************/
+	function addWorkStep(lcbh){
+		window.location = ctx + "/workflow/maintTWorkflowLcbzdy.do?method=init&bean.lcbh="+lcbh;
+	}
+	
+	function addNewWorkStep(lcbh){
+		//window.location = ctx + "/workflow/maintTWorkflowStep.do?method=init&bean.lcbh="+lcbh;
+		window.location = ctx + "/workflow/maintTWorkflowStep.do?method=init&lcbh="+lcbh;
+	}
+	
+	//创建分支
+	function addNewWorkStepFz(lcbh,bzbh){
+		window.location = ctx + "/workflow/maintTWorkflowStep.do?method=init&bean.lcbh="+lcbh+"&bean.fgzgx.fbzbh="+bzbh;
+	}
+	
+	/************************************************
+	* 添加工作动作的URL
+	* lcbh : 工作流的编号
+	*************************************************/
+	function addWorkAction(lcbh){
+		window.location = ctx + "/workflow/maintTWorkflowLcdydz.do?method=init&bean.lcbh="+lcbh;
+	}
+	
+	/************************************************
+	* 添加工作监听器的URL
+	* lcbh : 工作流的编号
+	*************************************************/
+	function addWorkListener(lcbh){
+		window.location = ctx + "/workflow/maintTWorkflowLcjtcx.do?method=init";
+	}
+	
+	/************************************************
+	* 添加工作监听器定义的URL
+	* lcbh : 工作流的编号
+	*************************************************/
+	function addWorkListenerDefine(lcbh){
+		window.location = ctx + "/workflow/maintTWorkflowYwlcjtcxdy.do?method=init&bean.lcxh="+lcbh;
+	}
+	
+	/************************************************
+	* 添加工作流动作对应工作步骤
+	* lcbh : 工作流的编号
+	*************************************************/
+	function addWorkStepMappingAction(lcbh){
+		window.location = ctx + "/workflow/maintTWorkflowBzdydz.do?method=init&lcbh="+lcbh;
+	}
+	
+	
+	/************************************************
+	* 添加工作流的变量定义
+	* lcbh : 工作流的编号
+	*************************************************/
+	function addWorkVariable(lcbh){
+		window.location = ctx + "/workflow/maintTWorkflowLcbldy.do?method=init&bean.lcdybh="+lcbh;
+	}
+	
+	
+	/************************************************
+	* 添加工作流的用户组
+	*************************************************/
+	function addWorkUserGroup(){
+		window.location = ctx + "/workflow/maintTWorkflowYhz.do?method=init";
+	}
+	
+	/************************************************
+	* 添加工作流的用户组与用户的关系
+	*************************************************/
+	function addWorkUser2UserGroup(){
+		window.location = ctx + "/workflow/maintTWorkflowYhhyhz.do?method=init";
+	}
+	
+	/************************************************
+	* 添加流程的启动人员
+	*************************************************/
+	function addWorkStartYhz(){
+		window.location = ctx + "/workflow/maintTWorkflowQdqx.do?method=init";
+	}
+	
+	/************************************************
+	* 添加流程步骤的流转需要执行的内容
+	*************************************************/
+	function addWorkSQL(lcbh,bzbh){
+		window.location = ctx + "/workflow/maintTWorkflowSqlScript.do?method=init&bean.lcbh="+lcbh+"&bean.bzbh="+bzbh;
+	}
+	
+	/************************************************
+	* 添加流程步骤的流转需要执行的内容
+	*************************************************/
+	function addWorkAttachment(lcbh){
+		window.location = ctx + "/workflow/maintTWorkflowWjdy.do?method=init&bean.lcbh="+lcbh;
+	}
+/******************************************工作流相关列表添加按钮的链接(结束)****************************************/
+
+
+
+/******************************************流程启动人员的js*******************************************************/
+	/*************************************************************************************
+	* 获取该流程还有哪些用户组可以配置（除去已经配置的）
+	*************************************************************************************/
+	function ajaxAddUserRelative(lcbh){
+		if(lcbh != ""){
+			var url = ctx+"/workflow/maintTWorkflowQdqx.do?method=ajaxGetLcExcludeYhz&lcbh="+lcbh;
+			var data = DomUtils.ajaxRequest(url);
+			if(data!=null && data.length>0){
+				DomUtils.select.clearOptions("bean.yhzbh"); 
+				for(var i=0;i<data.length;i++){
+					DomUtils.select.addOption("bean.yhzbh",data[i].zmc,data[i].zbh);
+				}
+			}
+		}
+		return null;
+	}
+	
+	/*************************************************************************************
+	* 添加工作流的启动用户组
+	*************************************************************************************/
+	function ajaxAdd(){
+		try{
+			var yhz		= DomUtils.select.getSelectedOption("noyhz_select");
+			var pxh		= findObj("pxh").value;
+			var lcbh	= findObj("lcbh").value;
+			var yan
+			if(lcbh != "" && vidatePxh()){
+				var args 	= "lcbh="+lcbh+"&yhzbh="+yhz.value+"&pxh="+pxh;
+				var url 	= ctx+"/workflow/maintTWorkflowQdqx.do?method=ajaxAdd&"+args;
+				var data 	= DomUtils.ajaxRequest(url);
+				if(data!=null && data.reuslt == true ){
+					var option = new Option(yhz.text,yhz.value);
+					option.title = "{pxh:'"+pxh+"',bh:'"+data.bh+"'}";
+					DomUtils.select.addOptionObj("yhz_select",option);
+					DomUtils.select.delOption("noyhz_select");
+					
+				}
+			}
+		}catch(e){
+			alert(e.message);
+		}
+	}
+	
+	/*************************************************************************************
+	* 获取该流程还有哪些用户组可以配置（除去已经配置的）
+	*************************************************************************************/
+	function ajaxUpdate(){
+		try{
+			var yhz		= DomUtils.select.getSelectedOption("yhz_select");
+			var pxh		= findObj("pxh").value;
+			var lcbh	= findObj("lcbh").value;
+			var yan
+			if(lcbh != "" && vidatePxh()){
+				var obj		= DomUtils.json.format(yhz.title);
+				var args	= "lcbh="+lcbh+"&yhzbh="+yhz.value+"&pxh="+pxh+"&bh="+obj.bh;
+				var url 	= ctx+"/workflow/maintTWorkflowQdqx.do?method=ajaxUpdate&"+args;
+				var data 	= DomUtils.ajaxRequest(url);
+				if(data!=null && data.reuslt == true ){
+					var selectOptions = DomUtils.select.getSelectedOption("yhz_select");
+					selectOptions.title = "{pxh:'"+pxh+"',bh:'"+obj.bh+"'}";
+					alert("保存成功");
+				}
+			}
+		}catch(e){
+			alert(e.message);
+		}
+	}
+	
+	
+	function ajaxInsertOrg(){
+		try{
+			var lcbh	= findObj("lcbh").value;
+			var bmbh	= findObj("bmbh").value;
+			var orgjs   = findObj("orgjs").value;
+			var bmjs    = findObj("bmjs").value;
+			if(lcbh == ""){
+				alert("流程编号不能为空!");
+				return false;
+			}
+			if(lcbh != ""){
+				var args	= "lcbh="+lcbh+"&bmbh="+bmbh+"&bmjs="+bmjs+"&orgjs="+orgjs;
+				var url 	= ctx+"/workflow/maintTWorkflowQdqx.do?method=ajaxInsertOrg&"+args;
+				var data = DomUtils.ajaxRequest(url);
+				if(data != null && data.result == true){
+					alert("保存成功!");
+					document.getElementById('opForm').submit();
+				}
+			}
+		}catch(e){
+			alert(e.message);
+		}
+	}
+	
+	function ajaxDelOrg(obj){
+		try{
+			var lcbh = findObj("lcbh").value;
+			var bmbh = "";
+			if(obj){
+				bmbh    = obj.name;
+			}
+			if(lcbh != ""){
+				var args	= "lcbh="+lcbh+"&bmbh="+bmbh;
+				var url 	= ctx+"/workflow/maintTWorkflowQdqx.do?method=ajaxDelOrg&"+args;
+				var data 	= DomUtils.ajaxRequest(url);
+				if(data!=null && data.result == true){
+					alert("删除成功");
+					document.getElementById('opForm').submit();
+				}
+			}
+		}catch(e){
+			alert(e.message);
+		}
+	}
+	
+	/*************************************************************************************
+	* 获取该流程还有哪些用户组可以配置（除去已经配置的）
+	*************************************************************************************/
+	function ajaxDel(){
+		try{
+			var yhz		= DomUtils.select.getSelectedOption("yhz_select");
+			var obj		= DomUtils.json.format(yhz.title);
+			if(obj.bh != ""){
+				var args		= "&bh="+obj.bh;
+				var url 	= ctx+"/workflow/maintTWorkflowQdqx.do?method=ajaxDel&"+args;
+				var data 	= DomUtils.ajaxRequest(url);
+				if(data!=null && data.reuslt == true ){
+					DomUtils.select.addOption("noyhz_select",yhz.text,yhz.value);
+					DomUtils.select.delOption("yhz_select");
+				}
+			}
+		}catch(e){
+			alert(e.message);
+		}
+	}
+	
+	/****************************************ajax 操作结束**************************************************************/
+	
+	function initWorkflowQdPage(lcbh,text,value){
+		var lcselect = findObj("bean.lcbh");
+		if(lcselect!=null && lcselect.length > 0){
+			if(lcbh!= ""){
+				lcselect.value = lcbh;
+			}else{
+				lcselect.options[0].selected = true;
+			}
+			lcselect.onchange();
+			if(findObj("bean.bh")!=""){
+				if(text != "" && value != ""){
+					DomUtils.select.addOption("bean.yhzbh",text,value);
+					findObj("bean.yhzbh").value = value;
+				}
+			}
+		}
+	}
+	
+	
+	function disabledBtn(flag){
+		try{
+			var option = null;
+			if(flag == true){
+				findObj("noyhz_select").blur();
+				findObj("add").disabled = true;
+				findObj("del").disabled = false;
+				findObj("save").disabled = false;
+				option = DomUtils.select.getSelectedOption("yhz_select");
+				findObj("yhzTd").innerHTML = option.text;
+				var obj = DomUtils.json.format(option.title);
+				findObj("pxh").value = obj.pxh;
+			}else{
+				findObj("yhz_select").blur();
+				findObj("add").disabled = false;
+				findObj("del").disabled = true;
+				findObj("save").disabled = true;
+				option = DomUtils.select.getSelectedOption("noyhz_select");
+				findObj("yhzTd").innerHTML = option.text;
+				findObj("pxh").value = "";
+			}
+			
+			if(option!=null){
+				var url = ctx+"/workflow/maintTWorkflowLcbzclry.do?method=ajaxGetUserByGroupBH&zbh="+option.value;
+				var data = DomUtils.ajaxRequest(url);
+				document.getElementById("qdusertd").innerHTML = "&nbsp;";
+				if(data!=null && data.length > 0){
+					var html = "";
+					for(var i=0;i<data.length;i++){
+						html += "<span class='qduserClass'><img src=\""+SKIN_PATH+"/images/platform/workflow/user.gif\" align=\"absmiddle\">"+data[i].yhm+"["+data[i].yhbh+"]</span>";
+					}
+					document.getElementById("qdusertd").innerHTML = html+"&nbsp;";
+				}
+			}
+		}catch(e){	
+		}
+	}
+	
+	
+	function vidatePxh(){
+		var obj = findObj("pxh");
+		var msg = obj.onchange();
+		if(msg){
+			return false;
+		}
+		return true;
+	}
+
+/******************************************流程启动人员的js(结束)*******************************************************/
+
+/**********************************************************************
+* 工作流监听程序操作主要js
+***********************************************************************/
+
+	/**********************************************************************
+	* 删除监听程序
+	* isquote： 通过查询该监听器是否被引用的一个标示
+	*********************************************************************/
+	function deleteListener(isquote){
+		var flag = true;
+		if(isquote == 1){
+			flag = window.confirm("该监听已经被引用,确定删除后将删除所有引用！");
+		}
+		if(flag){
+			deleteRecord();
+		}
+	}
+
+/**********************************************************************
+* 将option 的title信息解析出来，显示具体的信息
+*********************************************************************/
+	function showListenerInfo(){
+	 	try{
+	 		if(ACTION_OPERATE == null ){
+				var jtxc 	  = DomUtils.select.getSelectedOption("bean.jtcxbh");
+				var otherInfo = DomUtils.json.format(jtxc.title);
+				findObj("v_cxmc").innerHTML = jtxc.text;
+				findObj("v_pyjx").innerHTML = otherInfo.pyjx;
+				findObj("v_sxl").innerHTML 	= otherInfo.sxl;
+				findObj("v_bz").innerHTML 	= otherInfo.bz;
+			}
+		}catch(e){
+			alert(e.message)
+		}
+	}
+
+
+/**********************************************************************
+* 页面初始化操作
+* flag 	: 判断的页面当前的状态
+* jtcxbh: 监听程序的编号
+*********************************************************************/
+	function initListener(flag,jtcxbh){
+		try{
+			var selectObj = findObj("bean.jtcxbh");
+			var optionObj = DomUtils.select.getOptionByValue("bean.jtcxbh",jtcxbh)
+			optionObj.selected = true;
+			selectObj.onclick();
+			if(flag == "V"){
+				selectObj.onclick = "return false";
+				findObj("jtcxli").style.display = "none";
+			}
+		}catch(e){
+			
+		}
+	}
+
+
+/**************************************************工作流用户组**********************************************/
+
+/*************************************************************************************
+* 添加用户组的表单验证
+*************************************************************************************/
+	function submitUser(){
+		if(findObj("bean.yhbh").value != "" && findObj("bean.zbh").value != ""){
+			submitForm();
+		}else{
+			if(findObj("bean.yhbh").value == ""){
+				alert("请选择用户");
+			}
+			if(findObj("bean.zbh").value == ""){
+				alert("请选择用户组");
+			}
+		}
+	}
+
+/*************************************************************************************
+* 添加用户与用户组的关联
+*************************************************************************************/
+	function addUserToGroup(){
+		var text  = findObj("yhm_input").value;
+		var value = findObj("yhbh_hidden").value;
+		var message = findObj("pxh_input").onchange();;
+		if(text != "" && value != "" && message == undefined){
+			if(null == DomUtils.select.findOption("yhzyh_select",value)){
+				var bh = ajaxAddUserRelative(value,findObj("pxh_input").value);
+				if(bh != null){
+					var option = new Option(text,value);
+					option.title = "{bh:'"+bh+"'}";
+					DomUtils.select.addOptionObj("yhzyh_select",option);
+					
+					//清空数据
+					findObj("yhm_input").value = "";
+					findObj("yhbh_hidden").value = "";
+					findObj("pxh_input").value = "";
+				}
+			}
+		}else{
+			if(text == "" || value == ""){
+				alert("请输入正确的用户名");
+			}
+		}
+	}
+
+/*************************************************************************************
+* 删除用户与用户组的关联
+*************************************************************************************/
+	function delUserToGroup(){
+		try{
+			var options = DomUtils.select.getSelectedOption("yhzyh_select");
+			var obj		= DomUtils.json.format(options.title);
+			if(ajaxDelrelative(obj.bh)){
+				DomUtils.select.delOption("yhzyh_select");
+				
+				//清空数据
+				findObj("yhm_input").value = "";
+				findObj("yhbh_hidden").value = "";
+				findObj("pxh_input").value = "";
+			}
+		}catch(e){
+			alert(e.message);
+		}
+	}
+
+
+
+/*************************************************************************************
+* 添加用户与用户组的关联 (ajax 方法)
+*************************************************************************************/
+	function ajaxAddUserRelative(yhbh,pxh){
+		var bh = null;
+		var yhzbh = findObj("bean.bh").value;
+		if(yhzbh != ""){
+			var argss	= "yhzbh="+yhzbh+"&yhbh="+yhbh+"&pxh="+pxh;
+			var url 	= ctx+"/workflow/maintTWorkflowYhhyhz.do?method=ajaxAddUserToGroup&"+argss;
+			var data	= DomUtils.ajaxRequest(url);
+			if(data!=null){
+				bh = data.bh
+			}
+		}
+		return bh;
+	}
+
+
+/*************************************************************************************
+* 删除用户与用户组的关联(ajax 方法)
+*************************************************************************************/
+	function ajaxDelrelative(bh){
+		if(bh!=""){
+			var isDelete  = window.confirm("是否真的要删除记录");
+			if(isDelete){
+				var url 	= ctx+"/workflow/maintTWorkflowYhhyhz.do?method=ajaxDelUserFromGroup&bh="+bh;
+				var data	= DomUtils.ajaxRequest(url);
+				if(data!=null){
+					return data.result;
+				}
+			}
+		}
+		return false;
+	}
+	
+/*************************************************************************************
+* 是否允许添加上传文件
+*************************************************************************************/
+	function isAllowUpload(obj){
+		if(obj.value == "1"){
+			findObj("fjlj").innerHTML = "*".fontcolor("red");
+		}else{
+			findObj("fjlj").innerHTML = "";
+		}
+	}
+	
+	
+	/**
+     * 选择流程启动人用户组
+     */
+	function selectQdrYhz(yhzObj) {
+		var	height = 550;
+		var	width = 510;
+		var url = ctx + '/pages/platform/workflow/web/config/TWorkflowYhzSelect.jsp';
+		var vArguments = '';
+		var sFeatures = 'dialogHeight:'+height+'px;dialogWidth:'+width+'px;center:yes;help:no;resizable:no;status:yes;scroll:yes';
+		var obj = window.showModalDialog(url,vArguments,sFeatures);
+		if(obj != undefined) {
+			yhzObj.value = obj.bh;
+			yhzObj.fireEvent('onclick');
+			ajaxAdd();
+		}
+	}
+    
+    /**
+     * 选择步骤处理人用户组
+     */
+	function selectClrYhz(yhzObj) {
+		var	height = 550;
+		var	width = 510;
+		var url = ctx + '/pages/platform/workflow/web/config/TWorkflowYhzSelect.jsp';
+		var vArguments = '';
+		var sFeatures = 'dialogHeight:'+height+'px;dialogWidth:'+width+'px;center:yes;help:no;resizable:no;status:yes;scroll:yes';
+		var obj = window.showModalDialog(url,vArguments,sFeatures);
+		if(obj != undefined) {
+			yhzObj.value = obj.bh;
+			yhzObj.fireEvent('onchange');
+		}
+	}
+
+/**************************************************工作流用户组(结束)**********************************************/

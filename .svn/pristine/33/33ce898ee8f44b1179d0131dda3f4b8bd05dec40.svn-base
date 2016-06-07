@@ -1,0 +1,61 @@
+@charset "utf-8";
+/* CSS Document */
+html,body {
+	height: 100%;
+	text-align: center;
+}
+
+html {
+	overflow-y: scroll;
+	background-image: url(../images/bg2.jpg);
+	background-position: center;
+}
+
+#reg {
+	position: absolute;
+	top: 177px;
+	left: 494px;
+	width: 380px;
+	height: 300px;
+}
+
+#user {
+	position: absolute;
+	left: 36px;
+	top: 84px;
+	background-color: red;
+}
+
+#pass {
+	position: absolute;
+	left: 194px;
+	top: 84px;
+	background-color: red;
+}
+
+#sub {
+	position: absolute;
+	left: 140px;
+	top: 161px;
+}
+
+#u_name {
+	width: 125px;
+	padding: 0.5em 0.25em 0.4em 1.5em;
+	background: #FFF url(../images/u_name2.png) no-repeat 0 2px;
+}
+
+#u_password {
+	width: 125px;
+	padding: 0.5em 0.25em 0.4em 1.5em;
+	background: #FFF url(../images/u_pass2.png) no-repeat 0 2px;
+}
+
+#u_submit {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bolder;
+	color:white;
+	background-color:gray;
+	clip: rect(50px, auto, auto, auto);
+}

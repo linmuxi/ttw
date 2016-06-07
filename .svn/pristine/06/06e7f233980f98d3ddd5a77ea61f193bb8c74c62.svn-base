@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- job类 -->
+	<bean id="demoJob" class="com.phly.ttw.manage.job.DemoJob"></bean>
+	<bean id = "supplierJob" class="com.phly.common.base.service.SynSupplierTaskService"></bean>
+
+	<!-- 产生任务对象 -->
+	<bean id="demoJobTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="demoJob" />
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>
+	
+	<bean id="supplierJobTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject">
+			<ref bean="supplierJob" />
+		</property>
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod">
+			<value>createTask</value>
+		</property>
+	</bean>
+
+	<!-- 产生时间表达式对象 -->
+	<bean id="demoJobTimer" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="demoJobTask" />
+		</property>
+		<!-- cron表达式 (秒 分 时 日 月 周 年) -->
+		<property name="cronExpression">
+			<value>0 0 12 * * ?</value>
+		</property>
+	</bean>
+	
+	<!-- 产生时间表达式对象 -->
+	<bean id="supplierSynJobTimer" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="supplierJobTask" />
+		</property>
+		<!-- cron表达式 (秒 分 时 日 月 周 年) -->
+		<property name="cronExpression">
+			<value>0/10 * * * * ? 2018</value>
+		</property>
+	</bean>
+
+	<!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
+	<bean id="startQuertz" lazy-init="true" autowire="no" 
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="demoJobTimer" />
+				<ref bean="supplierSynJobTimer"/><!-- 供应商定时任务job -->
+			</list>
+		</property>
+		<property name="quartzProperties">
+			<props>
+				<prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

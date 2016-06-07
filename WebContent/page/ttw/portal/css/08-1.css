@@ -1,0 +1,19 @@
+﻿@import url('css.css');
+
+
+
+.banner ul li img { width: 1200px; height: 363px; }
+.windows { width: 385px; height: 245px; position: absolute; top: 42px; left: 420px; }
+.windowsbg { width: 385px; height: 245px; background: black; filter: alpha(opacity=80); /*IE滤镜，透明度50%*/ -moz-opacity: 0.8; /*Firefox私有，透明度50%*/ opacity: 0.8; /*其他，透明度50%*/ position: absolute; top: 0px; left: 0px; }
+.usernum, .passwrods, .fogpasswords, .signin { position: absolute; }
+.usernum { top: 25px; left: 25px; }
+.userimg { width: 40px; height: 38px; background: url(../images/icon_total.png); background-position: -261px -7px; }
+.ipt { width: 275px; height: 26px; background: white; padding-left:13px;padding-top:13px;margin-left:-1px;}
+.ipt input { border: 0px; outline: none; }
+.passwrods{left:25px;top:90px;}
+.mar1{margin-top:1px;}
+.passwordimg{width: 40px; height: 39px; background: url(../images/icon_total.png); background-position: -263px -50px;}
+.fogpasswords{top:150px;left:80px;color:White;cursor:pointer;}
+.signin{top:180px;left:65px;}
+.signin div:first-child{background:#0096dc;color:White;margin-right:15px;}
+.signin div{width:120px;height:40px;border-radius:2px;background:white;color:#31333e;text-align:center;line-height:40px;cursor:pointer;}

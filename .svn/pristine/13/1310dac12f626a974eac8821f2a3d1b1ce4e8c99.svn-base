@@ -1,0 +1,87 @@
+﻿body { margin:0; width:100%;}
+ul{ list-style:none; margin:0; padding:0;}
+
+.Opacity{ background:#a2a2a2; opacity:.4; display:none; width:100%; height:121.3%; position:absolute; left:0; top:0;}
+.main{ width:975px; margin:0 auto;}
+
+/*当前位置*/
+.Pos{ padding:20px 0;width:100%; height:26px; border-bottom:2px solid #0096dc;}
+.PosIcon{ background:url(../images/icon_total.png) -334px -93px; float:left; width:29px; height:26px; margin-right:10px;}
+.PosOne{ font-size:14px; float:left; line-height:26px;}
+.PosTwo{ font-size:12px; float:left; line-height:26px;}
+
+/*商品清单*/
+.List{ width:100%; padding-bottom:30px; border-bottom:2px solid #0096dc;}
+.ListTit{ width:100%; padding:15px; font-size:16px;}
+.ListBg{ padding:15px; border:1px solid #c9c9c9; background:#eee; height:130px;}
+.ListBgLeft{ float:left; width:70%;}
+.ListBgLeft img{ float:left; margin-right:25px;}
+.ListBgTit{ float:left; font-size:17px; margin-top:5px; font-weight:bold; font-family:sans-serif; }
+.ListBgSup{ float:left; font-size:17px; margin-top:10px;}
+.ListSeven{ font-size:12px; width:150px; height:15px; float:left; margin-top:55px;}
+.ListSeven div{ float:left; line-height:24px;}
+.SevenIcon{ background:url(../images/Submit/seven.png) 0 0; width:23px; height:24px;}
+.ListBgRight{ float:right; width:25%; padding:45px 0;}
+.ListPrice{ float:left; color:#cc0000; font-size:30px; width:140px;}
+.ListNum{ float:left; margin-left:15px; font-size:15px; margin-top:14px; width:20px; text-align:right;}
+.ListOpr{ float:left; margin-left:10px; font-size:15px; margin-top:14px;}
+
+/*发票信息*/
+.Bill{ border-bottom:1px solid #eee; padding:15px 20px; height:50px; position:relative;}
+.BillTit{ font-size:16px; width:100%;}
+.BillInfo{ margin-top:15px; font-size:14px;}
+.BillInfo_Type{ float:left;}
+.BMargin{ margin-left:40px;}
+.BillInfo_Rev{ float:left; margin-left:40px; color:#0096dc;}
+.BillInfo_Rev:hover{ text-decoration:underline; cursor:pointer;}
+.BillBox{ width:575px; height:575px; border:1px solie #eee; background:#fff; display:none; position:absolute; top:-200px; left:150px; z-index:999;}
+.BB_Tit{ padding:10px 15px; font-size:16px; color:#636363; border-bottom:1px solid #eee;}
+.BB_Con{ padding:20px 35px; font-size:14px;}
+.BB_ConTit{ width:100%; height:23px;}
+.BB_ConTit div{ float:left; margin-right:35px; padding:2px 0; cursor:pointer;}
+.BB_CT1{ color:#0096dc; border-bottom:1px solid #0096dc;}
+.BB_CT0{ color:#000;}
+.BB_ConHead{ clear:both; width:100%; margin-top:25px; position:relative; height:32px;}
+.BB_ConHead input{ width:243px; height:32px; float:left; padding:0 10px; margin-left:4px;}
+.BB_CHTit{ float:left; line-height:39px;}
+.BB_CHTit input{ float:left; width:248px; height:39px; padding:0 5px; margin-left:4px; border:solid 1px #E5E5E5;}
+.BB_CHIcon{ position:absolute; right:166px; top:8px; width:20px; height:20px; background:url(../images/Submit/Tick.png);}
+.BB_CHNew{ float:left; margin-left:20px; line-height:39px; color:#0096dc;}
+.BB_ConMain{ width:100%; margin-top:25px; height:32px;}
+.BB_CMCon{ float:left; margin-left:15px; padding:10px 0;}
+.BB_CMCon div{ float:left; margin-right:40px; padding:2px 0;}
+.BB_ConBtn{ width:50%; height:50px; margin:50px auto;}
+.BB_CB_Safe{ float:left; width:115px; height:38px; background:#0096dc; text-align:center; line-height:38px; color:#fff;}
+.BB_CB_Can{ float:right; width:115px; height:38px; background:#fff; text-align:center; line-height:38px; color:#0096dc; border:1px solid #0096dc;}
+.BB_M2Tit{ width:100%; font-size:14px; height:15px; margin-top:25px;}
+.BB_M2Tit1{ float:left; color:#0096dc;}
+.BB_M2Tit2{ float:left; margin-left:10px;}
+.BB_M2Ul{ width:75%; margin:20px auto;}
+.BB_M2Ul li{ margin-top:10px; height:39px;}
+.BB_M2Ul input{ float:right; width:264px; height:32px;}
+.BB_M2Star{ clear:both; float:left; color:#0096dc; font-size:20px; margin-top:3px;}
+#main2{ display:none;}
+
+/*使用代金劵*/
+.Gold{ margin-top:80px; height:25px; padding:15px; border:1px solid #c9c9c9; background:#eee;}
+.GoldFont{ float:left; font-size:12px; line-height:25px;}
+.Gold input{ float:left; width:70px; height:25px; margin-left:10px;}
+.GoldPrice{ float:left; margin-left:13px; color:#de0000; font-size:15px; margin-top:8px;}
+
+/*结算*/
+.Pay{ padding:20px 0; height:45px; margin-bottom:50px;}
+.PayRight{ float:right; width:43%;}
+.PayAll{ float:left; font-size:14px; margin-top:20px;}
+.PayPrice{ float:left; font-size:36px; color:#cc0000;}
+.PayBtn{ float:right; width:192px; height:45px; background:#0096dc; text-align:center; line-height:45px; color:#fff; font-size:18px;}
+
+/*当前位置*/
+.CPos{ padding:20px 0;width:100%; height:26px;}
+.Choose{ font-size:15px; color:#0096dc; height:16px;}
+.Content{ margin-top:15px;}
+.CTit{ float:left; font-size:14px; padding:5px 0; border-bottom:1px solid #0096dc;}
+.CMain{ clear:both; width:970px; height:445px; border:1px solid #b8b8bb;}
+.CBtn{ float:right; width:115px; height:38px; background:#0096dc; text-align:center; line-height:38px; color:#fff; margin-top:25px; margin-right:3px; margin-bottom:150px; font-size:16px;}
+.CUl li{ margin-left:12px; margin-top:10px; float:left; width:230px; height:80px;}
+.CUl li input{ float:left; margin-top:10px; margin-right:15px;}
+.CUl li img{ float:left;}

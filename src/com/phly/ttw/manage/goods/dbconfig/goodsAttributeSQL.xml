@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodsAttribute">
+
+	<!-- 查询商品属性列表 -->
+	<select id="queryGoodsAttributeList" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsAttributeVO" flushCache="true">
+	 SELECT ID id,
+	 		GOODSATTRIBUTENAME goodsAttributeName,
+	 		GOODS_TYPE_ID goodsTypeId,
+	 		GOODS_TYPE_NAME goodsTypeName,
+	 		STATE state,
+	 		ATTRIBUTELIST attributeList,
+	 		SORT sort,
+	 		ISSEARCH isSearch,
+	 		ORGID orgid,
+			CREATE_TIME createTime,
+			CREATE_USER creator,
+			UPDATE_TIME updateTime,
+			UPDATE_USER updater
+	   FROM t_goods_attribute
+		<where>
+		    1 = 1 
+		    <if test="goodsTypeId != null and goodsTypeId != ''">
+				AND GOODS_TYPE_ID = #{goodsTypeId}  
+			</if>
+			<if test="goodsAttributeName != null and goodsAttributeName != ''">
+				AND GOODSATTRIBUTENAME LIKE CONCAT('%',#{goodsAttributeName},'%') 
+			</if>
+			<if test="searchPhrase != null and searchPhrase != ''">
+				AND (
+					GOODSATTRIBUTENAME LIKE CONCAT('%',#{searchPhrase},'%') 
+					) 
+			</if>
+		</where>
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+		<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY SORT ASC
+		</if>
+	</select>
+	
+	<!-- 查询商品属性列表 -->
+	<select id="queryGoodsAttributeListByGoodsTypeId" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsAttributeVO" flushCache="true">
+	 SELECT ID id,
+	 		GOODSATTRIBUTENAME goodsAttributeName,
+	 		GOODS_TYPE_ID goodsTypeId,
+	 		GOODS_TYPE_NAME goodsTypeName,
+	 		STATE state,
+	 		ATTRIBUTELIST attributeList,
+	 		SORT sort,
+	 		ISSEARCH isSearch,
+	 		ORGID orgid,
+			CREATE_TIME createTime,
+			CREATE_USER creator,
+			UPDATE_TIME updateTime,
+			UPDATE_USER updater
+	   FROM t_goods_attribute
+		<where>
+		    <!--  
+		    1 = 1 AND GOODS_TYPE_ID = #{goodsTypeId}  
+		    -->
+		    1=1 AND FIND_IN_SET(GOODS_TYPE_ID, queryParentCategoryList(#{goodsTypeId}))
+		</where>
+		<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY SORT ASC
+		</if>
+	</select>
+	
+	<!-- 根据产品ID查询产品属性 -->
+	<select id="queryAllGoodsAttributeListByGoodsId" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsAttributeVO" flushCache="true">
+	SELECT  (CASE WHEN ATTRVAL.ATTRID IS NULL THEN ATTR.ID ELSE ATTRVAL.ATTRID END) id,
+			ATTRVAL.GOODSID goodsId,
+			ATTR.GOODSATTRIBUTENAME goodsAttributeName,
+			ATTR.GOODS_TYPE_ID goodsTypeId,
+			ATTR.GOODS_TYPE_NAME goodsTypeName,
+			ATTR.STATE state,
+			ATTR.ATTRIBUTELIST attributeList,
+			ATTRVAL.ATTRVAL attrVal,
+			ATTR.SORT sort,
+			ATTR.ISSEARCH isSearch,
+			ATTR.ORGID orgid,
+			ATTR.CREATE_TIME createTime,
+			ATTR.CREATE_USER creator,
+			ATTR.UPDATE_TIME updateTime,
+			ATTR.UPDATE_USER updater
+	  FROM T_GOODS_ATTRIBUTE ATTR
+	  LEFT JOIN T_GOODS_ATTRIBUTE_RP ATTRVAL ON ATTRVAL.ATTRID = ATTR.ID and ATTRVAL.GOODSID = #{goodsId}
+	  <where>
+	  	FIND_IN_SET(ATTR.GOODS_TYPE_ID, queryParentCategoryList(#{goodsTypeId}))
+	  </where>
+		<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY ATTR.SORT ASC
+		</if>
+	</select>
+	
+	
+	<!-- 根据产品ID查询产品属性 -->
+	<select id="queryGoodsAttributeListByGoodsId" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsAttributeVO" flushCache="true">
+	SELECT  (CASE WHEN ATTRVAL.ATTRID IS NULL THEN ATTR.ID ELSE ATTRVAL.ATTRID END) id,
+			ATTRVAL.GOODSID goodsId,
+			ATTR.GOODSATTRIBUTENAME goodsAttributeName,
+			ATTR.GOODS_TYPE_ID goodsTypeId,
+			ATTR.GOODS_TYPE_NAME goodsTypeName,
+			ATTR.STATE state,
+			ATTR.ATTRIBUTELIST attributeList,
+			ATTRVAL.ATTRVAL attrVal,
+			ATTR.SORT sort,
+			ATTR.ISSEARCH isSearch,
+			ATTR.ORGID orgid,
+			ATTR.CREATE_TIME createTime,
+			ATTR.CREATE_USER creator,
+			ATTR.UPDATE_TIME updateTime,
+			ATTR.UPDATE_USER updater
+	  FROM T_GOODS_ATTRIBUTE ATTR
+	  LEFT JOIN T_GOODS_ATTRIBUTE_RP ATTRVAL ON ATTRVAL.ATTRID = ATTR.ID 
+	  <where>
+	  	ATTRVAL.GOODSID = #{goodsId}
+	  </where>  
+		<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY ATTR.SORT ASC
+		</if>
+	</select>
+	
+	
+	<!-- 查询商品属性 -->
+	<select id="getGoodsAttribute" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsAttributeVO" flushCache="true">
+	 SELECT ID id,
+	 		GOODSATTRIBUTENAME goodsAttributeName,
+	 		GOODS_TYPE_ID goodsTypeId,
+	 		GOODS_TYPE_NAME goodsTypeName,
+	 		STATE state,
+	 		ATTRIBUTELIST attributeList,
+	 		SORT sort,
+	 		ISSEARCH isSearch,
+	 		ORGID orgid,
+			CREATE_TIME createTime,
+			CREATE_USER creator,
+			UPDATE_TIME updateTime,
+			UPDATE_USER updater
+	   FROM t_goods_attribute
+		<where>
+		    1 = 1 AND ID = #{id}  
+		</where>
+	</select>
+	
+	
+	<!-- 查询品牌总数 -->
+	<select id="getGoodsAttributeCount" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO"
+		resultType="int" flushCache="true">
+		 SELECT COUNT(1)
+  		FROM t_goods_attribute
+		<where>
+		    1 = 1
+			 <if test="goodsTypeId != null and goodsTypeId != ''">
+				AND GOODS_TYPE_ID = #{goodsTypeId}  
+			</if>
+			<if test="goodsAttributeName != null and goodsAttributeName != ''">
+				AND GOODSATTRIBUTENAME LIKE CONCAT('%',#{goodsAttributeName},'%') 
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	<insert id="addGoodsAttribute" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO">
+	  INSERT INTO t_goods_attribute(
+			 ID,
+			 GOODSATTRIBUTENAME,
+       		 GOODS_TYPE_ID,
+			 GOODS_TYPE_NAME,
+			 SORT,
+			 ATTRIBUTELIST,
+			 CREATE_TIME,
+			 CREATE_USER,
+			 UPDATE_TIME,
+			 UPDATE_USER)
+	  VALUES (
+			 UCASE(REPLACE(UUID(),'-','')),
+			 #{goodsAttributeName},
+			 #{goodsTypeId},
+			 #{goodsTypeName},
+			 #{sort},
+			 #{attributeList},
+			 NOW(),
+			 #{creator},
+			 NOW(),
+			 #{creator}
+			 )
+	</insert>
+	
+	
+	<insert id="addGoodsAttributeVal" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO">
+	  INSERT INTO t_goods_attribute_rp(
+			 ID,
+			 ATTRID,
+       		 GOODSID,
+			 ATTRVAL,
+			 CREATE_TIME,
+			 CREATE_USER,
+			 UPDATE_TIME,
+			 UPDATE_USER)
+	  VALUES (
+			 UCASE(REPLACE(UUID(),'-','')),
+			 #{id},
+			 #{goodsId},
+			 #{attrVal},
+			 NOW(),
+			 #{creator},
+			 NOW(),
+			 #{creator}
+			 )
+	</insert>
+	
+	<update id="updateGoodsAttribute" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO">
+		UPDATE t_goods_attribute
+		   SET GOODSATTRIBUTENAME = #{goodsAttributeName},
+		   	   GOODS_TYPE_ID = #{goodsTypeId},
+		   	   GOODS_TYPE_NAME = #{goodsTypeName},
+		   	   ATTRIBUTELIST = #{attributeList},
+		   	   SORT = #{sort},
+		   	   UPDATE_TIME = NOW(),
+		   	   UPDATE_USER = #{updater}
+		 WHERE ID = #{id}  
+	</update>
+	
+	<delete id="delGoodsAttribute" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO">
+		DELETE FROM t_goods_attribute
+		 WHERE ID = #{id};
+	</delete>
+	
+	<delete id="delGoodsAttributeByGoodsId" parameterType="com.phly.ttw.manage.goods.model.GoodsAttributeVO">
+		DELETE FROM t_goods_attribute_rp
+		 WHERE GOODSID = #{goodsId};
+	</delete>
+</mapper>

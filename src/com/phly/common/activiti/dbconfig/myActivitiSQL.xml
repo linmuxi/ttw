@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myActiviti">
+	
+	<!-- 根据业务key查询审核意见 -->
+	<select id="queryCommentByBkey" parameterType="com.phly.common.activiti.vo.CommentVO"
+		resultType="com.phly.common.activiti.vo.CommentVO">
+		SELECT 
+		  t2.id_ id,
+		  t2.type_ type,
+		  t2.time_ time,
+		  t2.task_id_ taskId,
+		  t2.proc_inst_id_ procInstId,
+		  t2.message_ message,
+		  t2.action_ action 
+		FROM act_hi_procinst t1 JOIN act_hi_comment t2 
+		    ON t1.proc_inst_id_ = t2.proc_inst_id_
+		    <if test="businessKey != null and businessKey != ''"> 
+		    	AND t1.business_key_ = #{businessKey} 
+		    </if>
+	</select>
+	
+	<select id="queryTaskList" parameterType="com.phly.common.activiti.vo.TaskVO" resultType="com.phly.common.activiti.vo.TaskVO">
+		SELECT 
+		  t2.ID_ id,
+		  t2.NAME_ name,
+		  t3.NAME_ processDefinitionName,
+		  t2.PRIORITY_ priority,
+		  t2.CREATE_TIME_ createTime,
+		  t2.DELEGATION_ description ,
+  		  t4.BUSINESS_KEY_ businessKey
+		FROM
+		  act_ru_identitylink t1,
+		  act_ru_task t2,
+		  act_re_procdef t3 ,
+  		  act_ru_execution t4
+		WHERE t1.TASK_ID_ = t2.ID_ 
+		  AND t2.PROC_DEF_ID_ = t3.ID_ 
+		  AND t2.PROC_INST_ID_ = t4.ID_
+		  AND (
+		    t2.ASSIGNEE_ = #{account}
+		    OR (
+		      t2.ASSIGNEE_ IS NULL 
+		      AND t1.TYPE_ = 'candidate' 
+		      AND (
+		        t1.USER_ID_ = #{account}
+		        <if test="groups != null and groups.size() > 0">
+			        OR t1.GROUP_ID_ IN
+			        <foreach collection="groups" item="item" open="(" close=")" separator=",">
+			        	#{item}
+			        </foreach> 
+		        </if>
+		      )
+		    )
+		  )
+		  <if test="name != null and name != ''">
+			and t2.name_ like CONCAT('%',#{name},'%')
+		  </if>
+		  <if test="processDefinitionName != null and processDefinitionName != ''">
+			and t3.name_ like CONCAT('%',#{processDefinitionName},'%')
+		  </if>
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+		<if
+			test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY T2.CREATE_TIME_ DESC
+		</if>
+	</select>
+	
+	<select id="getTaskCount" parameterType="com.phly.common.activiti.vo.TaskVO" resultType="int">
+		SELECT count(1) FROM
+		  act_ru_identitylink t1,
+		  act_ru_task t2,
+		  act_re_procdef t3 ,
+  		  act_ru_execution t4
+		WHERE t1.TASK_ID_ = t2.ID_ 
+		  AND t2.PROC_DEF_ID_ = t3.ID_ 
+		  AND t2.PROC_INST_ID_ = t4.ID_
+		  AND (
+		    t2.ASSIGNEE_ = #{account}
+		    OR (
+		      t2.ASSIGNEE_ IS NULL 
+		      AND t1.TYPE_ = 'candidate' 
+		      AND (
+		        t1.USER_ID_ = #{account}
+		        <if test="groups != null and groups.size() > 0 ">
+			        OR t1.GROUP_ID_ IN
+			        <foreach collection="groups" item="item" open="(" close=")" separator=",">
+			        	#{item}
+			        </foreach> 
+		        </if>
+		      )
+		    )
+		  )
+		  <if test="name != null and name != ''">
+			and t2.name_ like CONCAT('%',#{name},'%')
+		  </if>
+		  <if test="processDefinitionName != null and processDefinitionName != ''">
+			and t3.name_ like CONCAT('%',#{processDefinitionName},'%')
+		  </if>
+	</select>
+	
+	
+</mapper>

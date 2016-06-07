@@ -1,0 +1,12 @@
+@import url('css.css');
+.EtAll- { width: 1200px; height: 312px; margin: 0 auto; padding-bottom: 30px; }
+.Et-conten- { width: 435px; height: 274px; border: 1px solid #e6e6e6; margin: 0 auto; margin-top: 23px; }
+.Et-account- { width: 375px; height: 45px; font-family: 微软雅黑; font-size: 14px; margin-left: 39px; margin-top: 25px; }
+.account- { float: left; line-height: 39px; }
+.account-ip- { width: 320px; height: 39px; float: left; margin-left: 23px; border: 1px solid #e6e6e6; line-height: 39px;}
+.password-ip- { width: 320px; height: 39px; float: left; margin-left: 23px; border: 1px solid #e6e6e6; line-height: 39px;}
+.Et-password- { width: 375px; height: 45px; font-family: 微软雅黑; font-size: 14px; margin-left: 39px; margin-top: 15px; }
+.idcode-ip- { width: 113px; height: 39px; float: left; margin-left: 9px; border: 1px solid #e6e6e6; line-height: 39px;}
+.idcode-pic { width: 84px; height: 35px; float: left; background-color: lightblue; margin-top: 3px; }
+.idcode-change- { line-height: 39px; cursor: pointer; }
+.Et-true- { width: 117px; height: 38px; font-family: 微软雅黑; font-size: 14px; margin-left: 91px; margin-top: 15px; border-radius: 4px; background-color: #0096dc; text-align: center; line-height: 38px; color: white; }

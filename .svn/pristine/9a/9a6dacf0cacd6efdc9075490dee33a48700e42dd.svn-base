@@ -1,0 +1,21 @@
+﻿@import url('css.css');
+@import url('Pop.css');
+
+.column { width: 1200px; position: relative; }
+.columnone, .columntwo, .columnthree { width: 100%; height: 410px; float: left; position:relative;}
+.columnone { background: #0276b9; }
+.column-tit,.column-content,.column-more{float:left;}
+.column-tit { width: 100%; text-align: center; margin-top: 45px; }
+.column-content { margin-top: 63px; }
+.column-content img:last-child { margin-right: 0px; }
+.column-content img { float: left; margin-right: 18px; }
+.column-more { margin-top: 30px; text-align: center; }
+.column-more-img{width:86px;height:26px;background:url(../images/icon_total.png);background-position:-36px -119px;margin-left:461px;cursor:pointer;}
+.columntwo { background: #feb200; }
+.columnthree { background: #e662ff; }
+.columnbg, .columnbg1, .columnbg2 { position: absolute;top:0px;}
+.columnbg { width: 1200px; height: 410px; background: url(../images/Station/Shadow1.png); filter: alpha(opacity=50); /*IE滤镜，透明度50%*/ -moz-opacity: 0.5; /*Firefox私有，透明度50%*/ opacity: 0.5; /*其他，透明度50%*/ }
+.columnbg1, .columnbg2 { filter: alpha(opacity=30); /*IE滤镜，透明度50%*/ -moz-opacity: 0.3; /*Firefox私有，透明度50%*/ opacity: 0.3; /*其他，透明度50%*/ }
+.columnbg1 { width: 1200px; height: 410px; background: url(../images/Station/Shadow2.png);}
+.columnbg2 { width: 1200px; height: 520px; background: url(../images/Station/Shadow3.png); }
+.zindex99{z-index:999;position:relative;}

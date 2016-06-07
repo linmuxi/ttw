@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="supplierModel">
+	
+	<select id="findSupplierByDate" parameterType="String" resultType="com.phly.ttw.manage.supplier.model.SupplierModel">
+		SELECT 
+		SUPPLIERID supplierId,
+		SUPNO supNo,
+		CONTRACTCODE contractCode,
+		CMBPEOPLENAME cmbPeopleName,
+		SUPNAME supName,
+		SUPEMAIL supEmail,
+		SUPPHONE supPhone,
+		SUPFAXES supFaxes,
+		SUPADDRESS supAddress,
+		BUSLICENSE busLicense,
+		BANKACCOUNTNAME bankAccountName,
+		BANKACCOUNTNO bankAccountNo,
+		BANKADDRESS bankAddress,
+		LINKPEOPLENAME linkPeopleName,
+		LIKEPEOPLEPHONE linkPeoplePhone,
+		LIKEPEOPLEQQ linkPeopleQQ,
+		LIKEPEOPLEEMAIL linkPeopleEmail,
+		LIKEPEOPLEADDRESS linkPeopleAddress,
+		HEADPEOPLECARDNO HeadPeopleCardNo,
+		HEADPEOPLENAME headPeopleName,
+		HEADPEOPLEPHONE headPeoplePhone,
+		HEADPEOPLEQQ headPeopleQQ,
+		HEADPEOPLEEMAIL headPeopleEmail,
+		USERID userId,
+		SUPTYPE supType,
+		CREATEDATE createDate,
+		CREATOR creator,
+		LAST_UPDATE_DATE updateTime,
+		LAST_UPDATER updater,
+		ISLOCKED isLocked,
+		ISDEL idDel,
+		SUPSTATE supState,
+		REMARK remark 
+		FROM t_supplier t 
+		WHERE t.LAST_UPDATE_DATE >= STR_TO_DATE(#{date},'%Y-%m-%d');
+	</select>
+
+</mapper>

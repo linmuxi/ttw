@@ -1,0 +1,12 @@
+<nav>
+	<ul>
+		<li class="nav-home-icon"><a href="{{iconHref}}" title="导航首页图标" ></a></li>
+		{{each list as item i}}
+			{{if item.id == selectedId}}
+				<li class="selected"><a href="{{contextPath}}{{item.url}}?goodsCategoryId={{item.id}}&homeUrl={{item.homeUrl}}&search={{search}}">{{item.name}}</a></li>
+			{{else}}
+				<li><a href="{{contextPath}}{{item.url}}?goodsCategoryId={{item.id}}&homeUrl={{item.homeUrl}}&search={{search}}">{{item.name}}</a></li>
+			{{/if}}
+		{{/each}}
+	</ul>
+</nav>

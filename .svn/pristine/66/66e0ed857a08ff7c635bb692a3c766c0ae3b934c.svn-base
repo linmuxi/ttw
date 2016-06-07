@@ -1,0 +1,1011 @@
+/**
+ * FileName    : flowBase.js
+ * Description : 暂用于工作流的基础类(控制控件的坐标,画图等基本操作)
+ * @Copyright  : PowerData Software Co.,Ltd.Rights Reserved 
+ * @Company    : 深圳市博安达软件开发有限公司
+ * @author     : 刘剑
+ * @version    : 1.0
+ * Create Date : 2009-9-28 下午02:44:23
+ **/
+ 
+var DomUtils = {};
+	
+	//HTML的基础操作 例如：获取坐标和拖动等
+ 	DomUtils.html = {};
+ 	
+ 	//Js的画图工具类
+ 	DomUtils.graphics = {};
+	
+	//工作流自定义的操作
+	DomUtils.workflow = {};
+	
+	//日志
+	DomUtils.log = {};
+	
+	DomUtils.html.limit = {left:250,top:40,leftbeyong:false};
+/*********************************************************************
+ * 用于获取控制的绝对位置
+ *********************************************************************/
+DomUtils.html.getCoordinate = function(htmlObj){
+	if(!htmlObj){
+		throw new Error("无法获取当前控件的对象")
+	}
+    var top		= htmlObj.offsetTop;   
+    var left	= htmlObj.offsetLeft;   
+    while(htmlObj = htmlObj.offsetParent) {   
+        top		+= htmlObj.offsetTop;   
+        left	+= htmlObj.offsetLeft;   
+    }
+    return  {x:left,y:top}; 
+}	    
+
+DomUtils.html.dragCache = {};
+
+
+/*********************************************************************
+ * 主要用于让控制可以移动
+ *********************************************************************/
+DomUtils.html.move = function(obj,event,flag,callDown,callUp,callOver){
+	event = window.event || event;
+	//保持选择时的样式
+	if(obj == null){
+		obj = event.srcElement || event.target;
+	}
+	var lineStyle = obj.style.border;	
+	var position = DomUtils.html.getCoordinate(obj);
+	
+	//是否是相对路径
+	var mousePosition = this.getMousePosition(event);
+	var x_distance = (mousePosition.x - position.x);
+	var y_distance = (mousePosition.y - position.y);
+	
+	//DomUtils.log.info("当前移动对像ID:"+obj.id+" 鼠标x:"+mousePosition.x+",y:"+mousePosition.y +" 矩形位置:x"+position.x+",y:"+position.y+"移动的距离x："+x_distance+" y:"+y_distance+" 矩形自身属性x："+obj.offsetWidth+" y:"+obj.offsetHeight);
+	
+	obj.setCapture()
+	//获取移动操作
+	var moveType = this.getMoveType.call(obj,event); 
+	//加载拖动事件
+	this.drag.call(obj,event,{x:x_distance,y:y_distance},position,callDown,flag ? moveType : "move")
+	//鼠标悬浮事件
+	
+	obj.onmouseover = function(){
+		var types = DomUtils.html.getMoveType.call(this,event); 
+		this.style.cursor = types;
+		if(callOver != undefined && typeof(callOver) == "function"){
+			callOver(this,event);
+		}
+	}
+	
+	obj.onmouseup = function(){
+		this.releaseCapture();
+		this.onmousemove = null;
+		this.style.border = lineStyle == "" ? "0" : lineStyle;
+		if(callUp != undefined && typeof(callUp) == "function"){
+			callUp(this);
+		}
+	}
+} 
+
+
+/*********************************************************************
+ * 移动的核心类
+ *********************************************************************/
+DomUtils.html.drag = function(event,dis,oldps,callDown,moveType){
+	this.onmousemove = function(){
+		this.style.border 	= "1px dotted";
+		this.style.position = "absolute";
+		this.style.zIndex 	= "999";
+		var mousePosition 	= DomUtils.html.getMousePosition(event);
+		var limit			= DomUtils.html.limit;
+		if(moveType == "move" || moveType == undefined){
+			//控制拖动
+			this.style.cursor   = "move";
+			var left 			= mousePosition.x-(dis.x);
+			var top 			= mousePosition.y-(dis.y);
+			//靠右边的不出框的长度
+			var limtLeft 		= left+this.offsetWidth;
+			window.status =limtLeft +","+document.body.clientWidth;
+			if(limit.leftbeyong == false && limtLeft >= document.body.clientWidth){
+				left	= (document.body.clientWidth - this.offsetWidth);
+			}
+			this.style.top 		= top  < limit.top ? limit.top : top;
+			this.style.left 	= left < limit.left ? limit.left : left;
+			
+		}else{
+			//控制改变控件的大小
+			var minLenth 		= 50 ;
+			var newHeight 		= mousePosition.y - oldps.y
+			var newWidth 		= mousePosition.x - oldps.x;
+			newHeight = newHeight < minLenth ? minLenth : newHeight;
+			newWidth  = newWidth  < minLenth ? minLenth : newWidth;
+			if("N-resize" == moveType){
+				this.style.height  = newHeight ;
+			}else if("E-resize" == moveType){
+				this.style.width   = newWidth;
+			}else if("NW-resize" == moveType){
+				this.style.height  = newHeight;
+				this.style.width   = newWidth;
+			}
+		}
+		if(callDown != undefined && typeof(callDown) == "function"){
+			callDown(this);
+		}
+	}
+}
+
+
+/*********************************************************************
+ * 获取移动方式
+ *********************************************************************/
+DomUtils.html.getMoveType = function(event){
+	var movetype    = "move";
+	try{
+		event   		= (event == null ? window.event : event);
+		var shape		= {width:this.offsetWidth,height:this.offsetHeight};
+		var mouse		= {x:event.x,y:event.y};
+		var position 	= DomUtils.html.getCoordinate(this);
+		var maxHeight	= position.y + shape.height;
+		var maxWidth	= position.x + shape.width;
+		
+		var spearte = 20;
+		if(maxHeight-mouse.y <= spearte  && maxWidth-mouse.x > spearte){
+			movetype   = "N-resize";
+		}else if(maxHeight-mouse.y > spearte  && maxWidth-mouse.x <= spearte){
+			movetype   = "E-resize";
+		}else if(maxHeight-mouse.y <= spearte  && maxWidth-mouse.x <= spearte){
+			movetype   = "NW-resize";
+		}else{
+			movetype   = "move";
+		}
+	}catch(e){
+		alert("获取鼠标操作出错："+e.message);
+	}
+	return movetype;
+}
+
+
+/*********************************************************************
+ * 绘画前的预操作
+ *********************************************************************/
+DomUtils.graphics.init = function(event){
+	var obj 	= null;
+	try{	
+		var type 	= DomUtils.graphics.currentShape; 
+		if("RoundRect" == type){
+			obj = this.rect();
+		}else if("Oval" == type){
+			obj = this.oval();
+		}else if("shape" == type){
+			obj = this.diamond();
+		}
+		if(type == null){
+			throw new Error("请选择要添加的图形");
+		}
+		
+		if(obj != null){	
+			event = (event == null ? window.event : event);
+			document.body.appendChild(obj);
+			obj.style.position = "absolute";
+			obj.style.zIndex 	= "999";
+			obj.style.left = (DomUtils.html.limit.left + 10)+"px";
+			obj.style.top = (DomUtils.html.limit.top)+"px";
+			window.status = (DomUtils.html.limit.left + 10) +","+(DomUtils.html.limit.top);
+			obj.onmousedown= function(){
+				DomUtils.workflow.moveStep(this,event);
+			}
+			
+			obj.onmouseover = function(){
+				var types = DomUtils.html.getMoveType.call(this,event); 
+				this.style.cursor = types;
+				DomUtils.workflow.finishLine(this);
+			}
+		}
+	}catch(e){
+		alert("绘制["+DomUtils.graphics.currentShape+"]图像出错："+e.message);
+	}
+	return obj;
+}
+
+/*********************************************************************
+ * 追加相关实体
+ *********************************************************************/
+DomUtils.graphics.appendShape = function(shapeType,event,shapeName){
+	try{
+		DomUtils.graphics.currentShape = (shapeType == undefined || shapeType == null) ? "RoundRect" :shapeType;
+		var text = shapeName == null ? "新步骤" : shapeName;
+		var obj   = "newSteps"
+		
+		//调用配置事件(添加步骤)
+		var addStepsEvent = DomUtils.workflow.config.addStepsEvent;
+		if(addStepsEvent != null && typeof(addStepsEvent) == "function"){
+			obj = addStepsEvent(text);
+		} 
+		var start = DomUtils.graphics.init(event);
+		var startText = document.getElementById(start.id+"Text");
+		
+		start.id = obj.bzbh;
+		start.title = obj.bzmc;
+		startText.id = start.id+"Text";
+		startText.innerHTML = text; 
+		
+		//var posionts = null
+		//调用配置事件(记录坐标)
+		//var addPositionEvent = DomUtils.workflow.config.addPositionEvent;
+		//if(addPositionEvent != null && typeof(addPositionEvent) == "function"){
+		//	posionts = addPositionEvent(start);
+		//} 
+		//记录坐标的bh
+		//start.name = posionts;
+	}catch(e){
+		alert("DomUtils.graphics.appendShape追加实体出错："+e.message);
+	}	
+}
+
+/*********************************************************************
+ * 当前绘制的图的形状
+ *********************************************************************/
+DomUtils.graphics.currentShape = null;
+
+/*********************************************************************
+ * 更改实体的形状
+ *********************************************************************/
+DomUtils.graphics.changeShape = function(type,obj){
+	var flag = false;
+	if(obj == null){
+		obj = DomUtils.workflow.currentWork;
+		flag = true;
+	}
+	var html   = obj.outerHTML;
+	if(obj.tagName != type){
+		var oldshape = DomUtils.graphics.currentShape;
+		var newShape = null;
+		
+		DomUtils.graphics.currentShape = type
+		newShape = DomUtils.graphics.init();
+		
+		var newText = document.getElementById(newShape.id+"Text");
+		newShape.id = obj.id;
+		newShape.name = obj.name;
+		newText.id = obj.id+"Text";
+		newText.innerHTML = document.getElementById(obj.id+"Text").innerHTML;
+		
+		var postions = DomUtils.html.getCoordinate(obj);
+		newShape.style.top = postions.y+"px";
+		newShape.style.left = postions.x+"px";
+		newShape.style.cssText = obj.style.cssText;
+		if(flag){
+			document.body.removeChild(obj);
+			DomUtils.workflow.currentWork = newShape;
+		}
+	}
+	
+}
+ 
+/*********************************************************************
+ * 画矩形
+ *********************************************************************/
+DomUtils.graphics.rect = function(event){
+	var name = Math.random()*10000000;
+	var rect ='<v:RoundRect title="方形" style="position:relative;top:200px;width:120;height:50px"></v:RoundRect>';
+	var obj = document.createElement(rect);
+	obj.id = "demoRect"+name;
+	
+	var sh = '<v:shadow on="T" type="single" color="#b3b3b3" offset="5px,5px"/>';
+	var sho = document.createElement(sh);
+	obj.appendChild(sho);
+	
+	var txt = '<v:TextBox inset="5pt,5pt,5pt,5pt" style="font-size:10.2pt;" id="demoRect"'+name+'"Text">上的方式大幅是打法</v:TextBox>';
+	var txto = document.createElement(txt);
+	txto.style.zIndex = "9999";
+	txto.innerHTML = "new ";
+	txto.id	= obj.id+"Text";
+	obj.appendChild(txto);
+	return obj;
+}
+
+/*********************************************************************
+ * 画圆
+ *********************************************************************/
+DomUtils.graphics.oval = function(event){
+	var name = Math.random()*10000000;
+	var rect ='<v:Oval id="demoOval" title="圆形" style="position:relative;left:0px;top:0px;width:100px;height:40px;z-index:9" strokecolor="red" strokeweight="1"></v:Oval>';
+	var obj = document.createElement(rect);
+	obj.id = "demoOval"+name;
+	
+	var sh = '<v:shadow on="T" type="single" color="#b3b3b3" offset="5px,5px"/>';
+	var sho = document.createElement(sh);
+	obj.appendChild(sho);
+	
+	var txt = '<v:TextBox inset="5pt,5pt,5pt,5pt" style="font-size:10.2pt;" id="demoOval"'+name+'"Text">上的方式大幅是打法</v:TextBox>';
+	var txto = document.createElement(txt);
+	txto.style.zIndex = "9999";
+	txto.innerHTML = "new ";
+	txto.id	= obj.id+"Text";
+	obj.appendChild(txto);
+	return obj;
+}
+
+/*********************************************************************
+ * 画菱形
+ *********************************************************************/
+DomUtils.graphics.diamond = function(event){
+	var name = Math.random()*10000000;
+	var rect ='<v:shape id="demoDiamond" type="#_x0000_t4" style="position:absolute;left:0px;top:0px;width:70pt;height:60.5pt;z-index:1"></v:shape>';
+	var obj = document.createElement(rect);
+	obj.id = "demoDiamond"+name;
+	
+	var sh = '<v:shadow on="T" type="single" color="#b3b3b3" offset="5px,5px"/>';
+	var sho = document.createElement(sh);
+	obj.appendChild(sho);
+	
+	var txt = '<v:TextBox inset="5pt,5pt,5pt,5pt" style="font-size:10.2pt;" id="_x0000_s1025Text">END</v:TextBox>';
+	var txto = document.createElement(txt);
+	txto.style.zIndex = "9999";
+	txto.innerHTML = "new ";
+	txto.id	= obj.id+"Text";
+	obj.appendChild(txto);
+	return obj;
+}
+
+/*********************************************************************
+ * 画线
+ *********************************************************************/
+DomUtils.graphics.line = function(fromID,toID,obj){
+	try{
+		// 增加 返回 线的 样式是不是一样的处理方式 
+		var flag = false;
+		var relations = DomUtils.workflow.relationCache;
+		if(relations !=null && relations.length > 0 ){
+			for(var i = 0; i<relations.length; i++){
+				if(relations[i]!=null && relations[i].from == toID && relations[i].to == fromID ){
+					flag = true;	
+				}
+			}
+		}
+	
+		var lineObj = this.getLinePosition(fromID,toID);
+		var from	= lineObj.from;
+		var to		= lineObj.to;
+		var text	=	"<v:line style='POSITION: absolute;' from='0,0' to ='0,0'></v:line>";
+		var vml     = obj;
+		if(obj == undefined || obj == null){
+			 vml 	= document.createElement(text);
+			 document.body.appendChild(vml);
+		}
+		
+		if(flag == true){
+		from.x = from.x +10;
+		to.x  = to.x +10;
+		}
+		vml.style.zIndex = 1;
+		vml.style.left = from.x;
+		vml.style.top = from.y;
+		vml.id = fromID+"_"+toID;
+		vml.to = (to.x-from.x) + "," + (to.y-from.y);
+		
+		vml.innerHTML = "";
+		var arrow = "<v:stroke EndArrow=\"Classic\"  weight='2pt' dashstyle=\"\"/>";
+			if(flag == true){
+			arrow = "<v:stroke EndArrow=\"Classic\" color=\"red\" weight='2pt' dashstyle=\"\"/>";
+			}
+		var arrots = document.createElement(arrow);
+		arrow.color = 'red';
+		
+		vml.appendChild(arrots);
+		
+		vml.onclick = function(){
+			arrots.dashstyle = "Dash";
+			var currentLine = DomUtils.workflow.currentLine;
+			if(currentLine!=null){
+				currentLine.childNodes[0].dashstyle = "";
+			}
+			DomUtils.workflow.currentWork = null;
+			DomUtils.workflow.currentLine = this;
+		}
+		
+		vml.ondblclick = function(){
+			Workflow.selectWorkflowStepLine(fromID,toID);
+		}
+		
+		var ovalLine = document.getElementById("lineStart");
+		var ovalLine1 = document.getElementById("lineEnd");
+		if(ovalLine!=null){
+			document.body.removeChild(ovalLine)
+			document.body.removeChild(ovalLine1)
+		}
+		
+		return vml;
+	}catch(e){
+		alert("创建线出错："+e.message);
+	}
+}
+
+/*********************************************************************
+ * 画线
+ *********************************************************************/
+DomUtils.graphics.dynaline = function(rect,event){
+	try{
+		var positions1 = DomUtils.html.getCoordinate(rect);
+		var from	   = {x:(positions1.x+(rect.offsetWidth/2)),y:(positions1.y+(rect.offsetHeight/2))};
+		
+		var text	="<v:line style='POSITION: absolute;' from='0,0' to ='0,0'></v:line>";
+		var vml     = document.createElement(text);
+		vml.style.zIndex = "999999";
+		vml.style.left = from.x;
+		vml.style.top = from.y;
+		vml.id = "dyna_line";
+		vml.name="ConnectLine";
+		
+		document.body.appendChild(vml);
+		
+		var arrow = "<v:stroke EndArrow=\"Classic\"/>";
+		var arrots = document.createElement(arrow);
+		arrots.dashstyle = "Dash";
+		vml.appendChild(arrots);
+		
+		document.onmousemove = function(){
+			vml.to = (event.x-from.x) + "," + (event.y-from.y);
+		}
+		
+		document.onmouseup = function(){
+			if(vml.id == "dyna_line"){
+				try{
+					document.body.removeChild(vml);
+					document.onmousemove = null;
+					document.onmouseup   = null;
+					DomUtils.workflow.fromWork = null;
+					DomUtils.graphics.currentShape = "";
+				}catch(e){
+					alert("线段自动结束出错："+e.message);
+				}
+			}
+		}
+	}catch(e){
+		alert("创建动态线出错："+e.message);
+	}
+}
+
+/*********************************************************************
+ * 计算两个物体直接的路径
+ *********************************************************************/
+DomUtils.graphics.getLinePosition = function(fromObj,toObj){
+	var rect 	   	= document.getElementById(fromObj);
+	var positions1 	= DomUtils.html.getCoordinate(rect);
+	//中心坐标
+	var from	   	= {x:(positions1.x+(rect.offsetWidth/2)),y:(positions1.y+(rect.offsetHeight/2))};
+	var fromPostion = {left		:{x:(positions1.x),y:(positions1.y+(rect.offsetHeight/2))},
+					   right	:{x:(positions1.x+rect.offsetWidth),y:(positions1.y+(rect.offsetHeight/2))},	
+					   top		:{x:(positions1.x+(rect.offsetWidth/2)),y:(positions1.y)},	
+					   buttom	:{x:(positions1.x+(rect.offsetWidth/2)),y:(positions1.y+rect.offsetHeight)},
+					   center   :from 	
+					  };
+		
+	var rect1 	   	= document.getElementById(toObj);
+	var positions2 	= DomUtils.html.getCoordinate(rect1);
+	//中心坐标
+	var to		   	= {x:(positions2.x+(rect1.offsetWidth/2)),y:(positions2.y+(rect1.offsetHeight/2))};
+	var toPostion 	= {left		:{x:(positions2.x),y:(positions2.y+(rect1.offsetHeight/2))},
+					   right	:{x:(positions2.x+rect1.offsetWidth),y:(positions2.y+(rect1.offsetHeight/2))},	
+					   top		:{x:(positions2.x+(rect1.offsetWidth/2)),y:(positions2.y)},	
+					   buttom	:{x:(positions2.x+(rect1.offsetWidth/2)),y:(positions2.y+rect1.offsetHeight)},
+					   center   :to 
+					  };
+					  
+	var lengthArray = new Array();
+	//以fromObj为参考物
+	//在其左上方	
+	if(from.y > to.y && from.x >= to.x ){
+		lengthArray.push(this.countPositionLength(fromPostion.left,toPostion.right));
+		lengthArray.push(this.countPositionLength(fromPostion.left,toPostion.buttom));
+		lengthArray.push(this.countPositionLength(fromPostion.top,toPostion.right));
+		lengthArray.push(this.countPositionLength(fromPostion.top,toPostion.buttom));
+	}
+	
+	//在其右上方	
+	if(from.y > to.y && from.x < to.x ){
+		lengthArray.push(this.countPositionLength(fromPostion.right,toPostion.left));
+		lengthArray.push(this.countPositionLength(fromPostion.right,toPostion.buttom));
+		lengthArray.push(this.countPositionLength(fromPostion.top,toPostion.left));
+		lengthArray.push(this.countPositionLength(fromPostion.top,toPostion.buttom));
+	}
+	
+	//在其左下方	
+	if(from.y < to.y && from.x >= to.x ){
+		lengthArray.push(this.countPositionLength(fromPostion.left,toPostion.right));
+		lengthArray.push(this.countPositionLength(fromPostion.left,toPostion.top));
+		lengthArray.push(this.countPositionLength(fromPostion.buttom,toPostion.right));
+		lengthArray.push(this.countPositionLength(fromPostion.buttom,toPostion.top));
+	}
+	//在其右下方	
+	if(from.y < to.y && from.x < to.x ){
+		lengthArray.push(this.countPositionLength(fromPostion.right,toPostion.left));
+		lengthArray.push(this.countPositionLength(fromPostion.right,toPostion.top));
+		lengthArray.push(this.countPositionLength(fromPostion.buttom,toPostion.left));
+		lengthArray.push(this.countPositionLength(fromPostion.buttom,toPostion.top));
+	}
+	
+	if(from.y == to.y && from.x <= to.x){
+		return {from:fromPostion.right,to:toPostion.left};
+	}
+	
+	if(from.y == to.y && from.x > to.x){
+		return {from:fromPostion.left,to:toPostion.right};
+	}
+	
+	if(lengthArray.length > 0){
+		var minLength = lengthArray[0].len;
+		var j = 0;
+		for(var i = 0 ;i<lengthArray.length;i++){
+			if(minLength >lengthArray[i].len){
+				j = i;
+				minLength = lengthArray[i].len;
+			}
+		}
+		return lengthArray[j];
+	}
+	
+	return {from:fromPostion.center,to:toPostion.center};
+	
+}
+
+
+/*********************************************************************
+ * 计算两点之间的距离
+ *********************************************************************/
+DomUtils.graphics.countPositionLength = function(fromPosition,toPosition){
+	 var x = Math.pow(Math.abs(fromPosition.x - toPosition.x),2);
+	 var y = Math.pow(Math.abs(fromPosition.y - toPosition.y),2);
+	 var length = Math.sqrt(x+y);
+	 return {from:fromPosition,to:toPosition,len:length};
+}
+
+/*********************************************************************
+ * 画像的配置处理
+ *********************************************************************/
+DomUtils.graphics.configHandler = function(funcargs,args){
+	var reInfo = null;
+	try{
+		var funcss = DomUtils.workflow.config[funcargs];
+		if(funcss != null && typeof(funcss) == "function"){
+			reInfo = funcss(args);
+		}
+	}catch(e){
+		alert("处理图像配置事件出错："+e.message);
+	}
+	return reInfo;
+}
+
+/*********************************************************************
+ * 保存坐标
+ *********************************************************************/
+DomUtils.graphics.savePosition = function(){
+	var currentObj  = DomUtils.workflow.currentWork;
+	if(currentObj!=null){
+		currentObj.style.border = "0";
+	}
+	DomUtils.graphics.configHandler('savePositonEvent');
+	if(currentObj!=null){
+		currentObj.style.border = "1px dotted";
+	}
+}
+
+/*********************************************************************
+ * 删除实体
+ *********************************************************************/
+DomUtils.graphics.delEntity = function(){
+	var currentObj  = DomUtils.workflow.currentWork;
+	var currentLine = DomUtils.workflow.currentLine
+	if(currentObj != null){
+		var stepsName	= document.getElementById(currentObj.id+"Text").innerHTML;
+		var isDel 		= window.confirm("是否要删除["+stepsName+"]步骤！");
+		if(isDel){
+			DomUtils.graphics.configHandler('delStepEvent',currentObj.id);
+		 	document.body.removeChild(currentObj);
+		 	DomUtils.workflow.delRelation(currentObj);
+		 	DomUtils.workflow.currentWork = null;
+		}
+	}else if(currentLine!=null){
+		var isDel 		= window.confirm("是否要删除该关联！");
+		if(isDel){
+			DomUtils.workflow.currentLine = null;
+			DomUtils.graphics.configHandler('delLineEvent',currentLine.name);
+			DomUtils.workflow.delRelationByLine(currentLine);
+		}
+	}else {
+		alert("请选择你要删除的对象！");
+	}
+}
+
+
+/*********************************************************************
+ * 删除线
+ *********************************************************************/
+DomUtils.graphics.delLine = function(linObj){
+	//调用删除事件
+	DomUtils.graphics.configHandler('delLineEvent',linObj.name);
+	//移除实体
+	document.body.removeChild(linObj);
+}
+
+/*********************************************************************
+ * 删除实体
+ *********************************************************************/
+DomUtils.log.info = function(message){
+	//window.status = message;
+}
+
+
+/*********************************************************************
+ * 获取鼠标的坐标
+ *********************************************************************/
+DomUtils.html.getMousePosition = function(ev){
+	if(ev.pageX || ev.pageY){         
+		return {x:ev.pageX, y:ev.pageY};     
+	}     
+	return {         
+	  x:ev.clientX + document.body.scrollLeft - document.body.clientLeft,         
+	  y:ev.clientY + document.body.scrollTop  - document.body.clientTop     
+	}; 
+}
+
+/*********************************************************************
+ * 获取鼠标的坐标
+ *********************************************************************/
+DomUtils.html.closeWindow = function(){
+	window.opener = null;
+	window.open('','_self');
+	window.close();
+}
+
+/*********************************************************************
+ * 追加参数
+ *********************************************************************/
+DomUtils.html.appendURL = function(url,params){
+	url = (url == null) ? '' : url;
+	var linkChar = (url.indexOf('?') >= 0) ? '&' : '?'; 
+	return	url+linkChar+params;
+}
+
+
+document.onkeydown = function(event){
+	var evs = event || window.event;
+	if(evs.keyCode == 46){
+		DomUtils.graphics.delEntity();
+	}else if(evs.keyCode == 13){
+		return false;
+	}
+}
+
+/*********************************************************************
+ * 工作流触发事件配置信息
+ *********************************************************************/
+DomUtils.workflow.config = {
+							showWorkflowEvent		: null,
+							addStepsEvent	 		: null,
+							shapOnclickEvent 		: null,
+							delStepEvent	 		: null,
+							finishLineEvent	 		: null,
+							delLineEvent	 		: null,
+							propertiesEvent			: null,
+							savePositonEvent		: null,
+							checkWorkflowEvent		: null
+};
+
+
+
+/*********************************************************************
+ * 当前工作流步骤
+ *********************************************************************/
+DomUtils.workflow.currentWork = null;
+
+DomUtils.workflow.currentLine = null;
+
+/*********************************************************************
+ * 当前工作流步骤(用于画线)
+ *********************************************************************/
+DomUtils.workflow.fromWork = null;
+
+	
+/*********************************************************************
+ * 工作流步骤关系缓存
+ *********************************************************************/
+DomUtils.workflow.relationCache = new Array();
+	
+/*********************************************************************
+ * 添加工作流的步骤将关系进行缓存
+ *********************************************************************/
+DomUtils.workflow.putRelationCache = function(fromObj,toObj,linObj){
+	linObj.id = fromObj.id+"_"+toObj.id;
+	var relationObj   = {from:fromObj.id,to:toObj.id,line:linObj};
+	this.relationCache.push(relationObj);
+	DomUtils.log.info("relations:"+relationObj+"length"+relationObj);
+}
+
+
+
+/*********************************************************************
+ * 添加工作流的关联
+ *********************************************************************/
+DomUtils.workflow.showInfos = function(){
+	var showWorkflowEvent = DomUtils.workflow.config.showWorkflowEvent;
+	if(showWorkflowEvent != null && typeof(showWorkflowEvent) == "function"){
+		showWorkflowEvent();
+	}
+}	
+
+/*********************************************************************
+ * 添加工作流的步骤
+ *********************************************************************/
+DomUtils.workflow.addStep = function(type,event){
+	//DomUtils.graphics.currentShape = type;
+	//DomUtils.graphics.init(event);
+	DomUtils.graphics.appendShape(type,event);
+}
+
+/*********************************************************************
+ * 添加工作流的关联
+ *********************************************************************/
+DomUtils.workflow.addRelation = function(){
+	DomUtils.graphics.currentShape = 'line';
+}
+
+DomUtils.workflow.finishLine = function(obj){
+	try{
+		var isNotSelf = (obj != DomUtils.workflow.fromWork);
+		if(DomUtils.graphics.currentShape == "line" && DomUtils.workflow.fromWork !=null && isNotSelf){
+			var fromObj = DomUtils.workflow.fromWork;
+			var lineobj = document.getElementById("dyna_line");
+			DomUtils.log.info(fromObj+" fromObj.id"+fromObj);
+			var flag = DomUtils.workflow.validRelation(fromObj,obj);
+			
+			if(flag){
+				var lineName = "line-Relation";
+				//调用配置事件
+				var finishEvent = DomUtils.workflow.config.finishLineEvent;
+				if(finishEvent != null && typeof(finishEvent) == "function"){
+					lineName = finishEvent(fromObj.id,obj.id);
+					lineobj.name = lineName;
+				}
+				//生成线
+				DomUtils.graphics.line(fromObj.id,obj.id,lineobj);
+				//将关系放入缓存
+				DomUtils.workflow.putRelationCache(fromObj,obj,lineobj);
+				//清空操作信息
+				document.onmousemove = null;
+				DomUtils.workflow.fromWork = null;
+				DomUtils.graphics.currentShape = "";
+			}else{
+				//alert('流程不允许建立关系');
+				//清空操作信息
+				document.onmousemove = null;
+				DomUtils.workflow.fromWork = null;
+				DomUtils.graphics.currentShape = "";
+			}
+		}
+	}catch(e){
+		alert("结束连接线时出错："+e.message);
+	}
+}
+ 
+/*********************************************************************
+ * 添加工作流的步骤移动
+ *********************************************************************/
+DomUtils.workflow.moveStep = function(obj,event){
+	if(DomUtils.graphics.currentShape != "line"){
+		DomUtils.html.move(obj,event,true,this.restRelation,null,this.finishLine);
+	}else{
+		if(DomUtils.workflow.fromWork == null){
+			DomUtils.workflow.fromWork = obj;
+			DomUtils.graphics.dynaline(obj,event);
+		}
+	}
+	
+	//双击事件
+	obj.ondblclick = function(){
+		this.style.border = "1px dotted";
+		DomUtils.workflow.currentWork = this;
+		var curent = DomUtils.workflow.currentWork;
+		if(this != curent && curent != null){ 
+			curent.style.border = (lineStyle == "" || lineStyle ==  "1px dotted")? "0" : lineStyle;
+			
+		}
+		
+		//调用配置事件
+		var shapOnclickEvent = DomUtils.workflow.config.shapOnclickEvent;
+		if(shapOnclickEvent != null && typeof(shapOnclickEvent) == "function"){
+			shapOnclickEvent(obj.id);
+		}
+	}
+	
+	var lineStyle = obj.style.border;	
+	
+	//鼠标选中事件
+	obj.onclick = function(){
+		this.style.border = "1px dotted";
+		 
+		var curent = DomUtils.workflow.currentWork;
+		if(this != curent && curent != null){ 
+			curent.style.border = (lineStyle == "" || lineStyle ==  "1px dotted")? "0" : lineStyle;
+			
+		}
+		DomUtils.workflow.currentWork = this;
+		DomUtils.workflow.reloadWorkflowStep();
+	}
+	
+	obj.onmouseout = function(){
+		var curent = DomUtils.workflow.currentWork;
+		if(this != curent && curent != null){ 
+			this.style.border = (lineStyle == "" || lineStyle ==  "1px dotted")? "0" : lineStyle;
+		}
+	}
+	
+	obj.onkeydown = function(){
+		/*
+			var evs = event || window.event;
+			if(evs.keyCode == 13){
+				var isDel = window.confirm("确实要删除？");
+				if(isDel){
+					document.body.removeChild(this);
+				}
+			}
+		*/
+	}
+}
+
+/*********************************************************************
+ * 工作流移动时的线也跟着变
+ *********************************************************************/
+DomUtils.workflow.restRelation = function(obj){
+	try{
+		var relations = DomUtils.workflow.relationCache;
+		DomUtils.log.info("relations:"+relations);
+		if(relations !=null && relations.length > 0 ){
+			for(var i = 0; i<relations.length; i++){
+				if(relations[i]!=null && (relations[i].from == obj.id || relations[i].to == obj.id)){
+					DomUtils.graphics.line(relations[i].from,relations[i].to,relations[i].line);
+				}
+			}
+		}
+	}catch(e){
+		alert("重新绘制工作流步骤之间的线出错："+e.message);
+	}
+}
+
+/*********************************************************************
+ * 验证工作流的关系是否存在
+ *********************************************************************/
+DomUtils.workflow.validRelation = function(fromObj,toObj){
+	var flag = true;
+	try{
+		var relations = DomUtils.workflow.relationCache;
+		if(relations !=null && relations.length > 0 ){
+			for(var i = 0; i<relations.length; i++){
+			//在这里系统原来 的意思 是只允许 单线来进行处理 流程 。但是在一些意外 的情况 下面。
+			//系统 的双线更能简化一些流程的关系 所以决定 改成双线来使用
+				if(relations[i]!=null 
+					&& ((relations[i].from == fromObj.id && relations[i].to == toObj.id)
+						//&& (relations[i].from == toObj.id && relations[i].to == fromObj.id)
+						)
+					){
+					flag = false;					
+				}
+			}
+		}
+	}catch(e){
+		alert("验证工作流步骤的关系出错:"+e.message);
+	}
+	return flag;
+}
+
+/*********************************************************************
+ * 删除步骤后将对应的关联删除(实体)
+ *********************************************************************/
+DomUtils.workflow.delRelation = function(obj){
+	try{
+		var relations = DomUtils.workflow.relationCache;
+		if(relations !=null && relations.length > 0 ){
+			for(var i = 0; i<relations.length; i++){
+				if(relations[i]!=null && (relations[i].from == obj.id || relations[i].to == obj.id) ){
+					//document.body.removeChild(relations[i].line);
+					DomUtils.graphics.delLine(relations[i].line);
+					relations[i] = null;
+				}
+			}
+		}
+	}catch(e){
+		alert("删除步骤同时删除关联线出错："+e.message);
+	}
+}
+
+/*********************************************************************
+ * 删除步骤后将对应的关联删除(线)
+ *********************************************************************/
+DomUtils.workflow.delRelationByLine = function(obj){
+	try{
+		var relations = DomUtils.workflow.relationCache;
+		if(relations !=null && relations.length > 0 ){
+			for(var i = 0; i<relations.length; i++){
+				if(relations[i]!=null && relations[i].line == obj ){
+					//document.body.removeChild(document.getElementById("lineEnd"));
+					//document.body.removeChild(document.getElementById("lineOval"));
+					//document.body.removeChild(relations[i].line);
+					DomUtils.graphics.delLine(relations[i].line);
+					relations[i] = null;
+				}
+			}
+		}
+	}catch(e){
+		alert("删除关联线出错："+e.message);
+	}
+}
+
+/*********************************************************************
+ * 工作流属性的的处理(更改相关属性)
+ *********************************************************************/
+DomUtils.workflow.handlerWorkflowProperties = function(handlerType){
+	try{
+		var flag   = false;
+		var currentObj = null;
+		
+		var currentWorkflow = DomUtils.workflow.currentWork;
+		if("showBase" == handlerType){
+			flag = true;
+		}else if("relation" == handlerType){
+			flag = true;
+		}else if("nofity" == handlerType){
+			flag = true;
+			
+		}else if("name" == handlerType){
+			var name = document.getElementById("set-name").value;
+			var workflowText    = document.getElementById(currentWorkflow.id+"Text");
+			workflowText.innerHTML = name;
+			
+		}else if("text" == handlerType){
+			var text = document.getElementById("set-text").value;
+			var workflowText = document.getElementById(currentWorkflow.id+"Text");
+			workflowText.style.fontSize = text+"pt";
+			
+		}else if("border" == handlerType){
+			var border = document.getElementById("set-border").value;
+			currentWorkflow.style.border = border; 
+		}
+		
+		var propertiesEvent = DomUtils.workflow.config.propertiesEvent;
+		if(flag && propertiesEvent != null && typeof(propertiesEvent) == "function"){
+			propertiesEvent(currentWorkflow.id,handlerType,currentObj);
+		}
+	}catch(e){
+		alert("展示步骤的属性出错(属性框)："+e.message);
+	}
+}
+
+/*********************************************************************
+ * 加载当前工作步骤信息
+ *********************************************************************/
+DomUtils.workflow.reloadWorkflowStep = function(){
+	try{
+		var currentWorkflow = DomUtils.workflow.currentWork;
+		document.getElementById("propertiesbody").style.display = "block";
+		var workflowText    = document.getElementById(currentWorkflow.id+"Text");
+		var name 	= document.getElementById("set-name");
+		var text 	= document.getElementById("set-text");
+		name.value 		= workflowText.innerHTML;
+		text.value 		= workflowText.style.fontSize.replace("pt","");
+		var shapeRadio = document.getElementsByName("set-shape");
+		type = currentWorkflow.tagName;
+		if('RoundRect' == type){
+			shapeRadio[0].checked = true;
+		}else if('Oval' == type){
+			shapeRadio[1].checked = true;
+		}else if('shape'== type){
+			shapeRadio[2].checked = true;
+		}
+	}catch(e){
+		alert("加载工作流步骤信息出错(属性框)："+e.message);
+	}
+}
+
+
+DomUtils.workflow.checkWorkflow = function(){
+	DomUtils.graphics.configHandler('checkWorkflowEvent');
+}

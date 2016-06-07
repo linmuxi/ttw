@@ -1,0 +1,12 @@
+﻿body { margin:0; width:100%;}
+
+.main{ width:975px; margin:0 auto;}
+
+/*当前位置*/
+.Pos{ padding:20px 0;width:100%; height:26px;}
+.PosIcon{ background:url(../images/icon_total.png) -334px -93px; float:left; width:29px; height:26px; margin-right:10px;}
+.PosOne{ font-size:14px; float:left; line-height:26px;}
+.Choose{ font-size:15px; color:#0096dc; height:16px;}
+.Content{ margin-top:15px;}
+.CTit{ float:left; font-size:14px; padding:5px 0; border-bottom:1px solid #0096dc;}
+.CMain{ clear:both; width:970px; height:445px; border:1px solid #b8b8bb;}

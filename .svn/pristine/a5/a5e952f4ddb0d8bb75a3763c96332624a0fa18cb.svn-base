@@ -1,0 +1,8 @@
+﻿@import url('css.css');
+.large_run{padding:65px 0;}
+.des_bg{width:1200px; height:508px; background:url(../images/Design/des_bg.png);}
+.des_p{text-align:center; padding:20px 0 10px 0; color:#0eb493; font-size:30px;}
+.des_love {background:url(../images/icon_total.png); width:21px;height:18px; background-position:-288px -147px; display:inline-block; float:left; margin:0 10px;}
+.des_hr{width:100px; float:left; border:none; border-top:1px solid #edeeee;}
+.des_img img {float:left;}
+.header .des_nav{padding:0 14px; width:inherit;}

@@ -1,0 +1,54 @@
+﻿@import url('css.css');
+@import url('frame.css');
+@import url('virtual2.css');
+
+
+
+.bodyAll{ width:1000px;  margin: 0 auto;}
+.zuo{width:215px; height:960px; float:left; }
+.you{width:775px; height:960px; background-color:#ffffff; float:right; margin-left:10px;}
+.you_top{width:775px; height:275px;background-color:#31333f;float:left; }
+.banner{font-family:微软雅黑; font-size:16px;color:#ffffff;  line-height:250px; margin-left:355px;float:left;}
+.box1{width:10px; height:10px;background-color: #0096dc; -webkit-border-radius: 10px; margin-left:357px;float:left;}
+.box2{width:10px; height:10px;background-color: #ffffff; -webkit-border-radius: 10px; margin-left:15px;float:left;}
+.you_z{width:775px; height:380px;float:left; margin-top:15px; }
+.you_x{width:775px; height:280px;float:left; }
+.you_z_top{width:775px; height:35px;float:left;background-color:#eeeeee; }
+.you_z_x{width:775px; height:345px;float:left; }
+.you_z_top_hd{font-family:微软雅黑; font-size:16px;color:#000000; line-height:35px; margin-left:15px;}
+.you_z_x_left{width:363px; height:250px;float:left; margin-top:15px; border-right:2px solid #eeeeee;}
+.you_z_x_right{width:410px; height:250px;float:left; margin-top:15px;}
+.you_z_x_left_lr{width:363px; height:30px; float:left; margin-top:3px;}
+.lan{font-family:微软雅黑; font-size:15px;color:#54ade3;float:left; margin-left:20px; width:60px;}
+.lan1{font-family:微软雅黑; font-size:15px;color:#54ade3;float:left; margin-left:50px; width:60px;}
+.lan2{font-family:微软雅黑; font-size:15px;color:#54ade3;float:left; margin-left:50px; width:100px;}
+.lan3{font-family:微软雅黑; font-size:15px;color:#54ade3;float:left; margin-left:20px; width:380px; }
+.hei{font-family:微软雅黑; font-size:15px;color:#000000;float:left; margin-left:20px; width:60px;}
+.hei1{font-family:微软雅黑; font-size:15px;color:#000000;float:left; margin-left:50px; width:60px;}
+.hei2{font-family:微软雅黑; font-size:15px;color:#ff6767;float:left; margin-left:50px; width:55px;}
+.hei4{font-family:微软雅黑; font-size:15px;color:#000000;float:left; width:25px;}
+.hei3{font-family:微软雅黑; font-size:15px;color:#000000;float:left; margin-left:20px;  width:390px; margin-top:6px; }
+.you_z_x_x{width:365px; height:30px;float:left; margin-left:200px; margin-top:30px; }
+.xiaok{width:53px; height:23px; float:left; border:1px solid #0096dc; margin-left:10px;font-family:微软雅黑; font-size:15px;color:#0096dc;}
+.dak{width:73px; height:23px; float:left; border:1px solid #0096dc; margin-left:10px;font-family:微软雅黑; font-size:15px;color:#0096dc;}
+.you_x_top{width:775px; height:33px; border-bottom:1px solid #c9c9c9; border-top:1px solid #c9c9c9;}
+.you_x_top_z{width:115px; height:16px; font-family:微软雅黑; font-size:13px;color:#000000; line-height:30px; margin-left:30px;}
+.you_x_top_zl{width:115px; height:16px; font-family:微软雅黑; font-size:13px;color:#54ade3; line-height:30px; margin-left:30px;}
+.you_x_x_z{width:700px; height:17px; font-family:微软雅黑; font-size:14px; color:#000000; line-height:16px; margin-left:35px; margin-top:25px; border-left:2px solid #54ade3;float:left;}
+.you_x_x_xz{width:700px; height:15px; font-size:13px; color:#000000; margin-left:50px; margin-top:25px;float:left;}
+
+
+.List1 ul li:hover{ background:#fff; margin:0; padding:0 11px; margin:0; position:relative;}
+.List1 ul li:hover{ color:#0096dc; margin-left:0;}
+.List1 ul li:hover:before{ background:url(../images/product/hoverIcon.png) 0 0 no-repeat; margin-top:10px; margin-left:3px; margin-right:3.5px;}
+
+.List1 ul li:hover .Hbsj_C_T_C_L_B_D_Box{ display:block;}
+.Hbsj_C_T_C_L_B_D_Box{ display:none; position:absolute; left:212px; top:1px; background:white; height:12px; padding:10px 10px; margin-top:-2px; width:264px; border:1px solid #0096dc; border-left:none; z-index:999;}
+.Hbsj_C_T_C_L_B_D_Box .adsaf li:before{display: none;}
+.Hbsj_C_T_C_L_B_D_Box .adsaf li {border:none; width: 60px; height: 30px; }
+.Hbsj_C_T_C_L_B_D_Box .adsaf li:hover{background: none; margin:0;padding:0; }
+.adsaf{ font-size:12px; color:#31333e; margin-top: -10px;}
+.adsaf li{ float:left;}
+.adsaf div{ float:left; margin:0 4px;}
+
+.Hbsj_C_T_C_L_B_D_Box .adsafw70 li {width: 80px;}

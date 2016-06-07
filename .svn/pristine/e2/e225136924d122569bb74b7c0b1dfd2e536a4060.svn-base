@@ -1,0 +1,22 @@
+﻿@import url('css.css');
+@charset 'utf-8';
+.main{width:1100px;margin:1px auto;font-family:微软雅黑,黑体;color:#31333e;}
+/* side-nav */
+.side-nav{width:198px;background-color:#F6F6F6;position:relative;}
+.side-nav .active{background-color:#fff;border:none;border-bottom:1px solid #D8D8D8;cursor:default;}
+.side-nav-li{width:100%;line-height:50px;border-radius:1px;border:1px solid #D8D8D8;border-top:none;font-size:14px;cursor:pointer;}
+.side-nav-li i{width:19px;height:19px;margin:15px 9px 0px 39px;background-image:url('../images/icon_total.png');display:inline;float:left;}
+/* icon */
+.icon-phone{background-position: -251px -97px;}
+.icon-earth{background-position: -279px -97px;}
+.icon-copy{background-position: -306px -97px;}
+/* rightFrame 770px #0096db 7 9 17 25*/
+.rightFrame{width:900px;position:relative;}
+.rightFrame .title{width:770px;margin:0px auto;padding:15px 0px 8px;line-height:20px;font-size:14px;border-bottom:1px solid #dcdcdc;}
+.rightFrame .title:before{content:" ";width:2px;height:20px;margin-right:10px;background-color:#0096db;float:left;}
+.rightFrame .content{width:770px;margin:0px auto;}
+.in4Box{padding-left: 35px;font-size:12px;margin:25px 0px;}
+.in4Box .mark{font-size:14px;}
+.in4Box .mark:before{content:" ";width:7px;height:7px;border-radius:7px;background-color:#0096db;float:left;margin-top: 6px;margin-left:-16px;}
+.in4Box li{float: left;margin: 25px 24px 0px 0px;}
+.inpadd {line-height:30px; padding-left:0!important;}

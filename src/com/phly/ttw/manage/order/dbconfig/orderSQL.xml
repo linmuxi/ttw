@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="order">
+
+	<select id="queryOrderList" parameterType="com.phly.ttw.manage.order.model.OrderVO"
+		resultType="com.phly.ttw.manage.order.model.OrderVO">
+		SELECT
+			t1.id id,
+			t1.order_sn orderSn,
+			t1.member_id as "memberVO.id",
+			t1.is_invoice isInvoice,
+			t1.invoice_title invoiceTitle,
+			t1.memo memo,
+			t1.order_status orderStatus,
+			t1.payment_method_name paymentMethodName,
+			t1.payment_status paymentStatus,
+			t1.payment_method_id as "paymentMethodVO.id",
+			t1.mobile mobile,
+			t1.CREATE_DATE createDate,
+			t1.CREATOR creator,
+			t1.LAST_UPDATE_DATE updateTime,
+			t1.LAST_UPDATER updater ,
+			oi.name goodsName,
+			t2.`name` as memberName,
+			COALESCE(sum(oi.price),0) amount,
+			COUNT(1) num 
+		FROM
+			t_order t1 
+		INNER JOIN t_member t2 on t2.id=t1.member_id
+		INNER JOIN t_order_item oi on oi.order_id=t1.order_sn
+		INNER JOIN t_goods g ON g.SERIALNUMBER = oi.sn
+		<if test="supplier != null and supplier != ''">
+			INNER JOIN t_supplier s ON s.SUPNO = g.CREATE_USER AND s.SUPNO=#{supplier}
+		</if>
+		<include refid="sqlCondition"></include>
+		GROUP BY t1.order_sn
+		ORDER BY t1.create_date DESC
+	</select>
+	
+	<select id="getOrderCount" parameterType="com.phly.ttw.manage.order.model.OrderVO"
+		resultType="int">
+		SELECT count(1) FROM t_order t1 
+		INNER JOIN t_member t2 on t2.id=t1.member_id
+		INNER JOIN t_order_item oi on oi.order_id=t1.order_sn
+		INNER JOIN t_goods g ON g.SERIALNUMBER = oi.sn
+		<if test="supplier != null and supplier != ''">
+			INNER JOIN t_supplier s ON s.SUPNO = g.CREATE_USER AND s.SUPNO=#{supplier}
+		</if>
+		<include refid="sqlCondition"></include>
+	</select>
+	
+	<sql id="sqlCondition">
+		<where> 1 = 1
+			<if test="inOrderStatus != null and inOrderStatus.length > 0">
+				AND t1.order_status in
+				<foreach item="item" index="index" collection="inOrderStatus" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="inPaymentStatus != null and inPaymentStatus.length > 0">
+				AND t1.payment_status in
+				<foreach item="item" index="index" collection="inPaymentStatus" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="orderStatus != null and orderStatus != '' ">
+				AND t1.order_status = #{orderStatus}
+			</if>
+			<if test="creator != null and creator != '' ">
+				AND t1.creator = #{creator}
+			</if>
+			<if test="searchList != null and searchList.length > 0">
+				AND 
+				<if test="searchRegex == true">
+					<foreach collection="searchList" open="(" close=")" separator="or" item="key">
+						t1.order_sn like CONCAT('%',#{key},'%')
+					</foreach>
+				</if>
+				<if test="searchRegex == false">
+					<foreach collection="searchList" open="(" close=")" separator="or" item="key">
+						t1.order_sn = #{key}
+					</foreach>
+				</if>
+			</if>
+		</where>
+	</sql>
+	
+	<select id="findOrderByDate" parameterType="String"
+		resultType="com.phly.ttw.manage.order.model.OrderModel">
+		SELECT
+			t1.id id,
+			t1.order_sn orderSn,
+			t1.member_id as "memberVO.id",
+			t1.is_invoice isInvoice,
+			t1.invoice_title invoiceTitle,
+			t1.memo memo,
+			t1.order_status orderStatus,
+			t1.payment_method_name paymentMethodName,
+			t1.payment_status paymentStatus,
+			t1.payment_method_id as "paymentMethodVO.id",
+			t1.mobile mobile,
+			t1.CREATE_DATE createDate,
+			t1.CREATOR creator,
+			t1.LAST_UPDATE_DATE updateTime,
+			t1.LAST_UPDATER updater
+		FROM t_member t1
+		WHERE 1 = 1 
+		AND t1.CREATE_DATE >= STR_TO_DATE(#{date},'%Y-%m-%d')
+	</select>
+	
+	<select id="getOrder" parameterType="com.phly.ttw.manage.order.model.OrderVO" resultType="com.phly.ttw.manage.order.model.OrderVO">
+		SELECT
+			t1.id id,
+			t1.order_sn orderSn,
+			t1.member_id as "memberVO.id",
+			t1.is_invoice isInvoice,
+			t1.invoice_title invoiceTitle,
+			t1.memo memo,
+			t1.order_status orderStatus,
+			t1.payment_method_name paymentMethodName,
+			t1.payment_status paymentStatus,
+			t1.payment_method_id as "paymentMethodVO.id",
+			t1.mobile mobile,
+			t1.CREATE_DATE createDate,
+			t1.CREATOR creator,
+			t1.LAST_UPDATE_DATE updateTime,
+			t1.LAST_UPDATER updater,
+			us.name memberName,
+			mr.name rankName,
+			ts.SUPNAME AS supName,
+			COALESCE(sum(oi.price),0) amount,
+			COUNT(1) num 
+		FROM t_order t1
+		INNER JOIN t_member t2 on t2.id=t1.member_id
+		INNER JOIN t_member_rank mr ON mr.id = t2.member_rank_id
+		INNER JOIN sys_users_t us ON us.USER_ID = t2.user_id
+		INNER JOIN t_order_item oi on oi.order_id=t1.order_sn
+		INNER JOIN t_goods tg ON tg.SERIALNUMBER = oi.sn
+		INNER JOIN t_supplier ts ON ts.SUPNO = tg.CREATE_USER
+		<where>
+			<if test="id != null and id != '' ">
+				AND t1.id=#{id}
+			</if>
+			<if test="orderSn != null and orderSn != '' ">
+				AND t1.order_sn=#{orderSn}
+			</if>
+		</where>
+		GROUP BY t1.order_sn
+	</select>
+	
+	<insert id="updateOrderStatus" parameterType="com.phly.ttw.manage.order.model.OrderVO">
+		UPDATE t_order
+		SET order_status = #{orderStatus}
+		WHERE
+		id =#{id}
+	</insert>
+	<insert id="addOrder" parameterType="com.phly.ttw.manage.order.model.OrderVO">
+		INSERT INTO t_order (
+			id,
+			order_sn,
+			member_id,
+			is_invoice,
+			invoice_title,
+			memo,
+			order_status,
+			payment_method_name,
+			payment_status,
+			payment_method_id,
+			mobile,
+			create_date,
+			creator,
+			last_update_date,
+			last_updater
+		)
+		VALUES
+		(
+			#{id},
+			<!-- UPPER(REPLACE(UUID(),'-','')), -->
+			#{orderSn},
+			#{memberVO.id},
+			#{isInvoice},
+			#{invoiceTitle},
+			#{memo},
+			#{orderStatus},
+			#{paymentMethodName},
+			#{paymentStatus},
+			#{paymentMethodVO.id},
+			#{mobile},
+			NOW(),
+			#{creator},
+			NOW(),
+			#{creator}
+		)
+	</insert>
+</mapper>

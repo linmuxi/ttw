@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orderItem">
+
+	<select id="queryOrderItemList" parameterType="com.phly.ttw.manage.order.model.OrderItemVO" resultType="com.phly.ttw.manage.order.model.OrderItemVO">
+		SELECT
+			oi.id,
+			oi.name,
+			oi.price,
+			oi.quantity,
+			oi.sn,
+			oi.thumbnail
+		FROM
+			t_order_item oi
+		<where>
+			oi.order_id=#{orderId}
+		</where>
+	</select>
+	
+	<insert id="addOrderItem" parameterType="com.phly.ttw.manage.order.model.OrderItemVO">
+		INSERT INTO t_order_item (
+			id,
+			NAME,
+			price,
+			quantity,
+			sn,
+			thumbnail,
+			order_id,
+			create_date,
+			creator,
+			last_update_date,
+			last_updater
+		)VALUES
+		(
+			UPPER(REPLACE(UUID(),'-','')),
+			#{name},
+			#{price},
+			#{quantity},
+			#{sn},
+			#{thumbnail},
+			#{orderId},
+			NOW(),
+			#{creator},
+			NOW(),
+			#{creator}
+		)
+	</insert>
+</mapper>

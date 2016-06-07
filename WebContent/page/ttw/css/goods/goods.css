@@ -1,0 +1,19 @@
+.categoryParent {
+	width: 30%;
+	float: left;
+	margin-right: 5px;
+}
+
+.lineHeight{
+	line-height: 34px;
+}
+
+.divLable{
+	float: left;
+	font-size: 14px;
+	line-height: 34px;
+}
+
+.nodata{
+	text-align: center;
+}

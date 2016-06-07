@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="supplier">
+
+	<!-- 查询供应商列表 -->
+	<select id="querySupplierList" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo"
+		resultType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		SELECT
+		SUPPLIERID supplierId,
+		SUPNO supNo,
+		CONTRACTCODE contractCode,
+		CMBPEOPLENAME cmbPeopleName,
+		SUPNAME supName,
+		SUPEMAIL supEmail,
+		SUPPHONE supPhone,
+		SUPFAXES supFaxes,
+		SUPADDRESS supAddress,
+		BUSLICENSE busLicense,
+		BANKACCOUNTNAME bankAccountName,
+		BANKACCOUNTNO bankAccountNo,
+		BANKADDRESS bankAddress,
+		LINKPEOPLENAME linkPeopleName,
+		LIKEPEOPLEPHONE linkPeoplePhone,
+		LIKEPEOPLEQQ linkPeopleQQ,
+		LIKEPEOPLEEMAIL linkPeopleEmail,
+		LIKEPEOPLEADDRESS linkPeopleAddress,
+		HEADPEOPLECARDNO HeadPeopleCardNo,
+		HEADPEOPLENAME headPeopleName,
+		HEADPEOPLEPHONE headPeoplePhone,
+		HEADPEOPLEQQ headPeopleQQ,
+		HEADPEOPLEEMAIL headPeopleEmail,
+		USERID userId,
+		SUPTYPE supType,
+		CREATEDATE createDate,
+		CREATOR creator,
+		LAST_UPDATE_DATE updateTime,
+		LAST_UPDATER updater,
+		ISLOCKED isLocked,
+		ISDEL idDel,
+		SUPSTATE supState,
+		REMARK remark
+		FROM t_supplier t
+		<where>
+			1 = 1 AND t.ISDEL = 1
+			<if test="supNo != null and supNo != ''">
+				and t.SUPNO like CONCAT('%',#{supNo},'%')
+			</if>
+			<if test="contractCode != null and contractCode != ''">
+				and t.CONTRACTCODE like CONCAT('%',#{contractCode},'%')
+			</if>
+			<if test="cmbPeopleName != null and cmbPeopleName != ''">
+				and t.CMBPEOPLENAME like CONCAT('%',#{cmbPeopleName},'%')
+			</if>
+<!-- 			<if test="supType != null and supType != ''">
+				and t.SUPTYPE like CONCAT('%',${supType},'%')
+			</if> -->
+		</where>
+		<if
+			test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+	</select>
+
+	<select id="getSupplierCount" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo"
+		resultType="int">
+		SELECT count(1) FROM t_supplier t
+		<where>
+			1 = 1 AND t.ISDEL = 1
+			<if test="supNo != null and supNo != ''">
+				and t.SUPNO like CONCAT('%',#{supNo},'%')
+			</if>
+		</where>
+	</select>
+
+	<insert id="addSupplier" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		INSERT INTO t_supplier
+		(SUPPLIERID,
+		SUPNO,
+		CONTRACTCODE,
+		CMBPEOPLENAME,
+		SUPNAME,
+		SUPEMAIL,
+		SUPPHONE,
+		SUPFAXES,
+		SUPADDRESS,
+		BUSLICENSE,
+		BANKACCOUNTNAME,
+		BANKACCOUNTNO,
+		BANKADDRESS,
+		LINKPEOPLENAME,
+		LIKEPEOPLEPHONE,
+		LIKEPEOPLEQQ,
+		LIKEPEOPLEEMAIL,
+		LIKEPEOPLEADDRESS,
+		HEADPEOPLECARDNO,
+		HEADPEOPLENAME,
+		HEADPEOPLEPHONE,
+		HEADPEOPLEQQ,
+		HEADPEOPLEEMAIL,
+		USERID,
+		SUPTYPE,
+		CREATEDATE,
+		CREATOR,
+		LAST_UPDATER,
+		LAST_UPDATE_DATE,
+		ISDEL,
+		ISLOCKED,
+		SUPSTATE,
+		REMARK)
+		VALUES (
+		UPPER(REPLACE(UUID(),'-','')),
+		#{supNo},
+		#{contractCode},
+		#{cmbPeopleName},
+		#{supName},
+		#{supEmail},
+		#{supPhone},
+		#{supFaxes},
+		#{supAddress},
+		#{busLicense},
+		#{bankAccountName},
+		#{bankAccountNo},
+		#{bankAddress},
+		#{linkPeopleName},
+		#{linkPeoplePhone},
+		#{linkPeopleQQ},
+		#{linkPeopleEmail},
+		#{linkPeopleAddress},
+		#{headPeopleCardNo},
+		#{headPeopleName},
+		#{headPeoplePhone},
+		#{headPeopleQQ},
+		#{headPeopleEmail},
+		#{userId},
+		${supType},
+		NOW(),
+		#{creator},
+		#{updater},
+		NOW(),
+		${isDel},
+		${isLocked},
+		${supState},
+		#{remark})
+	</insert>
+	
+	
+	<insert id="addSupplierForUpdate" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		INSERT INTO t_supplier_update
+		(SUPPLIERID,
+		SUPNO,
+		CONTRACTCODE,
+		CMBPEOPLENAME,
+		SUPNAME,
+		SUPEMAIL,
+		SUPPHONE,
+		SUPFAXES,
+		SUPADDRESS,
+		BUSLICENSE,
+		BANKACCOUNTNAME,
+		BANKACCOUNTNO,
+		BANKADDRESS,
+		LINKPEOPLENAME,
+		LIKEPEOPLEPHONE,
+		LIKEPEOPLEQQ,
+		LIKEPEOPLEEMAIL,
+		LIKEPEOPLEADDRESS,
+		HEADPEOPLECARDNO,
+		HEADPEOPLENAME,
+		HEADPEOPLEPHONE,
+		HEADPEOPLEQQ,
+		HEADPEOPLEEMAIL,
+		USERID,
+		SUPTYPE,
+		CREATEDATE,
+		CREATOR,
+		LAST_UPDATER,
+		LAST_UPDATE_DATE,
+		ISDEL,
+		ISLOCKED,
+		SUPSTATE,
+		REMARK)
+		VALUES (
+		#{supplierId},
+		#{supNo},
+		#{contractCode},
+		#{cmbPeopleName},
+		#{supName},
+		#{supEmail},
+		#{supPhone},
+		#{supFaxes},
+		#{supAddress},
+		#{busLicense},
+		#{bankAccountName},
+		#{bankAccountNo},
+		#{bankAddress},
+		#{linkPeopleName},
+		#{linkPeoplePhone},
+		#{linkPeopleQQ},
+		#{linkPeopleEmail},
+		#{linkPeopleAddress},
+		#{headPeopleCardNo},
+		#{headPeopleName},
+		#{headPeoplePhone},
+		#{headPeopleQQ},
+		#{headPeopleEmail},
+		#{userId},
+		${supType},
+		NOW(),
+		#{creator},
+		#{updater},
+		NOW(),
+		${isDel},
+		${isLocked},
+		${supState},
+		#{remark})
+	</insert>
+	
+	<update id="updateSupplierBySupNo" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		UPDATE t_supplier
+		SET
+		CONTRACTCODE=#{contractCode},
+		CMBPEOPLENAME=#{cmbPeopleName},
+		SUPNAME=#{supName},
+		SUPEMAIL=#{supEmail},
+		SUPPHONE=#{supPhone},
+		SUPFAXES=#{supFaxes},
+		SUPADDRESS=#{supAddress},
+		BUSLICENSE=#{busLicense},
+		BANKACCOUNTNAME=#{bankAccountName},
+		BANKACCOUNTNO=#{bankAccountNo},
+		BANKADDRESS=#{bankAddress},
+		LINKPEOPLENAME=#{linkPeopleName},
+		LIKEPEOPLEPHONE=#{linkPeoplePhone},
+		LIKEPEOPLEQQ=#{linkPeopleQQ},
+		LIKEPEOPLEEMAIL=#{linkPeopleEmail},
+		LIKEPEOPLEADDRESS=#{linkPeopleAddress},
+		HEADPEOPLECARDNO=#{headPeopleCardNo},
+		HEADPEOPLENAME=#{headPeopleName},
+		HEADPEOPLEPHONE=#{headPeoplePhone},
+		HEADPEOPLEQQ=#{headPeopleQQ},
+		HEADPEOPLEEMAIL=#{headPeopleEmail},
+		ISLOCKED=#{isLocked},
+		SUPTYPE=${supType},
+		ISDEL=${isDel},
+		SUPSTATE=${supState},
+		REMARK=#{remark} 
+		WHERE SUPNO = #{supNo}
+	</update>
+	
+
+
+	<update id="updateSupplier" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		UPDATE t_supplier
+		SET
+		CONTRACTCODE=#{contractCode},
+		CMBPEOPLENAME=#{cmbPeopleName},
+		SUPNAME=#{supName},
+		SUPEMAIL=#{supEmail},
+		SUPPHONE=#{supPhone},
+		SUPFAXES=#{supFaxes},
+		SUPADDRESS=#{supAddress},
+		BUSLICENSE=#{busLicense},
+		BANKACCOUNTNAME=#{bankAccountName},
+		BANKACCOUNTNO=#{bankAccountNo},
+		BANKADDRESS=#{bankAddress},
+		LINKPEOPLENAME=#{linkPeopleName},
+		LIKEPEOPLEPHONE=#{linkPeoplePhone},
+		LIKEPEOPLEQQ=#{linkPeopleQQ},
+		LIKEPEOPLEEMAIL=#{linkPeopleEmail},
+		LIKEPEOPLEADDRESS=#{linkPeopleAddress},
+		HEADPEOPLECARDNO=#{headPeopleCardNo},
+		HEADPEOPLENAME=#{headPeopleName},
+		HEADPEOPLEPHONE=#{headPeoplePhone},
+		HEADPEOPLEQQ=#{headPeopleQQ},
+		HEADPEOPLEEMAIL=#{headPeopleEmail},
+		USERID=#{userId},
+		LAST_UPDATE_DATE=NOW(),
+		LAST_UPDATER=#{updater},
+		ISLOCKED=#{isLocked},
+		SUPTYPE=${supType},
+		ISDEL=${isDel},
+		SUPSTATE=${supState},
+		REMARK=#{remark} 
+		WHERE SUPPLIERID = #{supplierId}
+	</update>
+	
+	<update id="delSupplier" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		UPDATE t_supplier SET  ISDEL = 0,LAST_UPDATE_DATE = NOW() WHERE SUPPLIERID = #{supplierId}
+	</update>
+	
+	<update id="delSupplierForUpdate" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		delete from t_supplier_update WHERE SUPPLIERID = #{supplierId}
+	</update>
+	
+	<select id="getSupplier" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo"
+		resultType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		SELECT
+		SUPPLIERID supplierId,
+		SUPNO supNo,
+		CONTRACTCODE contractCode,
+		CMBPEOPLENAME cmbPeopleName,
+		SUPNAME supName,
+		SUPEMAIL supEmail,
+		SUPPHONE supPhone,
+		SUPFAXES supFaxes,
+		SUPADDRESS supAddress,
+		BUSLICENSE busLicense,
+		BANKACCOUNTNAME bankAccountName,
+		BANKACCOUNTNO bankAccountNo,
+		BANKADDRESS bankAddress,
+		LINKPEOPLENAME linkPeopleName,
+		LIKEPEOPLEPHONE linkPeoplePhone,
+		LIKEPEOPLEQQ linkPeopleQQ,
+		LIKEPEOPLEEMAIL linkPeopleEmail,
+		LIKEPEOPLEADDRESS linkPeopleAddress,
+		HEADPEOPLECARDNO HeadPeopleCardNo,
+		HEADPEOPLENAME headPeopleName,
+		HEADPEOPLEPHONE headPeoplePhone,
+		HEADPEOPLEQQ headPeopleQQ,
+		HEADPEOPLEEMAIL headPeopleEmail,
+		USERID userId,
+		SUPTYPE supType,
+		CREATEDATE createDate,
+		CREATOR creator,
+		LAST_UPDATE_DATE updateTime,
+		LAST_UPDATER updater,
+		ISDEL idDel,
+		ISLOCKED isLocked,
+		SUPSTATE supState,
+		REMARK remark
+		FROM t_supplier t
+		<where>
+			<if test="supplierId != null and supplierId != ''">
+				AND t.SUPPLIERID = #{supplierId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getSupplierForUpdate" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo"
+		resultType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		SELECT
+		SUPPLIERID supplierId,
+		SUPNO supNo,
+		CONTRACTCODE contractCode,
+		CMBPEOPLENAME cmbPeopleName,
+		SUPNAME supName,
+		SUPEMAIL supEmail,
+		SUPPHONE supPhone,
+		SUPFAXES supFaxes,
+		SUPADDRESS supAddress,
+		BUSLICENSE busLicense,
+		BANKACCOUNTNAME bankAccountName,
+		BANKACCOUNTNO bankAccountNo,
+		BANKADDRESS bankAddress,
+		LINKPEOPLENAME linkPeopleName,
+		LIKEPEOPLEPHONE linkPeoplePhone,
+		LIKEPEOPLEQQ linkPeopleQQ,
+		LIKEPEOPLEEMAIL linkPeopleEmail,
+		LIKEPEOPLEADDRESS linkPeopleAddress,
+		HEADPEOPLECARDNO HeadPeopleCardNo,
+		HEADPEOPLENAME headPeopleName,
+		HEADPEOPLEPHONE headPeoplePhone,
+		HEADPEOPLEQQ headPeopleQQ,
+		HEADPEOPLEEMAIL headPeopleEmail,
+		USERID userId,
+		SUPTYPE supType,
+		CREATEDATE createDate,
+		CREATOR creator,
+		LAST_UPDATE_DATE updateTime,
+		LAST_UPDATER updater,
+		ISDEL idDel,
+		ISLOCKED isLocked,
+		SUPSTATE supState,
+		REMARK remark
+		FROM t_supplier_update t
+		<where>
+			<if test="supplierId != null and supplierId != ''">
+				AND t.SUPPLIERID = #{supplierId}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getSupplierByUserId" parameterType="com.phly.ttw.manage.supplier.model.SupplierVo"
+		resultType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		SELECT
+		SUPPLIERID supplierId,
+		SUPNO supNo,
+		CONTRACTCODE contractCode,
+		CMBPEOPLENAME cmbPeopleName,
+		SUPNAME supName,
+		SUPEMAIL supEmail,
+		SUPPHONE supPhone,
+		SUPFAXES supFaxes,
+		SUPADDRESS supAddress,
+		BUSLICENSE busLicense,
+		BANKACCOUNTNAME bankAccountName,
+		BANKACCOUNTNO bankAccountNo,
+		BANKADDRESS bankAddress,
+		LINKPEOPLENAME linkPeopleName,
+		LIKEPEOPLEPHONE linkPeoplePhone,
+		LIKEPEOPLEQQ linkPeopleQQ,
+		LIKEPEOPLEEMAIL linkPeopleEmail,
+		LIKEPEOPLEADDRESS linkPeopleAddress,
+		HEADPEOPLECARDNO HeadPeopleCardNo,
+		HEADPEOPLENAME headPeopleName,
+		HEADPEOPLEPHONE headPeoplePhone,
+		HEADPEOPLEQQ headPeopleQQ,
+		HEADPEOPLEEMAIL headPeopleEmail,
+		USERID userId,
+		SUPTYPE supType,
+		CREATEDATE createDate,
+		CREATOR creator,
+		LAST_UPDATE_DATE updateTime,
+		LAST_UPDATER updater,
+		ISDEL idDel,
+		ISLOCKED isLocked,
+		SUPSTATE supState,
+		REMARK remark
+		FROM t_supplier t
+		WHERE t.USERID = #{userId}
+	</select>
+	
+	
+	<select id="existContractCode" parameterType="String" resultType="int">
+		SELECT
+		count(1)
+		FROM t_supplier t
+		WHERE t.contractCode = #{contractCode}
+	</select>
+	
+	<select id="findSupplierByDate" parameterType="String" resultType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		SELECT 
+		SUPPLIERID supplierId,
+		SUPNO supNo,
+		CONTRACTCODE contractCode,
+		CMBPEOPLENAME cmbPeopleName,
+		SUPNAME supName,
+		SUPEMAIL supEmail,
+		SUPPHONE supPhone,
+		SUPFAXES supFaxes,
+		SUPADDRESS supAddress,
+		BUSLICENSE busLicense,
+		BANKACCOUNTNAME bankAccountName,
+		BANKACCOUNTNO bankAccountNo,
+		BANKADDRESS bankAddress,
+		LINKPEOPLENAME linkPeopleName,
+		LIKEPEOPLEPHONE linkPeoplePhone,
+		LIKEPEOPLEQQ linkPeopleQQ,
+		LIKEPEOPLEEMAIL linkPeopleEmail,
+		LIKEPEOPLEADDRESS linkPeopleAddress,
+		HEADPEOPLECARDNO HeadPeopleCardNo,
+		HEADPEOPLENAME headPeopleName,
+		HEADPEOPLEPHONE headPeoplePhone,
+		HEADPEOPLEQQ headPeopleQQ,
+		HEADPEOPLEEMAIL headPeopleEmail,
+		USERID userId,
+		SUPTYPE supType,
+		CREATEDATE createDate,
+		CREATOR creator,
+		LAST_UPDATE_DATE updateTime,
+		LAST_UPDATER updater,
+		ISLOCKED isLocked,
+		ISDEL idDel,
+		SUPSTATE supState,
+		REMARK remark 
+		FROM t_supplier t 
+		WHERE t.LAST_UPDATE_DATE >= STR_TO_DATE(#{date},'%Y-%m-%d');
+	</select>
+	
+	
+	<select id="getSupplierBySupNo" parameterType="String" resultType="com.phly.ttw.manage.supplier.model.SupplierVo">
+		SELECT 
+		SUPPLIERID supplierId,
+		SUPNO supNo,
+		CONTRACTCODE contractCode,
+		CMBPEOPLENAME cmbPeopleName,
+		SUPNAME supName,
+		SUPEMAIL supEmail,
+		SUPPHONE supPhone,
+		SUPFAXES supFaxes,
+		SUPADDRESS supAddress,
+		BUSLICENSE busLicense,
+		BANKACCOUNTNAME bankAccountName,
+		BANKACCOUNTNO bankAccountNo,
+		BANKADDRESS bankAddress,
+		LINKPEOPLENAME linkPeopleName,
+		LIKEPEOPLEPHONE linkPeoplePhone,
+		LIKEPEOPLEQQ linkPeopleQQ,
+		LIKEPEOPLEEMAIL linkPeopleEmail,
+		LIKEPEOPLEADDRESS linkPeopleAddress,
+		HEADPEOPLECARDNO HeadPeopleCardNo,
+		HEADPEOPLENAME headPeopleName,
+		HEADPEOPLEPHONE headPeoplePhone,
+		HEADPEOPLEQQ headPeopleQQ,
+		HEADPEOPLEEMAIL headPeopleEmail,
+		USERID userId,
+		SUPTYPE supType,
+		CREATEDATE createDate,
+		CREATOR creator,
+		LAST_UPDATE_DATE updateTime,
+		LAST_UPDATER updater,
+		ISLOCKED isLocked,
+		ISDEL idDel,
+		SUPSTATE supState,
+		REMARK remark 
+		FROM t_supplier t 
+		WHERE t.supNo = #{supNo};
+	</select>
+
+</mapper>

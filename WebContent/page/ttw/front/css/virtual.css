@@ -1,0 +1,155 @@
+﻿@import url('css.css');
+
+
+.Content- { width: 1200px; height: 1404px; margin: 0 auto; }
+.Content-All- { width: 1000px; height: 1380px; margin: 0 auto; }
+.Content-head- { width: 1000px; height: 45px; }
+.Content-head-logo- { background-image: url(../images/icon_total.png); width: 29px; height: 27px; background-position: -335px -93px; float: left; margin-top: 10px; }
+.Content-head-navts- { margin-left: 15px; float: left; font-size: 14px; line-height: 26px; margin-top: 10px; }
+.Content-head-navwz- { font-size: 14px; line-height: 26px; cursor: pointer; margin-top: 10px; float: left; }
+.Content-left- { width: 215px; height: 1335px; float: left; }
+.Content-left-one- { width: 213px; height: 529px; border: 1px solid #108ac3; background-color: #eeeeee; }
+.Content-left-one-tit- { width: 213px; height: 32px; background-color: #0096dc; text-align: center; line-height: 32px; color: White; font-size: 14px;  }
+.Content-left-one-nav- {  font-size: 14px; }
+#bus-logo { background-position: -269px -122px; }
+.bus-logo- { width: 12px; height: 10px; background-image: url(../images/icon_total.png); float: left; margin-top: 10px; margin-left: 9px; }
+.one-dummyAll { height: 36px; cursor: pointer; }
+.business- { height: 32px; line-height: 32px; margin-left: 39px; font-size: 12px; }
+.one-line- { width: 202px; height: 2px; background-color: #FFFAFA; border-radius: 10px; margin-left: 5px; }
+.Content-left-two- { width: 213px; height: 529px; border: 1px solid #c9c9c9; background-color: white; margin-top: 13px; }
+.Content-left-two-tit- { width: 213px; height: 32px; background-color: #eeeeee; text-align: center; line-height: 32px; color: #0096dc; font-size: 14px;  }
+.Content-left-two-nav- {  font-size: 14px; }
+.two-dummyAll { cursor: pointer; }
+.two-line- { width: 202px; height: 1px; background-color: #c9c9c9; border-radius: 10px; margin-left: 5px; }
+.two-logo- { width: 15px; height: 15px; background-image: url(../images/icon_total.png); float: left; margin-top: 10px; margin-left: 9px; background-position: -319px -123px; }
+#on-line { width: 159px; height: auto; }
+.Content-left-three- { width: 213px; height: 229px; border: 1px solid #c9c9c9; background-color: white; margin-top: 13px; }
+.Content-left-three-img- { text-align: center; }
+.business-virtual- { width: 777px; height: 225px; margin-top: 15px; }
+.business-virtual-logo- { background-image: url(../images/icon_total.png); background-position: -338px -123px; width: 21px; height: 22px; float: left; }
+.business-virtual-name- { margin-left: 5px; font-size: 14px; line-height: 22px; float: left; }
+.business-virtual-border- { clear: both; width: 740px; height: 100%; border: 1px solid #0096dc; }
+.border-left- { background-color: #eeeeee; width: 356px; height: 175px; margin-left: 10px; margin-top: 12px; float: left; }
+.border-left-txt- { margin-left: 15px; line-height: 35px; }
+.border-txt-iis- { float: left; margin-left: 15px; line-height: 35px; }
+.border-txt-free- { color: Red; margin-left: 15px; line-height: 35px; clear: both; }
+.border-txt-bxz- { color: Red; float: left; line-height: 35px; }
+.border-right- { margin-left: 155px; margin-top: 12px; float: left;  width: 200px; }
+.border-rmb- { color: #cc0000; font-size: 15px; margin-top: 25px; float: left; font-weight: 700; font-family: Impact; }
+.border-price- { font-size: 40px; color: #cc0000; font-family: Impact; margin-left: 15px; }
+.border-txt-two-{ float: left; clear: both; }
+.border-txt-one-{ float: left; margin-top: 16px; clear: both; }
+.blue-squre{ background-color: #0096dc; width: 154px; height: 37px; text-align: center; line-height: 37px; margin-top: 10px; color: White; font-size: 14px; }
+
+.Content-right- { width: 785px; height: auto; float: left; }
+.Content-right-banner- { width: 777px; height: 273px; background-color: #31333e; margin-left: 10px; text-align: center; line-height: 273px;  font-size: 14px; color: White; position: relative; /* float: left; */ }
+.Content-right-banner-change- { bottom: 10px; position: absolute; margin-left: 355px; }
+.change-ul- { cursor: pointer; }
+#change-circle-one { background-position: -247px -147px; }
+#change-circle-two { background-position: -233px -147px; }
+#change-circle-three { background-position: -233px -147px; }
+.change-circle { background: url(../images/icon_total.png); width: 9px; height: 11px; float: left; margin-left: 10px; }
+.Content-right-product- { width: 740px; height: 651px; margin:30px 0px 0px 0px; }
+.Content-right-product-top- { width: 775px; height: 34px; border: 1px solid #febe15; border-bottom-style: none; margin-top: 12px; background-color: #fffaec;  }
+.product-name- { margin-left: 20px; font-size: 14px; line-height: 35px; font-weight: 600; float: left; width: 148px; }
+.product-mysql- { font-size: 14px; line-height: 35px; font-weight: 600; float: left; width: 213px; }
+#product-mysqlthr { width: 165px; }
+.product-mysqlt- { font-size: 14px; line-height: 35px; font-weight: 600; float: left; width: 213px; }
+.product-price- { width: 775px; height: 34px; border: 1px solid #c9c9c9; }
+.product-price-name- { margin-left: 20px; font-size: 12px; line-height: 35px; font-weight: 600; width: 150px; float: left; }
+#product-price-pricethr { width: 165px; }
+#online-opening{ border-top-style: none; }
+.online-one-{ color: #0096dc; width: 150px; font-size: 12px; line-height: 35px; font-weight: 600; margin-right: 188px; }
+.online-oneh-{ color: #cc0000; width: 150px; font-size: 12px; line-height: 35px; font-weight: 600; margin-right: 188px; }
+#online-three{ margin-right: 0px; }
+#online-opening-pricethr { width: 165px; }
+.product-price-price- { font-size: 12px; line-height: 35px; font-weight: 600; width: 150px; float: left; color: #cc0000; width: 212px; }
+.a-one- { color: #0096dc; margin-left: 18px; }
+.basic-config- { width: 775px; height: 34px; border: 1px solid #c9c9c9; border-top-style: none; border-bottom-style: none; background-color: #eeeeee;  }
+.basic-config-logo- { width: 12px; height: 13px; background-image: url(../images/icon_total.png); background-position: -206px -122px; margin-left: 20px; margin-top: 10px; float: left; }
+.basic-config-name- { font-size: 12px; float: left; line-height: 36px; margin-left: 5px; color: #0096dc; font-weight: 600; }
+.server-config- { width: 775px; height: 133px; border: 1px solid #c9c9c9;  font-size: 12px; }
+.server-config1- { width: 775px; border: 1px solid #c9c9c9;  font-size: 12px; }
+.server-config-name- { margin-top: 10px; margin-left: 20px; font-weight: 600; float: left; position: absolute; }
+.server-config-ttile- { margin-top: 10px; margin-left: 157px; }
+.server-config-sd- { margin-left: 157px; margin-top: 10px; }
+.control-panel- { width: 775px; height: 36px; border: 1px solid #c9c9c9; border-top-style: none; border-bottom-style: none; background-color: #eeeeee;  }
+.control-panel-logo- { width: 12px; height: 13px; background-image: url(../images/icon_total.png); background-position: -206px -122px; margin-left: 20px; margin-top: 10px; float: left; }
+.control-panel-name- { font-size: 12px; float: left; line-height: 36px; margin-left: 5px; color: #0096dc; font-weight: 600; }
+.database-info- { width: 775px; height: 34px; border: 1px solid #c9c9c9; border-bottom-style: none;  font-size: 12px; clear: both; }
+.database-info1- { width: 775px; height: 100px; border: 1px solid #c9c9c9; border-bottom-style: none;  font-size: 12px; clear: both; }
+.database-info-name- { font-weight: 600; margin-top: 10px; margin-left: 20px; width: 150px; float: left; }
+.database-info-name1- { font-weight: 600; margin-top: 40px; margin-left: -150px; width: 96px; float: left; }
+.database-info-name2- { font-weight: 600; margin-top: 70px; margin-left: -150px; width: 96px; float: left; }
+.database-info-name3- { font-weight: 600; margin-top: 10px; width: 553px; float: left; }
+.database-info-name4- {width: 109px; height: 7px; font-weight: 600; margin-top: 10px; margin-right: 113px; float: left; }
+.database-info-name5- {width: 109px; height: 7px; font-weight: 600; margin-top: 10px; margin-right: 50px; float: left; }
+.database-info-support- { width: 9px; height: 7px; background-image: url(../images/icon_total.png); float: left; margin-top: 15px; margin-right: 213px; background-position: -340px -193px; }
+#database-info-support-three { margin-right: 150px; }
+#change-password-support-three { margin-right: 150px; }
+#database-backups-support-three { margin-right: 150px; }
+#database-restore-support-three { margin-right: 150px; }
+#database-manage-support-three { margin-right: 150px; }
+#database-1-support-three { margin-right: 150px; }
+#database-2-support-three { margin-right: 150px; }
+#database-3-support-three { margin-right: 150px; }
+#database-4-support-three { margin-right: 150px; }
+#database-5-support-three { margin-right: 150px; }
+#database-6-support-three { margin-right: 150px; }
+#database-7-support-three { margin-right: 150px; }
+#database-8-support-three { margin-right: 150px; }
+#database-9-support-three { margin-right: 150px; }
+#database-11-support-three { margin-right: 150px; }
+#database-12-support-three { margin-right: 150px; }
+#database-13-support-three { margin-right: 150px; }
+#database-14-support-three { margin-right: 150px; }
+#database-15-support-three { margin-right: 150px; }
+#database-16-support-three { margin-right: 150px; }
+#database-17-support-three { margin-right: 150px; }
+#database-21-support-three { margin-right: 150px; }
+#database-22-support-three { margin-right: 150px; }
+#database-23-support-three { margin-right: 150px; }
+#database-24-support-three { margin-right: 150px; }
+#database-25-support-three { margin-right: 150px; }
+#database-26-support-three { margin-right: 150px; }
+#database-27-support-three { margin-right: 150px; }
+#database-31-support-three { margin-right: 150px; }
+#database-32-support-three { margin-right: 150px; }
+#database-33-support-three { margin-right: 150px; }
+#database-34-support-three { margin-right: 150px; }
+#database-35-support-three { margin-right: 150px; }
+#database-36-support-three { margin-right: 150px; }
+#database-37-support-three { margin-right: 150px; }
+.safety- { width: 775px; height: 36px; border: 1px solid #c9c9c9; border-bottom-style: none; background-color: #eeeeee;  }
+.safety-logo- { width: 12px; height: 13px; background-image: url(../images/icon_total.png); background-position: -206px -122px; margin-left: 20px; margin-top: 10px; float: left; }
+.safety-name- { font-size: 12px; float: left; line-height: 36px; margin-left: 5px; color: #0096dc; font-weight: 600; }
+.Hacking- { width: 775px; height: 34px; border: 1px solid #c9c9c9; border-bottom-style: none;  clear: both; }
+.Hacking-name- { line-height: 36px; }
+.option- { width: 775px; height: 34px; border: 1px solid #c9c9c9;  }
+#option-support { background-position: -340px -193px; margin-top: 14px; }
+#option-unsupported { background-position: -340px -207px; height: 11px; }
+#option-unsupported1 { background-position: -340px -207px; height: 11px; }
+#option-unsupported2 { background-position: -340px -207px; height: 11px; }
+#option-unsupported3 { background-position: -340px -207px; height: 11px; margin-right:150px;}
+#option-unsupported11 { background-position: -340px -207px; height: 11px; }
+#option-unsupported12 { background-position: -340px -207px; height: 11px; }
+#option-unsupported13 { background-position: -340px -207px; height: 11px; margin-right:150px;}
+#option-unsupported21 { background-position: -340px -207px; height: 11px; }
+#option-unsupported22 { background-position: -340px -207px; height: 11px; }
+#option-unsupported23 { background-position: -340px -207px; height: 11px; margin-right:150px;}
+#option-unsupported31 { background-position: -340px -207px; height: 11px; }
+#option-unsupported32 { background-position: -340px -207px; height: 11px; }
+#option-unsupported33 { background-position: -340px -207px; height: 11px; margin-right:150px;}
+#option-unsupported41 { background-position: -340px -207px; height: 11px; }
+#option-unsupported42 { background-position: -340px -207px; height: 11px; }
+#option-unsupported43 { background-position: -340px -207px; height: 11px; margin-right:150px;}
+#option-unsupported51 { background-position: -340px -207px; height: 11px; }
+#option-unsupported52 { background-position: -340px -207px; height: 11px; }
+#option-unsupported53 { background-position: -340px -207px; height: 11px; margin-right:150px;}
+#option-unsupported61 { background-position: -340px -207px; height: 11px; }
+#option-unsupported62 { background-position: -340px -207px; height: 11px; }
+#option-unsupported63 { background-position: -340px -207px; height: 11px; margin-right:150px;}
+.option-support- { width: 9px; height: 7px; background-image: url(../images/icon_total.png); margin-left: 20px; margin-top: 11px; float: left; }
+.option-support1- { width: 9px; height: 7px; background-image: url(../images/icon_total.png); margin-right: 213px; margin-top: 11px; float: left; }
+.option-support-txt- { float: left; line-height: 36px; margin-left: 15px; font-weight: 600; }
+.return-top { color: #0096dc; margin-left: 354px; font-weight: 600; line-height: 36px; }

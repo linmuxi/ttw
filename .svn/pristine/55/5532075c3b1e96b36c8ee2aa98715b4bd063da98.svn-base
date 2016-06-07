@@ -1,0 +1,15 @@
+﻿@import url('css.css');
+
+.DM_main { text-align: center; position: relative; padding-top: 61px; }
+.DM_text { position: absolute; width: 360px; padding-top: 20px; }
+.DM_text p { clear: both; text-align: right; font-size: 12px; color: #777777; }
+.DM_span { float: right; color: #fe3f21; font-size: 23px; padding-bottom: 10px; }
+.DM_more { background: url(../images/icon_total.png); width: 52px; height: 14px; background-position: -187px -97px; float: right; margin-top: 10px; }
+.DM_hr { position: absolute; border: none; border-top: 306px solid #f4f4f4; width: 1px; left: 500px; margin-top: 0px; }
+.DM_Show {margin-top:60px;  width:1200px;background:#f7f7f7; }
+.DM_p{text-align:center; padding:20px 0 10px 0; color:#0096dc; font-size:30px;font-size:40px;}
+.DM_p2{ text-align:center; color:#777777; font-size:14px; padding:10px 0 15px 0;}
+.DM_p3 {text-align:center; color:#333333; font-family:微软雅黑; font-size:14px; padding:30px 0 15px 0;}
+.DM_love {background:url(../images/icon_total.png); width:21px;height:18px; background-position:-288px -147px; display:inline-block; float:left; margin:0 10px;}
+.DM_hr_2{width:100px; float:left; border:none; border-top:1px solid #edeeee;}
+.DM_Show_box{width:291px; height:394px; background:white;}

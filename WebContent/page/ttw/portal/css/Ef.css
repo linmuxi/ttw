@@ -1,0 +1,160 @@
+@import url('css.css');
+
+@import url('Pop.css');
+
+.EtAll- {
+	width: 1200px;
+	height: 524px;
+	margin: 0 auto;
+	padding-bottom: 30px;
+	margin-top: 23px;
+}
+
+.acc-zcyh-active {
+	display: block;
+	background: url(../images/icon_total.png);
+	width: 163px;
+	height: 43px;
+	background-position: -7px -188px;
+	position: absolute;
+	margin-left: -26px;
+	color: white;
+	padding-top: 3px;
+	margin-top: -3px;
+	font-style: normal;
+}
+
+.Ef-conten- {
+	width: 435px;
+	height: 274px;
+	margin: 0 auto;
+}
+
+.acc-nav- {
+	width: 460px;
+	height: 36px;
+	background-color: #f5f5f5;
+	border: 1px solid #e5e5e5;
+	font-family: 微软雅黑;
+	font-size: 14px;
+	margin: 0 auto;
+}
+
+.acc-zcyh- {
+	line-height: 36px;
+	width: 115px;
+	height: 36px;
+	text-align: center;
+	float: left;
+}
+
+.Ef-account- {
+	width: 375px;
+	height: 28px;
+	font-family: 微软雅黑;
+	font-size: 14px;
+	margin-left: 12px;
+	margin-top: 23px;
+}
+
+.account- {
+	float: left;
+	line-height: 24px;
+	width: 100px;
+}
+
+.account-ip- {
+	width: 182px;
+	height: 24px;
+	float: left;
+	margin-left: 12px;
+	border: 1px solid #e6e6e6;
+}
+
+.password-ip- {
+	width: 182px;
+	height: 24px;
+	float: left;
+	margin-left: 12px;
+	border: 1px solid #e6e6e6;
+}
+
+.Ef-password- {
+	width: 435px;
+	height: 28px;
+	font-family: 微软雅黑;
+	font-size: 14px;
+	margin-left: 12px;
+	margin-top: 21px;
+}
+
+.Ef-xy- {
+	width: 405px;
+	height: 28px;
+	font-family: 微软雅黑;
+	font-size: 14px;
+	margin-left: 131px;
+	margin-top: 21px;
+}
+
+.idcode-ip- {
+	width: 290px;
+	height: 24px;
+	margin-left: 12px;
+	border: 1px solid #e6e6e6;
+}
+
+.Ef-true- {
+	width: 54px;
+	height: 24px;
+	font-family: 微软雅黑;
+	font-size: 14px;
+	margin-left: 135px;
+	margin-top: 15px;
+	border-radius: 4px;
+	background-color: #0096dc;
+	text-align: center;
+	line-height: 24px;
+	color: white;
+	cursor: pointer;
+}
+
+.checkbox- {
+	float: left;
+}
+
+.ty- {
+	float: left;
+}
+
+.ttwxy-a {
+	color: #0096dc;
+}
+
+.idcode-pic {
+	width: 84px;
+	height: 21px;
+	float: left;
+	background-color: lightblue;
+	margin-top: 3px;
+}
+
+.idcode-change- {
+	line-height: 28px;
+	cursor: pointer;
+}
+
+.Ef-conten-p {
+	font-size: 微软雅黑;
+	color: #0096dc;
+	font-size: 31px;
+	margin-left: 68px;
+}
+
+.acc-zcyh-aflish {
+	background: #0096dc;
+	color: White;
+	height: 100%;
+	width: 100%;
+	display: inline-block;
+}

@@ -1,0 +1,18 @@
+﻿@import url('css.css');
+.example { padding-top: 60px; }
+.website { position: relative; }
+.website img { float: left; }
+.website div .web_Ser { background-image: url(../images/Example/Ser_tol.png); margin: 0 auto; position: relative; }
+.web_span{font-size:18px; font-family:微软雅黑; color:White;position:relative; top:10px;}
+.make_des { width: 100px; height: 95px; margin-top: 100px !important; }
+.work_des { background-position: -114px -3px; width: 64px; height: 72px; margin-top: 21px !important; }
+.wei_des { width: 57px; height: 48px; background-position: -478px -11px; margin-top: 43px !important; }
+.tao_des { width: 66px; height: 52px; background-position: -213px -5px; margin-top: 43px !important; }
+.mao_des { width: 89px; height: 86px; background-position: -302px -6px; margin-top: 27px !important; }
+.u_des { width: 50px; height: 81px; background-position: -414px -7px; margin-top: 25px !important; }
+.h70 { clear: both; height: 70px; }
+.hborder { border: 1px solid #e9eaeb; position: absolute; margin-top: 35px; width: 1000px; }
+.web-icon { background: url(../images/icon_total.png); margin: 0 auto; position: relative; }
+.make_more { width: 47px; height: 9px; background-position: -130px -100px; top: 50px; }
+.web_content {background:#0096dc; width: 192px; height:212px; text-align:center; float:left;}
+

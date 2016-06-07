@@ -1,0 +1,234 @@
+.box1{
+	border:1px solid #C9C9C9;
+	width: 250px;
+	margin-top: 10px;
+	float: left;
+}
+
+.box1 h4{
+	background-color: #EEEEEE;
+	padding:5px 0px 5px 20px;
+	font-weight: normal; 
+}
+
+.box1 li::before{
+    background-image: url("../images/icon_total.png");
+    content: "";
+    display: block;
+    float: left;
+    height: 12px;
+    margin: 11px 6px 0 0;
+    width: 12px;
+}
+.box1 li{    
+	border-bottom: 1px solid #d1d1d1;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 36px;
+    margin: 0 auto;
+    width: 230px;				
+}
+.box1 li:last-child{
+	border-bottom:0px;
+}
+
+.email-left-mk1 li::before{
+    background-position: -253px -123px;
+}
+
+.email-left-mk2 li::before{
+    background-position: -320px -124px;
+}
+
+.you_z {
+    float: left;
+    height: 380px;
+    margin-top: 15px;
+    width: 740px;
+}
+.you_x {
+    float: left;
+    height: 280px;
+    width: 740px;
+}
+.you_z_top {
+    background-color: #eeeeee;
+    float: left;
+    height: 35px;
+    width: 740px; 
+}
+.you_z_x {
+    float: left;
+    height: 345px;
+    width: 740px;
+}
+.you_z_top_hd {
+    color: #000000;
+    font-family: 微软雅黑;
+    font-size: 16px;
+    line-height: 35px;
+    margin-left: 15px;
+}
+.you_z_x_left {
+    border-right: 2px solid #eeeeee;
+    float: left;
+    height: 250px;
+    margin-top: 15px;
+    width: 340px;
+}
+.you_z_x_right {
+    float: left;
+    height: 250px;
+    margin-top: 15px;
+    width: 380px;
+}
+.you_z_x_left_lr {
+    float: left;
+    height: 30px;
+    margin-top: 3px;
+    width: 363px;
+}
+.lan {
+    color: #54ade3;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 20px;
+    width: 60px;
+}
+.lan1 {
+    color: #54ade3;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 50px;
+    width: 60px;
+}
+.lan2 {
+    color: #54ade3;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 50px;
+    width: 100px;
+}
+.lan3 {
+    color: #54ade3;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 20px;
+    width: 380px;
+}
+.hei {
+    color: #000000;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 20px;
+    width: 60px;
+}
+.hei1 {
+    color: #000000;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 50px;
+    width: 60px;
+}
+.hei2 {
+    color: #ff6767;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 50px;
+    width: 55px;
+}
+.hei4 {
+    color: #000000;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    width: 25px;
+}
+.hei3 {
+    color: #000000;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    margin-left: 20px;
+    margin-top: 6px;
+    width: 390px;
+}
+.you_z_x_x {
+    float: left;
+    height: 30px;
+    margin-left: 200px;
+    margin-top: 30px;
+    width: 365px;
+}
+.xiaok {
+    border: 1px solid #0096dc;
+    color: #0096dc;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    height: 23px;
+    margin-left: 10px;
+    width: 53px;
+}
+.dak {
+    border: 1px solid #0096dc;
+    color: #0096dc;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 15px;
+    height: 23px;
+    margin-left: 10px;
+    width: 73px;
+}
+.you_x_top {
+    border-bottom: 1px solid #c9c9c9;
+    border-top: 1px solid #c9c9c9;
+    height: 33px;
+    width: 740px;
+}
+.you_x_top_z {
+    color: #000000;
+    font-family: 微软雅黑;
+    font-size: 13px;
+    height: 16px;
+    line-height: 30px;
+    margin-left: 30px;
+    width: 115px;
+}
+.you_x_top_zl {
+    color: #54ade3;
+    font-family: 微软雅黑;
+    font-size: 13px;
+    height: 16px;
+    line-height: 30px;
+    margin-left: 30px;
+    width: 115px;
+}
+.you_x_x_z {
+    border-left: 2px solid #54ade3;
+    color: #000000;
+    float: left;
+    font-family: 微软雅黑;
+    font-size: 14px;
+    height: 17px;
+    line-height: 16px;
+    margin-left: 35px;
+    margin-top: 25px;
+    width: 700px;
+}
+.you_x_x_xz {
+    color: #000000;
+    float: left;
+    font-size: 13px;
+    height: 15px;
+    margin-left: 50px;
+    margin-top: 25px;
+    width: 700px;
+}

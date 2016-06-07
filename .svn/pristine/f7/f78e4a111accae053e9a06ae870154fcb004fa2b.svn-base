@@ -1,0 +1,26 @@
+﻿body { margin:0; width:100%;}
+.main{ width:975px; margin:0 auto;}
+.main ul li{ clear:both; margin-top:5px; height:25px;}
+select{ float:left;}
+input{ width:170px; height:20px;}
+
+.Info{ width:675px; height:135px; margin:0 auto; margin-top:50px;}
+.bg{ width:655px; height:15px; background:#d9d9d9; margin:0 auto; padding:10px; font-size:16px; font-weight:bold;}
+.InfoCon{ padding:40px 20px;}
+.ICTit{ float:left; font-size:13px; margin-right:35px;}
+.PS{ float:left; font-size:13px; color:Red; line-height:26px; margin-left:15px;}
+
+.Chn{ width:675px; height:315px; margin:0 auto;}
+.bg div{ float:left;}
+.ChnPS{ float:left; font-size:12px;}
+.ChnPS div{ float:left;}
+.sPS{ color:Red;}
+.ChnCon{ padding:20px 20px; font-size:13px;}
+.ChnTit{ float:left; width:153px;}
+
+.Eng{ width:675px; height:226px; margin:0 auto;}
+.Other{ width:675px; height:225px; margin:0 auto;}
+.Last{ width:675px; height:120px; margin:0 auto; margin-bottom:100px;}
+.Last input{ float:left; width:15px; height:15px;}
+.LLeft{ float:left; font-size:13px; color:#666; margin-top:2px; margin-left:8px;}
+.LLook{ float:left; font-size:11px; color:#0096dc; margin-top:3px; margin-left:10px;}

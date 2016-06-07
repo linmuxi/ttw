@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+
+	<select id="queryMemberList" parameterType="com.phly.ttw.manage.member.model.MemberVO"
+		resultType="com.phly.ttw.manage.member.model.MemberVO">
+		SELECT
+		t1.id id,
+		t1.name name,
+		t2.ACCOUNT account,
+		t1.birth birth,
+		t1.gender gender,
+		t1.mobile mobile,
+		t1.email email,
+		t1.email_status emailStatus,
+		t1.zip_code zipCode,
+		t1.area area,
+		t1.address address,
+		t1.qq_code,
+		t1.urlImg,
+		t1.msn_code,
+		t1.home_phone,
+		t1.office_phone,
+		t2.enabled enabled,
+		t3.name rankName,
+		t1.CREATE_DATE createDate,
+		t1.CREATOR creator,
+		t1.LAST_UPDATE_DATE updateTime,
+		t1.LAST_UPDATER updater,
+		t2.LAST_LOGIN_DATE lastLoginDate,
+		t2.USER_ID AS "user.userId"
+		FROM t_member t1
+		INNER JOIN sys_users_t t2 ON t1.user_id = t2.USER_ID AND t2.ENABLED = 1
+		INNER JOIN
+		t_member_rank t3 ON t1.member_rank_id=t3.id
+		<include refid="sqlCondition"></include>
+		<if
+			test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+	</select>
+
+	<update id="updateMember" parameterType="com.phly.ttw.manage.member.model.MemberVO">
+		UPDATE t_member
+		SET
+		name=#{name},
+		birth= #{birth},
+		gender= #{gender},
+		email= #{email},
+		email_status=#{emailStatus},
+		vaildTimeEmail=#{vaildTimeEmail},
+		msn_code= #{msn_code},
+		qq_code= #{qq_code},
+		urlImg= #{urlImg},
+		office_phone= #{office_phone},
+		home_phone= #{home_phone},
+		mobile= #{mobile},
+		address=#{address}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<select id="findMemberByDate" parameterType="String"
+		resultType="com.phly.ttw.manage.member.model.MemberModel">
+		SELECT
+		t1.id id,
+		t1.birth birth,
+		t1.gender gender,
+		t1.mobile mobile,
+		t1.email email,
+		t1.email_status emailStatus,
+		t1.zip_code zipCode,
+		t1.area area,
+		t1.address address,
+		t1.qq_code,
+		t1.msn_code,
+		t1.home_phone,
+		t1.urlImg,
+		t1.office_phone,
+		t1.create_date createDate,
+		t1.creator,
+		t1.last_update_date updateTime,
+		t1.last_updater updater,
+		t1.user_id
+		FROM t_member t1
+		WHERE 1 = 1
+		AND t1.create_date>= STR_TO_DATE(#{date},'%Y-%m-%d')
+	</select>
+
+	<select id="getMember" parameterType="com.phly.ttw.manage.member.model.MemberVO"
+		resultType="com.phly.ttw.manage.member.model.MemberVO">
+		SELECT
+		t1.id,
+		t1.birth,
+		t1.gender,
+		t1.mobile,
+		t1.email,
+		t1.email_status emailStatus,
+		t1.zip_code zipCode,
+		t1.area,
+		t1.address,
+		t1.qq_code,
+		t1.msn_code,
+		t1.home_phone,
+		t1.urlImg,
+		t1.office_phone,
+		t2.name rankName,
+		t3.LAST_LOGIN_DATE lastLoginDate,
+		t3.account account,
+		t1.create_date createDate,
+		t1.creator,
+		t1.last_update_date updateTime,
+		t1.last_updater updater,
+		t1.user_id,
+		t1.name name
+		FROM t_member t1
+		INNER JOIN t_member_rank t2 ON t1.member_rank_id=t2.id
+		INNER JOIN sys_users_t t3 ON t1.user_id = t3.USER_ID
+		<where> 1 = 1  and t3.ENABLED = 1
+			<if test="userId!=null and userId!=''">
+				and t1.user_id=#{userId}
+			</if>
+			<if test="account!=null and account!=''">
+				and t3.ACCOUNT=#{account}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getMemberVoByAccount" parameterType="String"
+		resultType="com.phly.ttw.manage.member.model.MemberVO">
+		SELECT
+		t1.id,
+		t1.birth,
+		t1.gender,
+		t1.mobile,
+		t1.email,
+		t1.email_status emailStatus,
+		t1.vaildTimeEmail,
+		t1.zip_code zipCode,
+		t1.area,
+		t1.address,
+		t1.qq_code,
+		t1.msn_code,
+		t1.home_phone,
+		t1.urlImg,
+		t1.office_phone,
+		t2.name rankName,
+		t1.create_date createDate,
+		t1.creator,
+		t1.last_update_date updateTime,
+		t1.last_updater updater,
+		t1.user_id,
+		t1.name name
+		FROM t_member t1
+		INNER JOIN t_member_rank t2 ON t1.member_rank_id=t2.id
+		WHERE 1 = 1  
+		AND t1.email=#{account}
+	</select>
+
+	<select id="getMemberCount" parameterType="com.phly.ttw.manage.member.model.MemberVO"
+		resultType="int">
+		SELECT count(1) FROM t_member t1
+		INNER JOIN sys_users_t t2 ON t1.user_id = t2.USER_ID
+		INNER JOIN
+		t_member_rank t3 ON t1.member_rank_id=t3.id
+		<include refid="sqlCondition"></include>
+	</select>
+
+	<sql id="sqlCondition">
+		<where>
+			1 = 1
+			<if test="searchList != null and searchList.length > 0">
+				and
+				<if test="searchRegex == true">
+					<foreach collection="searchList" open="(" close=")"
+						separator="or" item="key">
+						t2.name like CONCAT('%',#{key},'%') or
+						t2.account like CONCAT('%',#{key},'%')
+					</foreach>
+				</if>
+				<if test="searchRegex == false">
+					<foreach collection="searchList" open="(" close=")"
+						separator="or" item="key">
+						t2.name = #{key} or t2.account = #{key}
+					</foreach>
+				</if>
+			</if>
+		</where>
+	</sql>
+
+	<insert id="addMember" parameterType="com.phly.ttw.manage.member.model.MemberVO">
+		INSERT INTO t_member (
+		id,
+		name,
+		birth,
+		gender,
+		mobile,
+		email,
+		email_status,
+		address,
+		member_rank_id,
+		create_date,
+		creator,
+		last_update_date,
+		last_updater,
+		user_id,
+		qq_code,
+		msn_code,
+		office_phone
+		)
+		VALUES
+		(
+			UPPER(REPLACE(UUID(),'-','')),
+			#{name},
+			#{birth},
+			${gender},
+			#{mobile},
+			#{email},
+			#{emailStatus},
+			#{address},
+			'1',
+			NOW(),
+			#{creator},
+			NOW(),
+			#{creator},
+			#{userId},
+			#{qq_code},
+			#{msn_code},
+			#{office_phone}
+		)
+	</insert>
+</mapper>

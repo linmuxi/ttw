@@ -1,0 +1,28 @@
+﻿@import url('css.css');
+
+
+
+
+.h-menu ul li { width: 150px; }
+.column { width: 100%; height: 345px; background: white; margin-top:45px;}
+.contentone, .contenttwo { height: 327px; float: left; text-align: center; padding-top: 18px; }
+.contentone { border-right: 1px solid #e4e4e4; width: 499px;}
+.contenttwo{width:500px;}
+.column h1{margin-top:25px;color:#31333e;font-size:20px;font-weight:bold;}
+.column p.dp{margin-top:30px;}
+.column p{line-height:26px;color:#2a2e39;}
+.hr{width:340px;background:#e4e4e4;height:1px;margin-top:22px;margin-bottom:38px;}
+.show{width:100%;}
+.show h1{color:#00aeff;font-size:30px;text-align:center;}
+.show h2{font-family:Britannic Bold;color:#a3a3a3;font-size:15.69px;font-weight:bold;text-align:center;}
+.showwindows{margin-top:15px;width:656px;position:relative;margin-bottom:50px;height:661px;}
+.showwindows img{position:absolute;}
+.uimg1{top:-1px;left:0px;}
+.uimg2{top:0px;left:219px;}
+.uimg3{top:0px;left:434px;}
+.uimg4{top:217px;left:0px;}
+.uimg5{top:298px;left:218px;}
+.uimg6{top:139px;left:434px;}
+.uimg7{top:357px;left:0px;}
+.uimg8{top:519px;left:218px;}
+.uimg9{top:438px;left:435px;}

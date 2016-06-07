@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vacationRequest">
+
+	<select id="queryVacationRequestList" parameterType="com.phly.common.activiti.vo.VacationRequestVO"
+		resultType="com.phly.common.activiti.vo.VacationRequestVO">
+		SELECT
+		  ID id,
+		  PERSON person,
+		  REASON reason,
+		  DAYS days,
+		  STATUS status
+		FROM t_vacationrequest_test
+		<include refid="getCondition"></include> 
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+	</select>
+	
+	<!-- 获取模块总数 -->
+	<select id="getVacationRequestCount" parameterType="com.phly.common.activiti.vo.VacationRequestVO"
+		resultType="int">
+		SELECT COUNT(1) count FROM t_vacationrequest_test T
+		<include refid="getCondition"></include> 
+	</select>
+	
+	<sql id="getCondition">
+	  <where>
+	  	1 = 1
+	  </where>
+	</sql>
+	
+	<insert id="addVacationRequest" parameterType="com.phly.common.activiti.vo.VacationRequestVO">
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+			select UPPER(REPLACE(UUID(),'-',''))
+		</selectKey>
+			INSERT INTO t_vacationrequest_test (ID,PERSON, REASON, DAYS, STATUS) 
+			VALUES
+			  (
+			  	#{id},
+			    #{person},
+			    #{reason},
+			    ${days},
+			    1
+			  )
+	</insert>
+	
+	<update id="updateVacationRequestStatus" parameterType="com.phly.common.activiti.vo.VacationRequestVO">
+		UPDATE t_vacationrequest_test
+		SET 
+		  STATUS = ${status}
+		WHERE ID = #{id}
+	</update>
+	
+	<select id="getVacationRequest" parameterType="com.phly.common.activiti.vo.VacationRequestVO"
+		resultType="com.phly.common.activiti.vo.VacationRequestVO">
+		SELECT
+		  ID id,
+		  PERSON person,
+		  REASON reason,
+		  DAYS days,
+		  STATUS status
+		FROM t_vacationrequest_test t where t.id = #{id}
+	</select>
+	
+</mapper>

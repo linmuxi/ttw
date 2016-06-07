@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<description></description>
+	<display-name></display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>menu</short-name>
+	<uri></uri>
+	<tag>
+		<description> 生成后台管理菜单 </description>
+		<name>markMenu</name>
+		<tag-class>com.phly.common.base.tag.DefaultMenuTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description></description>
+			<name>moduleList</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

@@ -1,0 +1,87 @@
+﻿/*首页*/
+.container { margin-right: auto; margin-left: auto; }
+.fl { float: left; }
+.fr { float: right; }
+.cl{clear:both;}
+.header { width: 100%; }
+.wid1000 { width: 1000px; }
+.wid1200 {width:1200px;}
+.h-nav { height: 32px; background: #e3e3e3; }
+.h-nav a { text-decoration: none; }
+.leftsidebar li:first-child { margin-left: 0px; }
+.leftsidebar li { float: left; margin-left: 15px; line-height: 32px; font-size: 12px; }
+.leftsidebar li a { color: black; }
+.rightsidebar li:first-child { margin-left: 0px; color: #0096dc; }
+.rightsidebar li:first-child a { color: #0096dc; }
+.rightsidebar li { float: left; margin-right: 15px; line-height: 32px; font-size: 12px; }
+.rightsidebar li a { color: black; }
+.h-sl { background: white; height: 107px; }
+.logo {width:256px;height:94px;  background:url(../images/icon_total.png);}
+.search { width: 600px; height: 36px; background: #0096dc; margin-top: 38px; border-radius: 4px; padding: 2px 0 2px 2px; }
+.search-k { width: 402px; height: 15px; background: white; padding: 10px 0px 11px 10px; }
+.search-input { border: 0px; width: 402px; outline: none; }
+.search-input::-webkit-input-placeholder { color: #797878; }
+.sx-icon{width:16px;height:13px; background:url(../images/icon_total.png);display:block;position:absolute;top:10px;right:13px; background-position:-337px -174px;}
+.search-input:-moz-placeholder { color: #797878; }
+.search-input::-moz-placeholder { color: #797878; }
+.search-input:-ms-input-placeholder { color: #797878; }
+.search-xl { width: 92px; height: 36px; background: #e2e7ed; text-align: center; line-height: 36px; font-size: 14px; cursor: pointer;position:relative; }
+.search-word { width: 92px; height: 36px; background: #0096dc; text-align: center; line-height: 36px; font-size: 14px; cursor: pointer; color: White; }
+.h-menu { height: 46px; background: #0096dc; }
+.h-menu ul li { float: left; color: White; font-size: 14px; line-height: 46px; width: 125px; height: 46px; text-align: center; cursor: pointer; position: relative; }
+.h-menu ul li i { width:26px;height:23px;  display: block; position:relative; top: 10px; margin-left: 15px;  background:url(../images/icon_total.png);background-position:-338px -150px; float:left;}
+.banner-bar { width: 1200px; height: 363px; position: relative;overflow:hidden; }
+.banner { position: relative; overflow: auto; }
+.banner .dots { position: absolute; left: 578px; right: 0; bottom: 20px; }
+.banner .dots li.active { background: #0096dc; opacity: 1;  background:url(../images/icon_total.png); background-position:-247px -147px;}
+.banner .dots li {  display: inline-block; width:9px;height:11px; margin: 0 4px; text-indent: -999em;  cursor: pointer;  background:url(../images/icon_total.png); background-position:-233px -147px;}
+.banner li { list-style: none; background: #31333e; }
+.banner ul li { float: left; width: 1200px; height: 363px; }
+.prev { position: absolute; width:18px;height:31px; top: 160px; left: 110px; background:url(../images/icon_total.png); background-position:-119px -155px;}
+.next { position: absolute; width:18px;height:31px; top: 160px; right: 110px; background:url(../images/icon_total.png); background-position:-148px -155px;}
+/*footer*/
+.footer{background:#31333e;width:100%;height:92px;padding-top:20px;clear:both;}
+.footer *{color:White;font-size:12px;text-align:center;position:relative;z-index:999;}
+.guild ul li{float:left;margin-left:20px;}
+.guild,.copyright,.dateas{float:left;width:100%;}
+.copyright{margin-top:23px;}
+.dateas{margin-top:12px;}
+.guild ul{width:1000px;margin:0 auto;}
+.guild ul a{text-decoration:none;color:White;}
+
+
+ .dropdownDefault {
+  line-height: 35px;
+  text-indent: 0em;
+  letter-spacing: 3px;}
+  .dropdownContainer {
+  position: relative;
+  height: 38px;
+  width: 92px;
+  color: #31333e;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dropdrown-menu {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  left: 0;
+  display: none;
+  background: #e2e7ed;
+  z-index:999;
+}
+.dropdrown-menu li {
+  display: inline-block;
+  width: 100%;
+  text-indent: 0.5em;
+  text-decoration: none;
+  color: black;
+  border-radius: 5px;
+}
+.dropdrown-menu li {
+  line-height: 24px;
+}
+.dropdrown-menu li:hover{ background:white;}
+.Hbsj_C_T_C_L_B_D_Box .adsaf li:hover {color:#0096dc; cursor: pointer;}

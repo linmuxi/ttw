@@ -1,0 +1,27 @@
+﻿body { margin:0; width:100%;}
+.Opacity{ background:#a2a2a2; opacity:.4; display:none; width:100%; height:112%; position:absolute; left:0; top:0; z-index:1;}
+.main{ width:975px; margin:0 auto;}
+
+/*当前位置*/
+.Pos{ padding:20px 0;width:100%; height:26px;}
+.PosIcon{ background:url(../images/icon_total.png) -334px -93px; float:left; width:29px; height:26px; margin-right:10px;}
+.PosOne{ font-size:14px; float:left; line-height:26px;}
+.Choose{ font-size:15px; color:#0096dc; height:16px; padding-bottom:8px; border-bottom:2px solid #0096dc;}
+
+.Need{ width:100%; padding:10px 0; height:15px;}
+.NeedTit{ float:left; font-size:14px;}
+.NeedMod{ float:left; margin-left:65px; font-size:14px; color:#707070; cursor:pointer;}
+.NeedIcon{ float:left; background:url(../images/Submit/chakan.png); width:17px; height:17px; margin-right:5px;}
+.Fill{ width:100%; height:500px; margin-bottom:70px; position:relative;}
+.FillStar{ float:left; color:#0096dc; font-size:20px; margin-top:3px;}
+.FillTit{ width:948px; height:35px; float:right; margin-top:10px; padding-left:10px;}
+.FillMain{ width:938px; height:299px; float:right; margin-top:15px; resize:none; padding:10px;}
+.FillBtn{ margin-top:20px; width:100%; float:left;}
+.FB_Add{ float:left; margin-top:10px; margin-left:20px; width:60px; font-size:14px;}
+.FB_UP{ float:left; margin-left:20px; width:125px; height:34px; background:#0096dc; color:#fff; text-align:center; line-height:34px; font-size:14px;}
+.FillPS{ width:100%; float:left; margin-top:10px; color:#bababa; font-size:14px; padding-left:20px;}
+
+.FillBox{ position:absolute; top:-100px; left:180px; width:574px; height:610px; border:1px solid #eee; background:#fff; display:none; z-index:999;}
+.FB_Tit{ font-size:16px; color:#636363; padding:10px; background:#e0e0e0;}
+.FB_Con{ padding:10px; color:#8e8f93;}
+.FB_Con p{ padding:7px 0; font-size:14px;}

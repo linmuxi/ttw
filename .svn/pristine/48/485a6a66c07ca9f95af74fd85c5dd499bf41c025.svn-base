@@ -1,0 +1,23 @@
+﻿body { margin:0; width:100%;}
+.main{ width:975px; margin:0 auto;}
+
+/*当前位置*/
+.Pos{ padding:20px 0;width:100%; height:26px;}
+.PosIcon{ background:url(../images/icon_total.png) -334px -93px; float:left; width:29px; height:26px; margin-right:10px;}
+.PosOne{ font-size:14px; float:left; line-height:26px;}
+.PosTwo{ font-size:12px; float:left; line-height:26px;}
+
+.Table{ border-collapse:collapse; border:none; width:970px; height:543px; font-size:14px; margin-bottom:110px;}
+.Table td{ border:1px solid #eee; padding:0 20px;}
+.Table td:first-child{ width:247px; text-align:center;}
+.Table td select{ float:left;}
+.SelPS{ float:left; margin-left:10px; margin-top:4px; font-size:14px; color:#0096dc;}
+.Twww div{ float:left; font-size:14px; line-height:32px; letter-spacing:1px;}
+.Twww input{ float:left; width:160px; height:32px; font-size:14px; background:#ededed; border:1px solid #c0c0c0; letter-spacing:1px;}
+.wwwPS{ float:left; color:#0096dc;}
+.Table td p{ line-height:25px;}
+.TName{ width:190px; height:30px; background:#ededed; border:1px solid #c0c0c0; letter-spacing:1px;}
+.TCheck{ width:300px; margin:0 auto;}
+.TCheck div,input{ float:left;}
+.TTips{ float:left; color:#0096dc; font-size:14px; font-weight:bold; text-indent:2em;}
+.TTipsCon{ color:#0096dc; font-size:14px;}

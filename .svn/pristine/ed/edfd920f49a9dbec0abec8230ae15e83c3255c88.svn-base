@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="goodsCategory">
+
+	<!-- 查询商品分类列表 -->
+	<select id="queryGoodsCategoryList" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsCategoryVO" flushCache="true">
+	  SELECT ID id,
+			 GRADE grade,
+			 META_KEYWORDS metaKeywords,
+			 META_DES metaDes,
+			 `NAME` name,
+			 CATEGORYCODE categoryCode,
+			 STATE state,
+			 PATH path,
+			 PIC_HREF picHref,
+			 SORT sort,
+			 SIGN sign,
+			 GOODS_TYPE_ID goodsTypeId,
+			 PARENT_ID parentId,
+			 LOGO logo,
+			 ENABLED enabled,
+			 RECOMMENDED recommended,
+			 SCROLL scroll,
+			 CREATE_TIME createTime,
+			 CREATE_USER creator,
+			 UPDATE_TIME updateTime,
+			 UPDATE_USER updater
+  		FROM t_goods_category
+		<where>
+		    1 = 1 AND ENABLED = 1 
+			<if test="name != null and name != ''">
+				AND `NAME` LIKE CONCAT('%',#{name},'%') 
+			</if>
+			<if test="searchPhrase != null and searchPhrase != ''">
+				AND (
+					`NAME` LIKE CONCAT('%',#{searchPhrase},'%') 
+					OR META_DES LIKE CONCAT('%',#{searchPhrase},'%') 
+					OR META_KEYWORDS LIKE CONCAT('%',#{searchPhrase},'%')
+					) 
+			</if>
+		</where>
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+		<if test="sortFieldName == null or sortFieldName == '' or sortType == null or sortType == ''">
+			ORDER BY UPDATE_TIME DESC
+		</if>
+	</select>
+	
+	
+	<!-- 查询商品分类列表 根据分类级别排序 -->
+	<select id="queryGoodsCategoryListByCategorySort" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsCategoryVO" flushCache="true">
+		SELECT T.* FROM (
+		  SELECT (CASE WHEN PATH IS NULL OR PATH = '' THEN `NAME` ELSE CONCAT(PATH,',',`NAME`) END) categorySort,
+		  		 ID id,
+				 GRADE grade,
+				 META_KEYWORDS metaKeywords,
+				 META_DES metaDes,
+				 `NAME` name,
+				 CATEGORYCODE categoryCode,
+				 STATE state,
+				 PATH path,
+				 SORT sort,
+				 SIGN sign,
+				 GOODS_TYPE_ID goodsTypeId,
+				 PARENT_ID parentId,
+				 LOGO logo,
+				 ENABLED enabled,
+				 RECOMMENDED recommended,
+			 	 SCROLL scroll,
+				 CREATE_TIME createTime,
+				 CREATE_USER creator,
+				 UPDATE_TIME updateTime,
+				 UPDATE_USER updater
+	  		FROM t_goods_category
+			<where>
+			    1 = 1 AND ENABLED = 1 
+			</where>
+			) AS T
+			ORDER BY categorySort ASC , grade ASC, sort ASC
+	</select>
+	
+	
+	<!-- 查询商品分类总数 -->
+	<select id="getGoodsCategoryCount" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO"
+		resultType="int" flushCache="true">
+		 SELECT COUNT(1)
+  		FROM t_goods_category
+		<where>
+		    1 = 1 AND ENABLED = 1 
+			<if test="name != null and name != ''">
+				AND `NAME` LIKE CONCAT('%',#{name},'%') 
+				AND META_DES LIKE CONCAT('%',#{name},'%') 
+				AND META_KEYWORDS LIKE CONCAT('%',#{name},'%') 
+			</if>
+			<if test="searchPhrase != null and searchPhrase != ''">
+				AND (
+					`NAME` LIKE CONCAT('%',#{searchPhrase},'%') 
+					OR META_DES LIKE CONCAT('%',#{searchPhrase},'%') 
+					OR META_KEYWORDS LIKE CONCAT('%',#{searchPhrase},'%')
+					) 
+			</if>
+  			LIMIT 0,1
+		</where>
+	</select>
+	
+	<!-- 根据id或者名称查询商品分类 -->
+	<select id="queryGoodsCategoryListByParentId" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsCategoryVO">
+	SELECT T.* FROM (
+	  SELECT t.ID id,
+			 t.GRADE grade,
+			 t.META_KEYWORDS metaKeywords,
+			 t.META_DES metaDes,
+			 t.`NAME` name,
+			 t.CATEGORYCODE categoryCode,
+			 t.STATE state,
+			 t.PATH path,
+			 t.SORT sort,
+			 t.SIGN sign,
+			 t.GOODS_TYPE_ID goodsTypeId,
+			 t.PARENT_ID parentId,
+			 t1.`NAME` parentCategoryName,
+			 t1.url parentCategoryUrl,
+			 t.LOGO logo,
+			 t.RECOMMENDED recommended,
+			 t.SCROLL scroll,
+			 t.CREATE_TIME createTime,
+			 t.CREATE_USER creator,
+			 t.UPDATE_TIME updateTime,
+			 t.UPDATE_USER updater,
+			 (CASE WHEN t.PATH IS NULL THEN t.`NAME` ELSE t.PATH END) categorySort,
+			 t.url url,
+			(
+		      SELECT IF(COUNT(1) > 0,1,0) FROM  t_goods_category t2 WHERE t2.parent_id = t.id AND t2.enabled=1 
+		    ) isHaveChild
+  		FROM t_goods_category t
+  		LEFT JOIN t_goods_category t1 ON t.PARENT_ID = t1.ID
+		<where>
+			1 = 1 AND t.ENABLED = 1
+			<if test="parentId != null">
+				AND (
+					t.PARENT_ID = #{parentId} 
+					OR 
+					t.ID IN (
+						SELECT CATEGORYID 
+						  FROM t_goods_category_rp 
+						 WHERE PARENTCATEGORYID = #{parentId} 
+						    )
+					)
+			</if>
+		</where>
+		) T 
+		ORDER BY categorySort ASC , grade ASC, sort ASC
+	</select>
+	
+	<!-- 根据id或者名称查询商品分类 -->
+	<select id="getGoodsCategory" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO"
+		resultType="com.phly.ttw.manage.goods.model.GoodsCategoryVO">
+	  SELECT t.ID id,
+			 t.GRADE grade,
+			 t.META_KEYWORDS metaKeywords,
+			 t.META_DES metaDes,
+			 t.`NAME` name,
+			 t.CATEGORYCODE categoryCode,
+			 t.STATE state,
+			 t.PATH path,
+			 t.SORT sort,
+			 t.SIGN sign,
+			 t.GOODS_TYPE_ID goodsTypeId,
+			 t.PARENT_ID parentId,
+			 t1.`NAME` parentCategoryName,
+			 t.LOGO logo,
+			 t.ENABLED enabled,
+			 t.RECOMMENDED recommended,
+			 t.SCROLL scroll,
+			 t.CREATE_TIME createTime,
+			 t.CREATE_USER creator,
+			 t.UPDATE_TIME updateTime,
+			 t.UPDATE_USER updater,
+			 t.url url,
+			(
+		      SELECT IF(COUNT(1) > 0,1,0) FROM  t_goods_category t2 WHERE t2.parent_id = t.id AND t2.enabled=1 
+		    ) isHaveChild,
+		    t.PIC_HREF picHref
+  		FROM t_goods_category t
+  		LEFT JOIN t_goods_category t1 ON t.PARENT_ID = t1.ID
+		<where>
+			1 = 1 AND t.ENABLED = 1
+			<if test="name != null and name != ''">
+				AND t.NAME = #{name}
+			</if>
+			<if test="id != null and id != ''">
+				AND t.ID = #{id}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	<insert id="addGoodsCategory" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO">
+	  INSERT INTO t_goods_category(
+			 ID,
+			 GRADE,
+			 META_KEYWORDS,
+			 META_DES,
+			 `NAME`,
+			 CATEGORYCODE,
+			 STATE,
+			 PATH,
+			 SORT,
+			 SIGN,
+			 GOODS_TYPE_ID,
+			 PARENT_ID,
+			 LOGO,
+			 ENABLED,
+			 RECOMMENDED,
+			 SCROLL,
+			 CREATE_TIME,
+			 CREATE_USER,
+			 UPDATE_TIME,
+			 UPDATE_USER,
+			 url,
+			 PIC_HREF)
+      VALUES (
+			 #{id},
+			 #{grade},
+			 #{metaKeywords},
+			 #{metaDes},
+			 #{name},
+			 #{categoryCode},
+			 #{state},
+			 #{path},
+			 #{sort},
+			 #{sign},
+			 #{goodsTypeId},
+			 #{parentId},
+			 #{logo},
+			 #{enabled},
+			 #{recommended},
+			 #{scroll},
+			 NOW(),
+			 #{creator},
+			 NOW(),
+			 #{creator},
+			 #{url},
+			 #{picHref}
+			 )
+	</insert>
+	
+	<update id="updateGoodsCategory" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO">
+		UPDATE t_goods_category
+		   SET GRADE = #{grade},
+		   	   META_KEYWORDS = #{metaKeywords},
+		   	   META_DES = #{metaDes},
+		   	   `NAME` = #{name},
+		   	   CATEGORYCODE = #{categoryCode},
+		   	   PATH = #{path},
+		   	   SORT = #{sort},
+		   	   SIGN = #{sign},
+		   	   PARENT_ID = #{parentId},
+		   	   LOGO = #{logo},
+		   	   ENABLED = #{enabled},
+		   	   RECOMMENDED = #{recommended},
+		   	   SCROLL = #{scroll},
+		   	   UPDATE_TIME = NOW(),
+		   	   UPDATE_USER = #{updater},
+		   	   url = #{url},
+		   	   PIC_HREF = #{picHref}
+		 WHERE ID = #{id}  
+	</update>
+	
+	<delete id="delGoodsCategory" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO">
+		UPDATE t_goods_category
+		SET ENABLED = 0
+		WHERE ID = #{id};
+	</delete>
+	
+	<!-- 查询热门分类或首页滚动 -->
+	<select id="queryHotGoodsCategoryList" parameterType="com.phly.ttw.manage.goods.model.GoodsCategoryVO" resultType="com.phly.ttw.manage.goods.model.GoodsCategoryVO">
+		SELECT 
+			 t1.ID id,
+			 t1.GRADE grade,
+			 t1.META_KEYWORDS metaKeywords,
+			 t1.META_DES metaDes,
+			 t1.NAME NAME,
+			 t1.CATEGORYCODE categoryCode,
+			 t1.STATE state,
+			 t1.PATH path,
+			 t1.SORT sort,
+			 t1.SIGN SIGN,
+			 t1.GOODS_TYPE_ID goodsTypeId,
+			 t1.PARENT_ID parentId,
+			 t1.LOGO logo,
+			 t1.ENABLED enabled,
+			 t1.CREATE_TIME createTime,
+			 t1.CREATE_USER creator,
+			 t1.UPDATE_TIME updateTime,
+			 t1.UPDATE_USER updater,
+			 (
+				SELECT MIN(tt.price) FROM t_goods tt WHERE tt.goodscategoryid = t1.id
+			 ) price
+		FROM
+		  t_goods_category t1 
+		  <where> 1 =1 and t1.enabled = 1
+		  	<if test="recommended != null and recommended != ''">
+		  		and t1.RECOMMENDED = ${recommended}	
+		  	</if>
+		  	<if test="scroll != null and scroll != ''">
+		  		and t1.scroll = ${scroll}	
+		  	</if>
+		  </where>
+		   ORDER BY t1.sort DESC
+		  LIMIT 0,4
+	</select>
+	
+	<!-- 查询更多父分类 -->
+	<select id="queryCategoryRp" parameterType="com.phly.ttw.manage.goods.model.CategoryRpVO" resultType="com.phly.ttw.manage.goods.model.CategoryRpVO">
+		SELECT 
+			 t1.ID id,
+			 t1.CATEGORYID categoryId,
+			 t1.PARENTCATEGORYID parentCategoryId,
+			 t1.PARENTCATEGORYNAME parentCategoryName,
+			 t1.CREATE_TIME createTime,
+			 t1.CREATE_USER creator,
+			 t1.UPDATE_TIME updateTime,
+			 t1.UPDATE_USER updater
+		FROM
+		  t_goods_category_rp t1 
+		  <where> 1 =1 
+		  	<if test="categoryId != null and categoryId != ''">
+		  		and t1.CATEGORYID = #{categoryId}	
+		  	</if>
+		  </where>
+	</select>
+	
+	
+	<insert id="addCategoryRp" parameterType="com.phly.ttw.manage.goods.model.CategoryRpVO">
+	  INSERT INTO t_goods_category_rp(
+			 ID,
+			 CATEGORYID,
+			 PARENTCATEGORYID,
+			 PARENTCATEGORYNAME,
+			 CREATE_TIME,
+			 CREATE_USER,
+			 UPDATE_TIME,
+			 UPDATE_USER)
+      VALUES (
+			 #{id},
+			 #{categoryId},
+			 #{parentCategoryId},
+			 #{parentCategoryName},
+			 NOW(),
+			 #{creator},
+			 NOW(),
+			 #{creator}
+			 )
+	</insert>
+	
+	<delete id="delCategoryRp" parameterType="com.phly.ttw.manage.goods.model.CategoryRpVO">
+		DELETE FROM t_goods_category_rp 
+		 WHERE CATEGORYID = #{categoryId}
+	</delete>
+</mapper>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+
+	<style type="text/css">
+	form, iframe, ul, li, h1, h2, h3, h4, h5, h6, span, input, textarea,
+		select, table, td, th, div, dl, dt, dd ,p{
+		margin: 0px;
+		padding: 0px;
+		list-style: none;
+		font-size: 14px;
+	}
+
+	ul li{
+		float:left;		
+		padding-left:50px;
+	}
+
+	html,body{
+		background-color:#0C0;
+
+	}
+	.aa{
+
+		transform:rotate(-45deg);
+
+	}
+
+	ul
+	</style>
+</head>
+<body>
+
+	
+	<div style="width:1020px;height:60px;padding-top:25px;padding-bottom:15px;;background-color:#f7f8f8;position:relative;border-bottom:10px solid gray;">
+		<div style="width:0px;height:0px;border-top:80px solid red;border-right:80px solid transparent;position:absolute;top:0;">
+			<span style="position:absolute;top:-60px;color:#FFF;" class="aa">yysy</span>
+		</div>
+		<ul style="padding-left:10px;">
+			<li>
+				<p>利率</p>
+				<span>8%~10%</span>
+			</li>
+			<li>
+				<p>项目名称</p>
+				<span>预约标</span>
+			</li>
+			<li>
+				<p>预约总金额</p>
+				<span>100,000,00</span>
+			</li>
+			<li>
+				<p>期限</p>
+				<span>6~12个月</span>
+			</li>
+			<li>
+				<p>还款方式</p>
+				<span>等额本息</span>
+			</li>
+			<li>
+				<p>起息方式</p>
+				<span>满标起息</span>
+			</li>
+			<li>
+				<p>截止日期</p>
+				<span>8月13日</span>
+			</li>
+			<li>
+				<p>剩余天数</p>
+				<span>3天</span>
+			</li>
+		</ul>
+		<div style="height:110px;width:125px;background-color:#FFee00;position:absolute;right:0;top:0px;">
+			fdasfds
+		</div>
+	</div>
+
+
+
+</body>
+</html>

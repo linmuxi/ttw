@@ -1,0 +1,5 @@
+1、service需要实现接口FormService
+2、启动工作流：
+activitiUtil.startWorkFlowByFormName("请假单", "实现了FormService接口类的全路径"+";"+"业务表单明细页面"+";"+"业务表单主键", "流程变量map");
+3、在明细页面提供getFormData方法用于返回页面所有表单元素值(PS:如果不需要在FormService方法中获取页面值，可以不用提供)
+

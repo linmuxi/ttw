@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="formProcess">
+
+	<!-- 查询列表 -->
+	<select id="queryFormProcessList" parameterType="com.phly.common.activiti.vo.FormProcessVO"
+		resultType="com.phly.common.activiti.vo.FormProcessVO">
+		SELECT 
+		  T.ID id,
+		  T.FORM_NAME formName,
+		  T.PRODEF_ID prodefId,
+		  T2.NAME_	prodefName,
+		  T.CREATE_DATE createDate,
+		  T.CREATOR creator,
+		  T.LAST_UPDATE_DATE updateTime,
+		  T.LAST_UPDATER updater ,
+		  t2.version_ version
+		FROM
+		  T_ACT_FORM_PROCESS t left join act_re_procdef t2 on t.PRODEF_ID = t2.ID_
+		<include refid="getCondition"></include> 
+		<if test="sortFieldName != null and sortFieldName != '' and sortType != null and sortType != ''">
+			ORDER BY ${sortFieldName} ${sortType}
+		</if>
+	</select>
+	
+	<!-- 获取总条数 -->
+	<select id="getFormProcessCount" parameterType="com.phly.common.activiti.vo.FormProcessVO"
+		resultType="int">
+		SELECT COUNT(1) count FROM T_ACT_FORM_PROCESS T left join act_re_procdef t2 on t.PRODEF_ID = t2.ID_
+		<include refid="getCondition"></include> 
+	</select>
+	
+	<sql id="getCondition">
+	  <where>
+		<if test="searchPhrase != null and searchPhrase != ''">
+			(t.FORM_NAME like CONCAT('%',#{searchPhrase},'%') or t2.NAME_ like CONCAT('%',#{searchPhrase},'%'))
+		</if>
+	  </where>
+	</sql>
+	
+	<!-- 添加 -->
+	<insert id="addFormProcess" parameterType="com.phly.common.activiti.vo.FormProcessVO">
+		INSERT INTO t_act_form_process (
+		  ID,
+		  FORM_NAME,
+		  PRODEF_ID,
+		  create_date,
+		  creator,
+		  last_update_date,
+		  last_updater
+		) 
+		VALUES
+		  (
+		    UPPER(REPLACE(UUID(),'-','')),
+		    #{formName},
+		    #{prodefId},
+		    NOW(),
+		    #{creator},
+		    NOW(),
+		    #{creator}
+		  )
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="updateFormProcess" parameterType="com.phly.common.activiti.vo.FormProcessVO">
+		UPDATE 
+		  t_act_form_process 
+		SET
+		  FORM_NAME = #{formName},
+		  PRODEF_ID = #{prodefId},
+		  last_update_date = NOW(),
+		  last_updater = #{creator} 
+		WHERE ID = #{id}
+	</update>
+	
+	<!-- 删除 -->
+	<delete id="deleteFormProcess" parameterType="com.phly.common.activiti.vo.FormProcessVO">
+		DELETE FROM t_act_form_process 
+			WHERE ID = #{id}
+	</delete>
+	
+	<!-- 获取表单流程信息 -->
+	<select id="getFormProcess" parameterType="com.phly.common.activiti.vo.FormProcessVO"
+		resultType="com.phly.common.activiti.vo.FormProcessVO">
+		SELECT 
+		  ID id,
+		  FORM_NAME formName,
+		  PRODEF_ID prodefId,
+		  CREATE_DATE createDate,
+		  CREATOR creator,
+		  LAST_UPDATE_DATE updateTime,
+		  LAST_UPDATER updater 
+		FROM
+		  T_ACT_FORM_PROCESS t
+		  <where>
+		  	<if test="id != null and id != ''">
+		  		t.id = #{id}
+		  	</if>
+		  	<if test="formName != null and formName != ''">
+		  		and t.FORM_NAME = #{formName}
+		  	</if>
+		  </where>
+	</select>
+	
+	<select id="getApprover" parameterType="hashmap" resultType="com.phly.common.activiti.vo.ApproverVO">
+		SELECT 
+			  ID id,
+			  FORM_PROCESS_ID formProcessId,
+			  NODE node,
+			  ROLE_ID roleId,
+			  (SELECT role_name FROM sys_roles_t t1 WHERE role_id = t.role_Id) roleName,
+			  USER_ID userId,
+			  (SELECT account FROM sys_users_t WHERE user_id = t.user_id) userAccount
+		 FROM t_act_approver t WHERE t.FORM_PROCESS_ID = (
+		SELECT t1.ID FROM t_act_form_process t1 WHERE t1.FORM_NAME = #{formName}
+		) AND t.node = ${node} limit 0,1
+	</select>
+</mapper>

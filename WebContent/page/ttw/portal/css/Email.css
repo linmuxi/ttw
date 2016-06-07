@@ -1,0 +1,16 @@
+﻿body { margin:0; width:100%;}
+.main{ width:675px; height:280px; margin:50px auto; border:1px solid #0096dc; margin-bottom:150px;}
+
+.bg{ width:675px; height:40px; background:#cbcbcb; text-align:center; line-height:40px; font-size:16px;}
+.Table{ border-collapse:collapse; border:none; width:675px; height:240px; font-size:14px; margin-bottom:110px;}
+.Table td{ border:1px solid #eee; padding:0 20px;}
+.Table td:first-child{ width:165px; text-align:center;}
+.Table select{ float:left;}
+.SelPS{ float:left; margin-left:10px; margin-top:4px; font-size:14px; color:red;}
+.email{ width:145px; height:22px;}
+.emailFont{ width:200px;}
+.emailFont p{ float:left;}
+.emailFont p:last-child{ color:#0096dc;}
+.emailFont input{ float:left;}
+.last{ margin:0 auto; width:240px;}
+.btn{ width:105px; height:30px; border:1px solid #8dc7e9; text-align:center; line-height:30px; margin:0 auto; background:#eee;}

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>manages</display-name>
+
+	<!-- Spring配置 -->
+	<context-param>
+		<description>Spring Context Path</description>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/config/spring/applicationContext.xml;/WEB-INF/config/spring/applicationContext-security.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- Spring配置 end -->
+
+	<!-- SpringMVC 配置 -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/spring/servlet-config.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- SpringMVC 配置 end -->
+
+	<!-- dwr配置 -->
+	<servlet>
+		<servlet-name>dwr</servlet-name>
+		<servlet-class>org.directwebremoting.spring.DwrSpringServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>crossDomainSessionSecurity</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowScriptTagRemoting</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>activeReverseAjaxEnabled</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dwr</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+	<!-- dwr配置 end -->
+	
+	<!-- cxf配置 -->
+	<servlet>
+		<servlet-name>cxf</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cxf</servlet-name>
+		<url-pattern>/webservice/*</url-pattern>
+	</servlet-mapping>
+	<!-- cxf配置 end -->
+	
+	<!-- 登录过滤器 -->
+	<filter>
+		<filter-name>loginFilter</filter-name>
+		<filter-class>com.phly.common.base.security.LoginFilter</filter-class>
+		
+		<init-param>
+			<param-name>IGNORE_PAGES</param-name>
+			<param-value>
+				.*.dwr$,
+				.*.css$,
+				.*.js$,
+				.*.png$,
+				.*.jpg$,
+				.*.bmp$,
+				.*.jpeg$,
+				.*.gif$,
+				^/|/ttw|/ttw/$,
+				^.*/page/mylogin,
+				^.*/page/login/.*,
+				^.*/page/front/.*,
+				^.*/page/portal/.*,
+				^.*/page/ttw/portal/.*,
+				^.*/page/ttw/front/.*,
+				^.*/page/manage/member/resertpwd$,
+				^.*/page/admin/user/getAccountExists$,
+				^.*/page/admin/user/loginCheckVerifyCode$,
+				^.*/upload/user/.*,
+				^.*/webservice.*,
+				^.*/loginVerifyCode$,
+				^.*/forGetCheckverifyCode$,
+				^.*/forGetVerifyCode$
+			</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>loginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	
+	<!-- 登录过滤器 -->
+	
+	<!-- 启用页面缓存 -->
+	<filter>
+	    <filter-name>PageEhCacheFilter</filter-name>
+	    <filter-class>com.phly.common.filter.PageEhCacheFilter</filter-class>
+	    <!-- 使用的缓存名称 -->
+	    <init-param>
+	    	<param-name>cacheName</param-name>
+	    	<param-value>SimplePageCachingFilter</param-value>
+	    </init-param>
+	    <!-- 缓存配置文件路径 统一配置到config.properties文件中 -->
+	    <!-- <init-param>
+	    	<param-name>ehCacheFilePath</param-name>
+	    	<param-value>/com/phly/common/resource/ehcache.xml</param-value>
+	    </init-param> -->
+		<!-- 配置需要缓存的url -->
+	    <init-param>
+	        <param-name>patterns</param-name>
+	        <!-- <param-value>/hello.jsp,/demo/hello3</param-value> -->
+	        <param-value><!-- /page/ttw/portal/index.jsp, /ttw/page/front/home--></param-value>
+	    </init-param>
+	</filter>
+	<filter-mapping>
+	    <filter-name>PageEhCacheFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 启用页面缓存 end -->
+
+	<!-- SpringSecurity 核心过滤器配置 -->  
+	<filter>   
+	    <filter-name>springSecurityFilterChain</filter-name>    
+	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>    
+	</filter>  
+	<filter-mapping>  
+	    <filter-name>springSecurityFilterChain</filter-name>  
+	    <url-pattern>/*</url-pattern>    
+	</filter-mapping> 
+	<!-- SpringSecurity 核心过滤器配置 end -->
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

@@ -1,0 +1,22 @@
+﻿@import url('css.css');
+
+
+.h-menu ul li:first-child{width:170px;}
+.column{width:100%;height:385px;}
+.columnContent{height:385px;border-bottom:1px solid #ccc;}
+.contentone,.contenttwo,.contentthree{width:305px;margin-top:70px;text-align:center;float:left;}
+.contenttwo{margin-left:42.5px;margin-right:42.5px;}
+.column div h1{margin-top:10px;text-align:left;font-size:18px;}
+.h1one{color:#7abc28;}
+.h1two{color:#0096dc;}
+.h1three{color:#2e221b;}
+.column div p{color:#8f8e8e;font-size:12px;text-align:left;}
+.column div p.pd{margin-top:5px;}
+.column div p:first-child{margin-top:5px;}
+.column-more{margin-top:22px;width:100%;}
+.more-img{width:52px;height:16px;background:url(../images/icon_total.png);background-position:-54px -123px;margin:0 auto; cursor:pointer;}
+.case{width:1200px;height:370px;background:#efefef;margin:0px auto;}
+.caseContent{height:340px;text-align:center;padding-top:30px;}
+.case-tit{color:#565656;font-size:18px;margin-bottom:44px;}
+
+.case-img img{cursor:pointer;}

@@ -1,0 +1,73 @@
+﻿@import url('css.css');
+.Content- { width: 1200px; height: 1404px; margin: 0 auto; }
+.Content-All- { width: 1000px; height: 1380px; margin: 0 auto; }
+.Content-head- { width: 1000px; height: 45px; font-family: 微软雅黑; }
+.Content-head-logo- { background-image: url(../images/icon_total.png); width: 29px; height: 27px; background-position: -335px -93px; float: left; margin-top: 10px; }
+.Content-head-navts- { margin-left: 15px; float: left; font-size: 14px; line-height: 26px; margin-top: 10px; }
+.Content-head-navwz- { font-size: 14px; line-height: 26px; cursor: pointer; margin-top: 10px; float: left; }
+.Content-left- { width: 215px; height: 1335px; float: left; }
+.Content-left-one- { width: 213px; height: 529px; border: 1px solid #108ac3; background-color: #eeeeee; }
+.Content-left-one-tit- { width: 213px; height: 32px; background-color: #0096dc; text-align: center; line-height: 32px; color: White; font-size: 14px; font-family: 微软雅黑; }
+.Content-left-one-nav- { font-family: 微软雅黑; font-size: 14px; }
+#bus-logo { background-position: -269px -122px; }
+.bus-logo- { width: 12px; height: 10px; background-image: url(../images/icon_total.png); float: left; margin-top: 10px; margin-left: 9px; }
+.one-dummyAll { height: 36px; cursor: pointer; }
+.business- { height: 32px; line-height: 32px; margin-left: 39px; font-size: 12px; }
+.one-line- { width: 202px; height: 2px; background-color: #FFFAFA; border-radius: 10px; margin-left: 5px; }
+.Content-left-two- { width: 213px; height: 529px; border: 1px solid #c9c9c9; background-color: white; margin-top: 13px; }
+.Content-left-two-tit- { width: 213px; height: 32px; background-color: #eeeeee; text-align: center; line-height: 32px; color: #0096dc; font-size: 14px; font-family: 微软雅黑; }
+.Content-left-two-nav- { font-family: 微软雅黑; font-size: 14px; }
+.two-dummyAll { cursor: pointer; }
+.two-line- { width: 202px; height: 1px; background-color: #c9c9c9; border-radius: 10px; margin-left: 5px; }
+.two-logo- { width: 15px; height: 15px; background-image: url(../images/icon_total.png); float: left; margin-top: 10px; margin-left: 9px; background-position: -319px -123px; }
+#on-line { width: 159px; height: auto; }
+.Content-left-three- { width: 213px; height: 229px; border: 1px solid #c9c9c9; background-color: white; margin-top: 13px; }
+.Content-left-three-img- { text-align: center; }
+.Content-right- { width: 785px; height: 1335px; float: left; }
+.Content-right-banner- { width: 777px; height: 273px; background-color: #31333e; margin-left: 10px; text-align: center; line-height: 273px; font-family: 微软雅黑; font-size: 14px; color: White; position: relative; /* float: left; */ }
+.Content-right-banner-change- { bottom: 10px; position: absolute; margin-left: 355px; }
+.change-ul- { cursor: pointer; }
+#change-circle-one { background-position: -247px -147px; }
+#change-circle-two { background-position: -233px -147px; }
+#change-circle-three { background-position: -233px -147px; }
+.change-circle { background: url(../images/icon_total.png); width: 9px; height: 11px; float: left; margin-left: 10px; }
+.Content-right-product- { width: 777px; height: 651px; margin-left: 10px; }
+.Content-right-product-top- { width: 775px; height: 34px; border: 1px solid #febe15; border-bottom-style: none; margin-top: 12px; background-color: #fffaec; font-family: 微软雅黑; }
+.product-name- { margin-left: 20px; font-size: 14px; line-height: 35px; font-weight: 600; float: left; width: 148px; }
+.product-mysql- { font-size: 14px; line-height: 35px; font-weight: 600; float: left; width: 213px; }
+#product-mysqlthr { width: 165px; }
+.product-mysqlt- { font-size: 14px; line-height: 35px; font-weight: 600; float: left; width: 213px; }
+.product-price- { width: 775px; height: 43px; border: 1px solid #c9c9c9; }
+.product-price-name- { margin-left: 20px; font-size: 12px; line-height: 44px; font-weight: 600; width: 150px; float: left; }
+#product-price-pricethr { width: 165px; }
+.product-price-price- { font-size: 12px; line-height: 44px; font-weight: 600; width: 150px; float: left; color: #cc0000; width: 212px; }
+.a-one- { color: #0096dc; margin-left: 18px; }
+.basic-config- { width: 775px; height: 34px; border: 1px solid #c9c9c9; border-top-style: none; border-bottom-style: none; background-color: #eeeeee; font-family: 微软雅黑; }
+.basic-config-logo- { width: 12px; height: 13px; background-image: url(../images/icon_total.png); background-position: -206px -122px; margin-left: 20px; margin-top: 10px; float: left; }
+.basic-config-name- { font-size: 12px; float: left; line-height: 36px; margin-left: 5px; color: #0096dc; font-weight: 600; }
+.server-config- { width: 775px; height: 133px; border: 1px solid #c9c9c9; font-family: 微软雅黑; font-size: 12px; }
+.server-config-name- { margin-top: 10px; margin-left: 20px; font-weight: 600; float: left; position: absolute; }
+.server-config-ttile- { margin-top: 10px; margin-left: 157px; }
+.server-config-sd- { margin-left: 157px; margin-top: 10px; }
+.control-panel- { width: 775px; height: 36px; border: 1px solid #c9c9c9; border-top-style: none; border-bottom-style: none; background-color: #eeeeee; font-family: 微软雅黑; }
+.control-panel-logo- { width: 12px; height: 13px; background-image: url(../images/icon_total.png); background-position: -206px -122px; margin-left: 20px; margin-top: 10px; float: left; }
+.control-panel-name- { font-size: 12px; float: left; line-height: 36px; margin-left: 5px; color: #0096dc; font-weight: 600; }
+.database-info- { width: 775px; height: 34px; border: 1px solid #c9c9c9; border-bottom-style: none; font-family: 微软雅黑; font-size: 12px; clear: both; }
+.database-info-name- { font-weight: 600; margin-top: 10px; margin-left: 20px; width: 150px; float: left; }
+.database-info-support- { width: 9px; height: 7px; background-image: url(../images/icon_total.png); float: left; margin-top: 15px; margin-right: 213px; background-position: -340px -193px; }
+#database-info-support-three { margin-right: 150px; }
+#change-password-support-three { margin-right: 150px; }
+#database-backups-support-three { margin-right: 150px; }
+#database-restore-support-three { margin-right: 150px; }
+#database-manage-support-three { margin-right: 150px; }
+.safety- { width: 775px; height: 36px; border: 1px solid #c9c9c9; border-bottom-style: none; background-color: #eeeeee; font-family: 微软雅黑; }
+.safety-logo- { width: 12px; height: 13px; background-image: url(../images/icon_total.png); background-position: -206px -122px; margin-left: 20px; margin-top: 10px; float: left; }
+.safety-name- { font-size: 12px; float: left; line-height: 36px; margin-left: 5px; color: #0096dc; font-weight: 600; }
+.Hacking- { width: 775px; height: 34px; border: 1px solid #c9c9c9; border-bottom-style: none; font-family: 微软雅黑; clear: both; }
+.Hacking-name- { line-height: 36px; }
+.option- { width: 775px; height: 34px; border: 1px solid #c9c9c9; font-family: 微软雅黑; }
+#option-support { background-position: -340px -193px; margin-top: 14px; }
+#option-unsupported { background-position: -340px -207px; height: 11px; }
+.option-support- { width: 9px; height: 7px; background-image: url(../images/icon_total.png); margin-left: 20px; margin-top: 11px; float: left; }
+.option-support-txt- { float: left; line-height: 36px; margin-left: 15px; font-weight: 600; }
+.return-top{color: #0096dc; margin-left: 354px; font-weight: 600; line-height: 36px;}

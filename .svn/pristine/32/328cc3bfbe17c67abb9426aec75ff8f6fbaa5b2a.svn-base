@@ -1,0 +1,43 @@
+@import url('css.css');
+@import url('product.css');
+.Hbsj_C_T_Mer { width:100%; height:420px; border:solid 1px #c9c9c9; margin-bottom:20px;}
+.Hbsj_C_T_M_Left { width:330px; height:100%; float:left;}
+.Hbsj_C_T_M_Pic{ width:300px; height:300px; border:solid 1px #ccc; background-color:#e9e9e9; margin:15px auto; margin-bottom:0px;}
+.Hbsj_C_T_M_Bot{ width:100%; height: 90px; margin-top: 10px;}
+.Hbsj_C_T_M_B_Sel{ width:295px; height:100%; margin:auto;}
+.Hbsj_C_T_M_B_Left{ width:30px;height:30px; background-image:url(../images/icon_total.png); background-position:-114px -154px; margin: 28px 0px; float:left; cursor: pointer;}
+.Hbsj_C_T_M_B_Div{ width:65px; height:65px; border:solid 1px #ccc; float:left; margin: 10px 5px; }
+
+.Hbsj_C_T_M_Right{ width:670px; height:100%; float:right;}
+.Hbsj_C_T_M_R_Top{ width:100%; height:90px;}
+.Hbsj_C_T_M_R_T_Left{ width:35%; height:100%; float:left;}
+.Hbsj_C_T_M_R_T_L_Text{ color:cc0000; font-size:20px; margin-top: 20px; float:left;}
+.Hbsj_C_T_M_R_T_L_Num{ font-size:14px; margin-top:10px;}
+.Hbsj_C_T_M_R_T_L_Pic{ background-position:-309px -12px; background-image:url(../images/icon_total.png); width:65px; height:65px; float:right; margin-top: -35px;}
+.Hbsj_C_T_M_R_T_Right{ width:50%; height:100%; float:right;}
+.Hbsj_C_T_M_R_T_R_Text{ float:left; font-size:12px; color:#31333e; margin-right:5px; margin-top: 65px;}
+.Hbsj_C_T_M_R_T_R_Time{ width:32px; height:42px; float:left; background-image:url(../images/icon_total.png); background-position:-9px -119px;  margin-top: 45px;}
+.Hbsj_C_T_M_R_T_R_T_Line{ width: 29px; height: 1px; background-color: #c7c7c7; margin-top: 20px; position: relative;}
+.Hbsj_C_T_M_R_T_R_T_Num{ float: left; line-height: 42px; text-align: center; width: 100%; font-size: 25px; width:30px;}
+.Hbsj_C_T_M_R_T_Cen{ width:640px; height:130px; background-color:#eeeeee; margin-top:25px;}
+.Hbsj_C_T_M_R_T_C_Top{ height:55px; width:90%; margin:auto;}
+.Hbsj_C_T_M_R_T_C_T_Text{ margin-top: 30px; float: left; color:#31333e; font-size:12px;}
+.Hbsj_C_T_M_R_T_C_T_Num{ font-size:30px; color:#cc0000; float: left; margin-top: 11px; font-weight:bold;}
+.Hbsj_C_T_M_R_T_C_T_Value{ font-size:12px; color:#31333e; float: left; margin-top: 28px; margin-left: 20px; text-decoration:line-through;}
+.Hbsj_C_T_M_R_T_C_Cen{ height:15px; margin-top: 10px;}
+.Hbsj_C_T_M_R_T_C_C_Text{ font-size:12px;}
+.Hbsj_C_T_M_R_T_C_Bot{ height: 25px; font-size: 12px; margin-top: 15px;}
+.Hbsj_C_T_M_R_T_C_B_Text{ margin-left: 15px; float:left; line-height: 25px;}
+.Hbsj_C_T_M_R_T_C_B_Appraisal{ float: right; line-height: 25px; margin-right:140px;}
+.Hbsj_C_T_M_R_T_C_B_A_Start{ width: 20px; height: 20px; background-position: -264px -146px; float: left; background-image: url(../images/icon_total.png); margin-left: 5px;}
+.Hbsj_C_T_M_R_T_C_B_A_Value{ color:#ffa100; float:left; margin-left: 10px;}
+.Hbsj_C_T_M_R_T_Bot{ width:100%; height:60px;}
+.Hbsj_C_T_M_R_T_B_Num{ width:85px; height:40px; border:solid 1px #c9c9c9; margin-top:30px; margin-left:20px; float:left;}
+.Hbsj_C_T_M_R_T_B_N_Num{ width:65px; height:100%; line-height:40px; float:left; text-align:center;}
+.Hbsj_C_T_M_R_T_B_N_Add{ width:19px; height:19px; float:right; line-height: 20px; text-align: center; border-left:solid 1px #c9c9c9; border-bottom:solid 1px #c9c9c9; cursor: pointer;}
+.Hbsj_C_T_M_R_T_B_N_Pay{ width:180px; height:50px; background-color:#eeeeee; border:solid 1px #0096dc; text-align:center; line-height:50px; color:#00aeff; font-size:14px; float: left; margin-left: 30px; margin-top: 20px;}
+.Hbsj_C_T_M_R_T_B_N_Fun{ color:#31333e; font-size:12px; margin-top: 45px; margin-left: 20px; float:left;}
+.Hbsj_C_T_M_R_T_B_N_CusSer{ width:90px; height:20px; background-color:#cc0000; margin-top: 42.5px;  margin-right: 280px; float:right; background-image:url(../images/icon_total.png); background-position:-12px -164px;}
+
+.Hbsj_C_T_C_R_Top{ width:100%; height:30px; background-color:#eeeeee;}
+.Hbsj_C_T_C_R_T_Left{ width:70px; height:100%; background-color:white; border-top:solid 1px #0aaffc; color:#31333e; font-size:12px; text-align:center; line-height:30px;}

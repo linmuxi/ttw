@@ -1,0 +1,44 @@
+-----------------创建表空间-----------------
+CREATE TABLESPACE TBS_EBCM_01 
+DATAFILE 'D:\tablespaces\TBS_EBCM_01.DBF' 
+SIZE 100M 
+AUTOEXTEND ON NEXT 100M 
+MAXSIZE UNLIMITED;
+
+CREATE TABLESPACE TBS_EBCM_ZH_01 
+DATAFILE 'D:\tablespaces\TBS_EBCM_ZH_01.DBF' 
+SIZE 100M 
+AUTOEXTEND ON NEXT 100M 
+MAXSIZE UNLIMITED;
+
+------------------创建用户--------------------
+create user U_EBCMGZJL identified by U_EBCMGZJL
+default tablespace TBS_EBCM_01; 
+
+------------------授权--------------------
+GRANT CREATE USER,DROP USER,ALTER USER ,CREATE ANY VIEW ,
+   DROP ANY VIEW,EXP_FULL_DATABASE,IMP_FULL_DATABASE,
+      DBA,CONNECT,RESOURCE,CREATE SESSION  TO U_EBCMGZJL;  
+
+
+--创建操作目录
+create or replace directory dump_dir as 'D:\backup';
+
+--授权目录相关用户
+grant read,write on directory dump_dir to U_EBCMGZJL;
+
+--执行导入
+impdp U_EBCMGZJL/U_EBCMGZJL@ORCL schemas=U_EBCMGZ REMAP_SCHEMA=U_EBCMGZ:U_EBCMGZJL directory=dump_dir dumpfile =EBCMGZ_20140801.DMP（把U_EBCMGZ用户下的表导入到U_EBCMGZJL）
+impdp test/test directory=dpdump dumpfile=scott.dmp schemas=test job_name=cases_import remap_schema=scott:test parallel=2 
+
+
+
+
+ORA-06502: PL/SQL: 数字或值错误 :  字符串缓冲区太小
+
+--删除表空间
+drop tablespace TBS_EBCM_ZH_01 including contents and datafiles CASCADE CONSTRAINTS; 
+
+imp U_QYMHGZ/U_QYMHGZ@ORCL file=C:\Users\Administrator\Desktop\U_QYMHBZ.dmp fromuser=U_QYMHBZ touser=U_QYMHGZ
+这时遇到这样的问题
+IMP-00017: 由于 ORACLE 错误 1950, 以下语句失败:
