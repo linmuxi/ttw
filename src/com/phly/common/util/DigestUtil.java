@@ -20,5 +20,9 @@ public class DigestUtil {
 	public static String encodePasswordByMD5(String password,String key){
 		return new MessageDigestPasswordEncoder("MD5").encodePassword(password,key);		
 	}
+	
+	public static void main(String[] args) {
+		System.out.println(DigestUtil.encodePasswordByMD5("123456", "364434006@qq.com"));
+	}
 
 }

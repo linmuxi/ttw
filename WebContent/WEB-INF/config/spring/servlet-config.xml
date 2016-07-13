@@ -24,7 +24,7 @@
 	</context:component-scan>
 
 	<!-- <mvc:annotation-driven />  -->
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean>
 	
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<!-- 配置信息转换，将用@responsebody注解的返回值(map)转换为json返回前台，编码为utf-8 -->
